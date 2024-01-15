@@ -1,0 +1,14 @@
+{
+  "name": "tado",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Asynchronous Python client providing Tado API, mainly usage for Home Assistant",
+  "scripts": {
+    "prettier": "prettier --write **/*.{json,js,md,yml,yaml}"
+  },
+  "author": "Erwin Douna <e.douna@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "3.2.2"
+  }
+}
