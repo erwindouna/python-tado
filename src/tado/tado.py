@@ -6,6 +6,7 @@ import time
 from dataclasses import dataclass
 from typing import Any, Self
 from urllib import request
+from typing import Optional
 
 import orjson
 from aiohttp import ClientResponseError
@@ -222,8 +223,6 @@ class Tado:
             data={"homePresence": presence},
             method=HttpMethod.PUT,
         )
-
-    from typing import Optional
 
     async def set_zone_overlay(
         self,
