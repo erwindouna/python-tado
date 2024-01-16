@@ -319,5 +319,5 @@ class Tado:
         return self
 
     async def __aexit__(self, *_exc_info: object) -> None:
-        """Async exit.        """
+        """Async exit."""
         await self.close()
