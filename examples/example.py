@@ -7,9 +7,10 @@ from tado import Tado
 
 async def main() -> None:
     """Show example on how to use aiohttp.ClientSession."""
-    async with Tado("e.douna@gmail.com", "jadiekrijgjeniettezien") as tado:
-        await tado.get_me()
+    async with Tado("e.douna@gmail.com", "bla") as tado:
+        print(await tado.get_devices())
         print("do stuff with tado")
+
 
 if __name__ == "__main__":
     asyncio.run(main())
