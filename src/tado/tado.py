@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from typing import Any, Self
 from urllib import request
 
+import orjson
 from aiohttp import ClientResponseError
 from aiohttp.client import ClientSession
 from yarl import URL
@@ -19,7 +20,7 @@ from tado.exceptions import (
     TadoException,
     TadoForbiddenError,
 )
-from tado.models import GetMe
+from tado.models import Device, GetMe, MobileDevice, Zone
 
 
 @dataclass
@@ -151,9 +152,29 @@ class Tado:
             self._me = GetMe.from_json(response)
         return self._me
 
-    async def get_devices(self) -> dict[str, Any]:
+    async def get_devices(self) -> dict[str, Device]:
         """Get the devices."""
-        return await self._request(f"homes/{self._home_id}/devices")
+        response = await self._request(f"homes/{self._home_id}/devices")
+        obj = orjson.loads(response)
+        return [Device.from_dict(device) for device in obj]
+    
+    async def get_mobile_devices(self) -> dict[str, MobileDevice]:
+        """Get the mobile devices."""
+        response = await self._request(f"homes/{self._home_id}/mobileDevices")
+        obj = orjson.loads(response)
+        return [MobileDevice.from_dict(device) for device in obj]
+    
+    async def get_zones(self) -> dict[str, Zone]:
+        """Get the zones."""
+        response = await self._request(f"homes/{self._home_id}/zones")
+        obj = orjson.loads(response)
+        return [Zone.from_dict(zone) for zone in obj]
+    
+    async def get_zone_states(self) -> dict[str, Zone]:
+        """Get the zone states."""
+        response = await self._request(f"homes/{self._home_id}/zoneStates")
+        obj = orjson.loads(response)
+        return [Zone.from_dict(zone) for zone in obj]
 
     async def _request(
         self, uri: str, data: dict | None = None, method: str = HttpMethod.GET
