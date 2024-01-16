@@ -314,20 +314,10 @@ class Tado:
             await self.session.close()
 
     async def __aenter__(self) -> Self:
-        """Async enter.
-
-        Returns
-        -------
-            The Tado object.
-        """
+        """Async enter."""
         await self._login()
         return self
 
     async def __aexit__(self, *_exc_info: object) -> None:
-        """Async exit.
-
-        Args:
-        ----
-            _exc_info: Exec type.
-        """
+        """Async exit.        """
         await self.close()
