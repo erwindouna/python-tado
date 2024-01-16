@@ -20,7 +20,18 @@ from tado.exceptions import (
     TadoException,
     TadoForbiddenError,
 )
-from tado.models import Device, GetMe, MobileDevice, Zone
+from tado.models import (
+    Capabilities,
+    Device,
+    GetMe,
+    Home_state,
+    MobileDevice,
+    TemperatureOffset,
+    Weather,
+    Zone,
+    ZoneState,
+    ZoneStates,
+)
 
 
 @dataclass
@@ -53,6 +64,7 @@ class Tado:
         self._access_headers: dict | None = None
         self._home_id: int | None = None
         self._me: dict | None = None
+        self._auto_geofencing_supported: bool | None = None
 
     async def _login(self) -> None:
         """Perform login to Tado."""
@@ -109,12 +121,7 @@ class Tado:
             ),
         }
 
-        if request.status in status_error_mapping:
-            raise status_error_mapping.get(
-                request.status,
-                TadoException(f"Error {request.status} connecting to Tado."),
-            )
-        raise TadoException(
+        raise status_error_mapping.get(request.status) or TadoException(
             f"Error {request.status} connecting to Tado. Response body: {await request.text()}"
         )
 
@@ -157,24 +164,118 @@ class Tado:
         response = await self._request(f"homes/{self._home_id}/devices")
         obj = orjson.loads(response)
         return [Device.from_dict(device) for device in obj]
-    
+
     async def get_mobile_devices(self) -> dict[str, MobileDevice]:
         """Get the mobile devices."""
         response = await self._request(f"homes/{self._home_id}/mobileDevices")
         obj = orjson.loads(response)
         return [MobileDevice.from_dict(device) for device in obj]
-    
+
     async def get_zones(self) -> dict[str, Zone]:
         """Get the zones."""
         response = await self._request(f"homes/{self._home_id}/zones")
         obj = orjson.loads(response)
         return [Zone.from_dict(zone) for zone in obj]
-    
+
     async def get_zone_states(self) -> dict[str, Zone]:
-        """Get the zone states."""
         response = await self._request(f"homes/{self._home_id}/zoneStates")
         obj = orjson.loads(response)
-        return [Zone.from_dict(zone) for zone in obj]
+        zone_states = {
+            zone_id: ZoneState.from_dict(zone_state_dict)
+            for zone_id, zone_state_dict in obj["zoneStates"].items()
+        }
+        return [ZoneStates(zoneStates=zone_states)]
+
+    async def get_weather(self) -> Weather:
+        """Get the weather."""
+        response = await self._request(f"homes/{self._home_id}/weather")
+        return Weather.from_json(response)
+
+    async def get_home_state(self) -> Home_state:
+        """Get the home state."""
+        response = await self._request(f"homes/{self._home_id}/state")
+        home_state = Home_state.from_json(response)
+
+        self._auto_geofencing_supported = (
+            home_state.showSwitchToAutoGeofencingButton or not home_state.presenceLocked
+        )
+
+        return home_state
+
+    async def get_capabiliteis(self, zone: int) -> Capabilities:
+        """Get the capabilities."""
+        response = await self._request(
+            f"homes/{self._home_id}/zones/{zone}/capabilities"
+        )
+        return Capabilities.from_json(response)
+
+    async def reset_zone_overlay(self, zone: int) -> None:
+        """Reset the zone overlay."""
+        await self._request(
+            f"homes/{self._home_id}/zones/{zone}/overlay", method=HttpMethod.DELETE
+        )
+
+    async def set_presence(self, presence: str) -> None:
+        """Set the presence."""
+        await self._request(
+            f"homes/{self._home_id}/presenceLock",
+            data={"homePresence": presence},
+            method=HttpMethod.PUT,
+        )
+
+    from typing import Optional
+
+    async def set_zone_overlay(
+        self,
+        zone: int,
+        overlay_mode: str,
+        set_temp: Optional[float] = None,
+        duration: Optional[int] = None,
+        device_type: str = "HEATING",
+        power: str = "ON",
+        mode: Optional[str] = None,
+        fan_speed: Optional[str] = None,
+        swing: Optional[str] = None,
+    ) -> None:
+        """Set the zone overlay."""
+        data = {
+            "setting": {
+                "type": device_type,
+                "power": power,
+                **(
+                    {"temperature": {"celsius": set_temp}}
+                    if set_temp is not None
+                    else {}
+                ),
+                **(
+                    {"fanSpeed": fan_speed}
+                    if fan_speed is not None and set_temp is not None
+                    else {}
+                ),
+                **(
+                    {"swing": swing}
+                    if swing is not None and set_temp is not None
+                    else {}
+                ),
+                **({"mode": mode} if mode is not None else {}),
+            },
+            "termination": {
+                "typeSkillBasedApp": overlay_mode,
+                **({"durationInSeconds": duration} if duration is not None else {}),
+            },
+        }
+        await self._request(
+            f"homes/{self._home_id}/zones/{zone}/overlay",
+            data=data,
+            method=HttpMethod.PUT,
+        )
+
+    async def get_device_info(
+        self, serial_no: str, attribute: str
+    ) -> TemperatureOffset:
+        """Get the device info."""
+        response = await self._request(f"devices/{serial_no}/{attribute}")
+        return TemperatureOffset.from_json(response)
 
     async def _request(
         self, uri: str, data: dict | None = None, method: str = HttpMethod.GET
@@ -188,6 +289,12 @@ class Tado:
         headers = {
             "Authorization": f"Bearer {self._access_token}",
         }
+
+        if method == HttpMethod.DELETE:
+            headers["Content-Type"] = "text/plain;charset=UTF-8"
+        elif method == HttpMethod.PUT:
+            headers["Content-Type"] = "application/json;charset=UTF-8"
+            headers["Mime-Type"] = "application/json;charset=UTF-8"
 
         try:
             async with asyncio.timeout(self.request_timeout):
