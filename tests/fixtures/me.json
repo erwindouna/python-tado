@@ -1,0 +1,28 @@
+{
+  "id": "5",
+  "mobileDevices": [
+    {
+      "name": "test_user_mobile",
+      "deviceMetadata": {
+        "platform": "Android",
+        "locale": "en",
+        "osVersion": "10",
+        "model": "OnePlus_GM1917"
+      },
+      "settings": {
+        "geoTrackingEnabled": false
+      },
+      "id": 1
+    }
+  ],
+  "homes": [
+    {
+      "name": "home name",
+      "id": 1
+    }
+  ],
+  "name": "test_user",
+  "locale": "nl",
+  "email": "user@domain.tld",
+  "username": "user@domain.tld"
+}

@@ -4,9 +4,8 @@ from __future__ import annotations
 import asyncio
 import time
 from dataclasses import dataclass
-from typing import Any, Self
+from typing import Any, Optional, Self
 from urllib import request
-from typing import Optional
 
 import orjson
 from aiohttp import ClientResponseError
@@ -34,6 +33,12 @@ from tado.models import (
     ZoneStates,
 )
 
+CLIENT_ID = "tado-web-app"
+CLIENT_SECRET = "wZaRN7rpjn3FoNyF5IFuxg9uMzYJcvOoQ8QWiIqS3hfk6gLhVlG57j5YNoZL2Rtc"
+AUTHORIZATION_BASE_URL = "https://auth.tado.com/oauth/authorize"
+TOKEN_URL = "https://auth.tado.com/oauth/token"
+API_URL = "my.tado.com/api/v2"
+
 
 @dataclass
 class Tado:
@@ -41,20 +46,14 @@ class Tado:
 
     session: ClientSession | None = None
     request_timeout: int = 10
-    _username: str | None = None
-    _password: str | None = None
-    _debug: bool = False
 
-    _client_id = "tado-web-app"
-    _client_secret = "wZaRN7rpjn3FoNyF5IFuxg9uMzYJcvOoQ8QWiIqS3hfk6gLhVlG57j5YNoZL2Rtc"
-    _authorization_base_url = "https://auth.tado.com/oauth/authorize"
-    _token_url = "https://auth.tado.com/oauth/token"
-    _api_url = "my.tado.com/api/v2"
-
-    def __init__(self, username: str, password: str, debug: bool = False) -> None:
+    def __init__(
+        self, username: str, password: str, debug: bool = None, session=None
+    ) -> None:
         """Initialize the Tado object."""
         self._username: str = username
         self._password: str = password
+        self._debug: bool = debug if debug is not None else False
         self._headers: dict = {
             "Content-Type": "application/json",
             "Referer": "https://app.tado.com/",
@@ -65,13 +64,12 @@ class Tado:
         self._access_headers: dict | None = None
         self._home_id: int | None = None
         self._me: dict | None = None
-        self._auto_geofencing_supported: bool | None = None
 
     async def _login(self) -> None:
         """Perform login to Tado."""
         data = {
-            "client_id": self._client_id,
-            "client_secret": self._client_secret,
+            "client_id": CLIENT_ID,
+            "client_secret": CLIENT_SECRET,
             "grant_type": "password",
             "scope": "home.user",
             "username": self._username,
@@ -84,7 +82,7 @@ class Tado:
 
         try:
             async with asyncio.timeout(self.request_timeout):
-                request = await self.session.post(url=self._token_url, data=data)
+                request = await self.session.post(url=TOKEN_URL, data=data)
                 request.raise_for_status()
         except asyncio.TimeoutError:
             raise TadoConnectionError("Timeout occurred while connecting to Tado.")
@@ -128,20 +126,24 @@ class Tado:
 
     async def _refresh_auth(self) -> None:
         """Refresh the authentication token."""
-        if time.time() < self._token_expiry - 30:
+        if self._token_expiry is not None and time.time() < self._token_expiry - 30:
             return
 
         data = {
-            "client_id": self._client_id,
-            "client_secret": self._client_secret,
+            "client_id": CLIENT_ID,
+            "client_secret": CLIENT_SECRET,
             "grant_type": "refresh_token",
             "scope": "home.user",
             "refresh_token": self._refesh_token,
         }
 
+        if self.session is None:
+            self.session = ClientSession()
+            self._close_session = True
+
         try:
             async with asyncio.timeout(self.request_timeout):
-                request = await self.session.post(url=self._token_url, data=data)
+                request = await self.session.post(url=TOKEN_URL, data=data)
                 request.raise_for_status()
         except asyncio.TimeoutError:
             raise TadoConnectionError("Timeout occurred while connecting to Tado.")
@@ -282,7 +284,7 @@ class Tado:
         """Handle a request to the Tado API."""
         await self._refresh_auth()
 
-        url = URL.build(scheme="https", host=self._api_url).joinpath(uri)
+        url = URL.build(scheme="https", host=API_URL).joinpath(uri)
 
         # versienummer nog toevoegen
         headers = {
