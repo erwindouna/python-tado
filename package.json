@@ -9,6 +9,6 @@
   "author": "Erwin Douna <e.douna@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "prettier": "3.2.2"
+    "prettier": "3.2.3"
   }
 }
