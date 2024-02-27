@@ -1,0 +1,19 @@
+{
+  "solarIntensity": {
+    "type": "PERCENTAGE",
+    "percentage": 0.0,
+    "timestamp": "2024-02-27T20:29:49.360Z"
+  },
+  "outsideTemperature": {
+    "celsius": 2.29,
+    "fahrenheit": 36.12,
+    "timestamp": "2024-02-27T20:29:49.360Z",
+    "type": "TEMPERATURE",
+    "precision": { "celsius": 0.01, "fahrenheit": 0.01 }
+  },
+  "weatherState": {
+    "type": "WEATHER_STATE",
+    "value": "NIGHT_CLOUDY",
+    "timestamp": "2024-02-27T20:29:49.360Z"
+  }
+}

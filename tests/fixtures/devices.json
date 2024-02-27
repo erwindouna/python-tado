@@ -1,0 +1,98 @@
+[
+  {
+    "deviceType": "IB01",
+    "serialNo": "SerialNo1",
+    "shortSerialNo": "ShortSerialNo1",
+    "currentFwVersion": "92.1",
+    "connectionState": {
+      "value": true,
+      "timestamp": "2024-02-27T20:13:45.407Z"
+    },
+    "characteristics": { "capabilities": ["RADIO_ENCRYPTION_KEY_ACCESS"] },
+    "inPairingMode": false
+  },
+  {
+    "deviceType": "VA02",
+    "serialNo": "SerialNo2",
+    "shortSerialNo": "ShortSerialNo2",
+    "currentFwVersion": "95.1",
+    "connectionState": {
+      "value": true,
+      "timestamp": "2024-02-27T20:20:20.921Z"
+    },
+    "characteristics": {
+      "capabilities": ["INSIDE_TEMPERATURE_MEASUREMENT", "IDENTIFY"]
+    },
+    "mountingState": {
+      "value": "CALIBRATED",
+      "timestamp": "2024-02-19T17:23:30.537Z"
+    },
+    "mountingStateWithError": "CALIBRATED",
+    "batteryState": "NORMAL",
+    "orientation": "HORIZONTAL",
+    "childLockEnabled": true
+  },
+  {
+    "deviceType": "VA02",
+    "serialNo": "SerialNo3",
+    "shortSerialNo": "ShortSerialNo3",
+    "currentFwVersion": "95.1",
+    "connectionState": {
+      "value": true,
+      "timestamp": "2024-02-27T20:23:13.342Z"
+    },
+    "characteristics": {
+      "capabilities": ["INSIDE_TEMPERATURE_MEASUREMENT", "IDENTIFY"]
+    },
+    "mountingState": {
+      "value": "CALIBRATED",
+      "timestamp": "2024-02-26T13:33:10.647Z"
+    },
+    "mountingStateWithError": "CALIBRATED",
+    "batteryState": "NORMAL",
+    "orientation": "HORIZONTAL",
+    "childLockEnabled": true
+  },
+  {
+    "deviceType": "VA02",
+    "serialNo": "SerialNo4",
+    "shortSerialNo": "ShortSerialNo4",
+    "currentFwVersion": "95.1",
+    "connectionState": {
+      "value": true,
+      "timestamp": "2024-02-27T20:23:02.849Z"
+    },
+    "characteristics": {
+      "capabilities": ["INSIDE_TEMPERATURE_MEASUREMENT", "IDENTIFY"]
+    },
+    "mountingState": {
+      "value": "CALIBRATED",
+      "timestamp": "2023-10-09T15:39:08.131Z"
+    },
+    "mountingStateWithError": "CALIBRATED",
+    "batteryState": "NORMAL",
+    "orientation": "HORIZONTAL",
+    "childLockEnabled": true
+  },
+  {
+    "deviceType": "VA02",
+    "serialNo": "SerialNo5",
+    "shortSerialNo": "ShortSerialNo5",
+    "currentFwVersion": "95.1",
+    "connectionState": {
+      "value": true,
+      "timestamp": "2024-02-27T20:16:13.890Z"
+    },
+    "characteristics": {
+      "capabilities": ["INSIDE_TEMPERATURE_MEASUREMENT", "IDENTIFY"]
+    },
+    "mountingState": {
+      "value": "CALIBRATED",
+      "timestamp": "2024-02-04T10:17:00.266Z"
+    },
+    "mountingStateWithError": "CALIBRATED",
+    "batteryState": "NORMAL",
+    "orientation": "HORIZONTAL",
+    "childLockEnabled": true
+  }
+]

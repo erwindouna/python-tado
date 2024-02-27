@@ -1,0 +1,33 @@
+[
+  {
+    "name": "User1",
+    "id": 123456,
+    "settings": {
+      "geoTrackingEnabled": true,
+      "specialOffersEnabled": true,
+      "onDemandLogRetrievalEnabled": false
+    },
+    "location": null,
+    "deviceMetadata": {
+      "platform": "Android",
+      "osVersion": "14",
+      "model": "Model1",
+      "locale": "nl"
+    }
+  },
+  {
+    "name": "User2",
+    "id": 789012,
+    "settings": {
+      "geoTrackingEnabled": false,
+      "specialOffersEnabled": true,
+      "onDemandLogRetrievalEnabled": false
+    },
+    "deviceMetadata": {
+      "platform": "Android",
+      "osVersion": "14",
+      "model": "Model2",
+      "locale": "nl"
+    }
+  }
+]

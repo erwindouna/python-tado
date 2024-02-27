@@ -195,7 +195,7 @@ class TemperatureOffset(DataClassORJSONMixin):
 class TemperatureSetting(DataClassORJSONMixin):
     type: str
     power: str
-    temperature: Temperature
+    temperature: Temperature | None = None
 
 
 @dataclass
@@ -203,7 +203,7 @@ class Overlay(DataClassORJSONMixin):
     type: str
     setting: TemperatureSetting
     termination: dict
-    projectedExpiry: Optional[str] = None
+    projectedExpiry: str | None = None
 
 
 @dataclass

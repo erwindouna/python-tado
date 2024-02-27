@@ -1,0 +1,217 @@
+{
+  "zoneStates": {
+    "1": {
+      "tadoMode": "HOME",
+      "geolocationOverride": false,
+      "geolocationOverrideDisableTime": null,
+      "preparation": null,
+      "setting": {
+        "type": "HEATING",
+        "power": "ON",
+        "temperature": { "celsius": 17.0, "fahrenheit": 62.6 }
+      },
+      "overlayType": "MANUAL",
+      "overlay": {
+        "type": "MANUAL",
+        "setting": {
+          "type": "HEATING",
+          "power": "ON",
+          "temperature": { "celsius": 17.0, "fahrenheit": 62.6 }
+        },
+        "termination": {
+          "type": "MANUAL",
+          "typeSkillBasedApp": "MANUAL",
+          "projectedExpiry": null
+        }
+      },
+      "openWindow": null,
+      "nextScheduleChange": {
+        "start": "2024-02-27T21:00:00Z",
+        "setting": {
+          "type": "HEATING",
+          "power": "ON",
+          "temperature": { "celsius": 18.0, "fahrenheit": 64.4 }
+        }
+      },
+      "nextTimeBlock": { "start": "2024-02-27T21:00:00.000Z" },
+      "link": { "state": "ONLINE" },
+      "activityDataPoints": {
+        "heatingPower": {
+          "type": "PERCENTAGE",
+          "percentage": 0.0,
+          "timestamp": "2024-02-27T20:30:01.259Z"
+        }
+      },
+      "sensorDataPoints": {
+        "insideTemperature": {
+          "celsius": 17.98,
+          "fahrenheit": 64.36,
+          "timestamp": "2024-02-27T20:37:02.553Z",
+          "type": "TEMPERATURE",
+          "precision": { "celsius": 0.1, "fahrenheit": 0.1 }
+        },
+        "humidity": {
+          "type": "PERCENTAGE",
+          "percentage": 51.0,
+          "timestamp": "2024-02-27T20:37:02.553Z"
+        }
+      }
+    },
+    "2": {
+      "tadoMode": "HOME",
+      "geolocationOverride": false,
+      "geolocationOverrideDisableTime": null,
+      "preparation": null,
+      "setting": {
+        "type": "HEATING",
+        "power": "ON",
+        "temperature": { "celsius": 15.0, "fahrenheit": 59.0 }
+      },
+      "overlayType": "MANUAL",
+      "overlay": {
+        "type": "MANUAL",
+        "setting": {
+          "type": "HEATING",
+          "power": "ON",
+          "temperature": { "celsius": 15.0, "fahrenheit": 59.0 }
+        },
+        "termination": {
+          "type": "MANUAL",
+          "typeSkillBasedApp": "MANUAL",
+          "projectedExpiry": null
+        }
+      },
+      "openWindow": null,
+      "nextScheduleChange": null,
+      "nextTimeBlock": { "start": "2024-02-27T21:00:00.000Z" },
+      "link": { "state": "ONLINE" },
+      "activityDataPoints": {
+        "heatingPower": {
+          "type": "PERCENTAGE",
+          "percentage": 11.0,
+          "timestamp": "2024-02-27T20:37:22.791Z"
+        }
+      },
+      "sensorDataPoints": {
+        "insideTemperature": {
+          "celsius": 14.89,
+          "fahrenheit": 58.8,
+          "timestamp": "2024-02-27T20:38:14.791Z",
+          "type": "TEMPERATURE",
+          "precision": { "celsius": 0.1, "fahrenheit": 0.1 }
+        },
+        "humidity": {
+          "type": "PERCENTAGE",
+          "percentage": 56.9,
+          "timestamp": "2024-02-27T20:38:14.791Z"
+        }
+      }
+    },
+    "3": {
+      "tadoMode": "HOME",
+      "geolocationOverride": false,
+      "geolocationOverrideDisableTime": null,
+      "preparation": null,
+      "setting": {
+        "type": "HEATING",
+        "power": "ON",
+        "temperature": { "celsius": 17.0, "fahrenheit": 62.6 }
+      },
+      "overlayType": "MANUAL",
+      "overlay": {
+        "type": "MANUAL",
+        "setting": {
+          "type": "HEATING",
+          "power": "ON",
+          "temperature": { "celsius": 17.0, "fahrenheit": 62.6 }
+        },
+        "termination": {
+          "type": "MANUAL",
+          "typeSkillBasedApp": "MANUAL",
+          "projectedExpiry": null
+        }
+      },
+      "openWindow": null,
+      "nextScheduleChange": {
+        "start": "2024-02-27T21:00:00Z",
+        "setting": {
+          "type": "HEATING",
+          "power": "ON",
+          "temperature": { "celsius": 18.0, "fahrenheit": 64.4 }
+        }
+      },
+      "nextTimeBlock": { "start": "2024-02-27T21:00:00.000Z" },
+      "link": { "state": "ONLINE" },
+      "activityDataPoints": {
+        "heatingPower": {
+          "type": "PERCENTAGE",
+          "percentage": 0.0,
+          "timestamp": "2024-02-27T20:28:21.301Z"
+        }
+      },
+      "sensorDataPoints": {
+        "insideTemperature": {
+          "celsius": 17.52,
+          "fahrenheit": 63.54,
+          "timestamp": "2024-02-27T20:37:12.297Z",
+          "type": "TEMPERATURE",
+          "precision": { "celsius": 0.1, "fahrenheit": 0.1 }
+        },
+        "humidity": {
+          "type": "PERCENTAGE",
+          "percentage": 55.5,
+          "timestamp": "2024-02-27T20:37:12.297Z"
+        }
+      }
+    },
+    "4": {
+      "tadoMode": "HOME",
+      "geolocationOverride": false,
+      "geolocationOverrideDisableTime": null,
+      "preparation": null,
+      "setting": { "type": "HEATING", "power": "OFF", "temperature": null },
+      "overlayType": "MANUAL",
+      "overlay": {
+        "type": "MANUAL",
+        "setting": { "type": "HEATING", "power": "OFF", "temperature": null },
+        "termination": {
+          "type": "MANUAL",
+          "typeSkillBasedApp": "MANUAL",
+          "projectedExpiry": null
+        }
+      },
+      "openWindow": null,
+      "nextScheduleChange": {
+        "start": "2024-02-27T21:00:00Z",
+        "setting": {
+          "type": "HEATING",
+          "power": "ON",
+          "temperature": { "celsius": 18.0, "fahrenheit": 64.4 }
+        }
+      },
+      "nextTimeBlock": { "start": "2024-02-27T21:00:00.000Z" },
+      "link": { "state": "ONLINE" },
+      "activityDataPoints": {
+        "heatingPower": {
+          "type": "PERCENTAGE",
+          "percentage": 0.0,
+          "timestamp": "2024-02-27T20:27:18.903Z"
+        }
+      },
+      "sensorDataPoints": {
+        "insideTemperature": {
+          "celsius": 18.57,
+          "fahrenheit": 65.43,
+          "timestamp": "2024-02-27T20:37:20.931Z",
+          "type": "TEMPERATURE",
+          "precision": { "celsius": 0.1, "fahrenheit": 0.1 }
+        },
+        "humidity": {
+          "type": "PERCENTAGE",
+          "percentage": 63.3,
+          "timestamp": "2024-02-27T20:37:20.931Z"
+        }
+      }
+    }
+  }
+}

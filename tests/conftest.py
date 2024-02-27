@@ -37,9 +37,9 @@ def _tado_oauth(responses: aioresponses) -> None:
         TADO_TOKEN_URL,
         status=200,
         payload={
-            "access_token": "test",
+            "access_token": "test_access_token",
             "expires_in": 3600,
-            "refresh_token": "test_token",
+            "refresh_token": "test_refresh_token",
         },
     )
     responses.get(

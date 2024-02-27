@@ -4,7 +4,7 @@ from __future__ import annotations
 import asyncio
 import time
 from dataclasses import dataclass
-from typing import Any, Optional, Self
+from typing import Any, Self
 from urllib import request
 
 import orjson
@@ -46,14 +46,19 @@ class Tado:
 
     session: ClientSession | None = None
     request_timeout: int = 10
+    _close_session: bool = False
 
     def __init__(
-        self, username: str, password: str, debug: bool = None, session=None
+        self,
+        username: str,
+        password: str,
+        debug: bool | None = None,
+        session: ClientSession = None,
     ) -> None:
         """Initialize the Tado object."""
         self._username: str = username
         self._password: str = password
-        self._debug: bool = debug if debug is not None else False
+        self._debug: bool = debug or False
         self._headers: dict = {
             "Content-Type": "application/json",
             "Referer": "https://app.tado.com/",
@@ -145,8 +150,10 @@ class Tado:
             async with asyncio.timeout(self.request_timeout):
                 request = await self.session.post(url=TOKEN_URL, data=data)
                 request.raise_for_status()
-        except asyncio.TimeoutError:
-            raise TadoConnectionError("Timeout occurred while connecting to Tado.")
+        except asyncio.TimeoutError as err:
+            raise TadoConnectionError(
+                "Timeout occurred while connecting to Tado."
+            ) from err
         except ClientResponseError:
             await self.check_request_status(request)
 
@@ -181,6 +188,7 @@ class Tado:
         return [Zone.from_dict(zone) for zone in obj]
 
     async def get_zone_states(self) -> dict[str, Zone]:
+        """Get the zone states."""
         response = await self._request(f"homes/{self._home_id}/zoneStates")
         obj = orjson.loads(response)
         zone_states = {
@@ -205,7 +213,7 @@ class Tado:
 
         return home_state
 
-    async def get_capabiliteis(self, zone: int) -> Capabilities:
+    async def get_capabilities(self, zone: int) -> Capabilities:
         """Get the capabilities."""
         response = await self._request(
             f"homes/{self._home_id}/zones/{zone}/capabilities"
@@ -230,13 +238,13 @@ class Tado:
         self,
         zone: int,
         overlay_mode: str,
-        set_temp: Optional[float] = None,
-        duration: Optional[int] = None,
+        set_temp: float | None = None,
+        duration: int | None = None,
         device_type: str = "HEATING",
         power: str = "ON",
-        mode: Optional[str] = None,
-        fan_speed: Optional[str] = None,
-        swing: Optional[str] = None,
+        mode: str | None = None,
+        fan_speed: str | None = None,
+        swing: str | None = None,
     ) -> None:
         """Set the zone overlay."""
         data = {
@@ -303,8 +311,10 @@ class Tado:
                     method=method.value, url=str(url), headers=headers, json=data
                 )
                 request.raise_for_status()
-        except asyncio.TimeoutError:
-            raise TadoConnectionError("Timeout occurred while connecting to Tado.")
+        except asyncio.TimeoutError as err:
+            raise TadoConnectionError(
+                "Timeout occurred while connecting to Tado."
+            ) from err
         except ClientResponseError:
             await self.check_request_status(request)
 
