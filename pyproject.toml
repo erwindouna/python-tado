@@ -64,7 +64,7 @@ source = ["tado"]
 # free to run mypy on Windows, Linux, or macOS and get consistent
 # results.
 platform = "linux"
-python_version = "3.11"
+python_version = "3.12"
 
 # show error messages from unrelated files
 follow_imports = "normal"
@@ -99,7 +99,7 @@ good-names = ["_", "ex", "fp", "i", "id", "j", "k", "on", "Run", "T"]
 max-attributes = 8
 
 [tool.pylint."MESSAGES CONTROL"]
-disable = ["duplicate-code", "format", "unsubscriptable-object"]
+disable = ["duplicate-code", "format", "unsubscriptable-object", "no-member", "too-many-arguments", "protected-access"]
 
 [tool.pylint.SIMILARITIES]
 ignore-imports = true
@@ -121,6 +121,10 @@ ignore = [
   "D417",    # False positives in some occasions
   "PLR2004", # Just annoying, not really useful
   "SLOT000", # Has a bug with enums: https://github.com/astral-sh/ruff/issues/5748
+  "TRY003",  # Avoid specifying long messages outside the exception class
+  "EM101",   # Exception must not use a string literal, assign to variable first
+  "EM102",   # Exception must not use an f-string literal, assign to variable first
+  "PLR0913", # Too many arguments in function definition
 
   # Conflicts with the Ruff formatter
   "COM812",

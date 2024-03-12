@@ -7,7 +7,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import aiohttp
 import pytest
-from aiohttp import ClientResponse, ClientResponseError
+from aiohttp import ClientResponse, ClientResponseError, RequestInfo
 from aioresponses import CallbackResult, aioresponses
 
 from syrupy import SnapshotAssertion
@@ -32,6 +32,7 @@ async def test_create_session(
     async with aiohttp.ClientSession() as session:
         tado = Tado(username="username", password="password", session=session)
         await tado.get_me()
+        assert tado.session is not None
         assert not tado.session.closed
         await tado.close()
         assert tado.session.closed
@@ -48,6 +49,7 @@ async def test_login_success(responses: aioresponses) -> None:
         tado = Tado(username="username", password="password", session=session)
         await tado._login()
         assert tado._access_token == "test_access_token"
+        assert tado._token_expiry is not None
         assert tado._token_expiry > time.time()
         assert tado._refesh_token == "test_refresh_token"
 
@@ -77,23 +79,23 @@ async def test_login_invalid_content_type(
         await python_tado._login()
 
 
-async def test_login_client_response_error(
-    python_tado: Tado, responses: aioresponses
-) -> None:
+async def test_login_client_response_error(python_tado: Tado) -> None:
     """Test login client response error."""
+    mock_request_info = MagicMock(spec=RequestInfo)
     mock_response = MagicMock(spec=ClientResponse)
     mock_response.raise_for_status.side_effect = ClientResponseError(
-        None, None, status=400
+        mock_request_info, (mock_response,), status=400
     )
     mock_response.status = 400
     mock_response.text = AsyncMock(return_value="Error message")
 
-    async def mock_post(*args, **kwargs):
+    async def mock_post(*args: Any, **kwargs: Any) -> ClientResponse:  # noqa: ARG001 # pylint: disable=unused-argument
         return mock_response
 
-    with patch("aiohttp.ClientSession.post", new=mock_post):
-        with pytest.raises(TadoBadRequestError):
-            await python_tado._login()
+    with patch("aiohttp.ClientSession.post", new=mock_post), pytest.raises(
+        TadoBadRequestError
+    ):
+        await python_tado._login()
 
 
 async def test_refresh_auth_success(responses: aioresponses) -> None:
@@ -135,14 +137,15 @@ async def test_refresh_auth_timeout(python_tado: Tado, responses: aioresponses) 
 
 async def test_refresh_auth_client_response_error(python_tado: Tado) -> None:
     """Test client response error during refresh of auth token."""
+    mock_request_info = MagicMock(spec=RequestInfo)
     mock_response = MagicMock(spec=ClientResponse)
     mock_response.raise_for_status.side_effect = ClientResponseError(
-        None, None, status=400
+        mock_request_info, (mock_response,), status=400
     )
     mock_response.status = 400
     mock_response.text = AsyncMock(return_value="Error message")
 
-    async def mock_post(*args, **kwargs) -> ClientResponse:
+    async def mock_post(*args: Any, **kwargs: Any) -> ClientResponse:  # noqa: ARG001 # pylint: disable=unused-argument
         return mock_response
 
     with patch("aiohttp.ClientSession.post", new=mock_post):
@@ -318,19 +321,21 @@ async def test_set_zone_overlay_success(
 
 async def test_request_client_response_error(python_tado: Tado) -> None:
     """Test client response error during request."""
+    mock_request_info = MagicMock(spec=RequestInfo)
     mock_response = MagicMock(spec=ClientResponse)
     mock_response.raise_for_status.side_effect = ClientResponseError(
-        None, None, status=400
+        mock_request_info, (mock_response,), status=400
     )
     mock_response.status = 400
     mock_response.text = AsyncMock(return_value="Error message")
 
-    async def mock_get(*args, **kwargs):
+    async def mock_get(*args: Any, **kwargs: Any) -> ClientResponse:  # noqa: ARG001 # pylint: disable=unused-argument
         return mock_response
 
-    with patch("aiohttp.ClientSession.request", new=mock_get):
-        with pytest.raises(TadoBadRequestError):
-            await python_tado._request("me")
+    with patch("aiohttp.ClientSession.request", new=mock_get), pytest.raises(
+        TadoBadRequestError
+    ):
+        await python_tado._request("me")
 
 
 async def test_get_me_timeout(python_tado: Tado, responses: aioresponses) -> None:
@@ -349,3 +354,10 @@ async def test_get_me_timeout(python_tado: Tado, responses: aioresponses) -> Non
 
     with pytest.raises(TadoConnectionError):
         await python_tado.get_devices()
+
+
+async def test_close_session() -> None:
+    """Test not closing the session when the session does not exist."""
+    tado = Tado(username="username", password="password")
+    tado._close_session = True
+    await tado.close()

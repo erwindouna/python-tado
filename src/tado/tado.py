@@ -4,11 +4,10 @@ from __future__ import annotations
 import asyncio
 import time
 from dataclasses import dataclass
-from typing import Any, Self
-from urllib import request
+from typing import Self
 
 import orjson
-from aiohttp import ClientResponseError
+from aiohttp import ClientResponse, ClientResponseError
 from aiohttp.client import ClientSession
 from yarl import URL
 
@@ -34,14 +33,14 @@ from tado.models import (
 )
 
 CLIENT_ID = "tado-web-app"
-CLIENT_SECRET = "wZaRN7rpjn3FoNyF5IFuxg9uMzYJcvOoQ8QWiIqS3hfk6gLhVlG57j5YNoZL2Rtc"
+CLIENT_SECRET = "wZaRN7rpjn3FoNyF5IFuxg9uMzYJcvOoQ8QWiIqS3hfk6gLhVlG57j5YNoZL2Rtc"  # noqa: S105
 AUTHORIZATION_BASE_URL = "https://auth.tado.com/oauth/authorize"
-TOKEN_URL = "https://auth.tado.com/oauth/token"
+TOKEN_URL = "https://auth.tado.com/oauth/token"  # noqa: S105
 API_URL = "my.tado.com/api/v2"
 
 
 @dataclass
-class Tado:
+class Tado:  # pylint: disable=too-many-instance-attributes
     """Base class for Tado."""
 
     session: ClientSession | None = None
@@ -53,22 +52,23 @@ class Tado:
         username: str,
         password: str,
         debug: bool | None = None,
-        session: ClientSession = None,
+        session: ClientSession | None = None,  # pylint: disable=unused-argument # noqa: ARG002
     ) -> None:
         """Initialize the Tado object."""
         self._username: str = username
         self._password: str = password
         self._debug: bool = debug or False
-        self._headers: dict = {
+        self._headers: dict[str, str] = {
             "Content-Type": "application/json",
             "Referer": "https://app.tado.com/",
         }
         self._access_token: str | None = None
         self._token_expiry: float | None = None
         self._refesh_token: str | None = None
-        self._access_headers: dict | None = None
+        self._access_headers: dict[str, str] | None = None
         self._home_id: int | None = None
-        self._me: dict | None = None
+        self._me: GetMe | None = None
+        self._auto_geofencing_supported: bool | None = None
 
     async def _login(self) -> None:
         """Perform login to Tado."""
@@ -89,15 +89,20 @@ class Tado:
             async with asyncio.timeout(self.request_timeout):
                 request = await self.session.post(url=TOKEN_URL, data=data)
                 request.raise_for_status()
-        except asyncio.TimeoutError:
-            raise TadoConnectionError("Timeout occurred while connecting to Tado.")
+        except asyncio.TimeoutError as err:
+            raise TadoConnectionError(
+                "Timeout occurred while connecting to Tado."
+            ) from err
         except ClientResponseError:
             await self.check_request_status(request)
 
-        if "application/json" not in request.headers.get("content-type"):
+        content_type = request.headers.get("content-type")
+        if content_type and "application/json" not in content_type:
             text = await request.text()
             raise TadoException(
-                f"Unexpected response from Tado. Content-Type: {request.headers.get('content-type')}, Response body: {text}"
+                "Unexpected response from Tado. Content-Type: "
+                f"{request.headers.get('content-type')}, "
+                f"Response body: {text}"
             )
 
         response = await request.json()
@@ -108,25 +113,31 @@ class Tado:
         get_me = await self.get_me()
         self._home_id = get_me.homes[0].id
 
-    async def check_request_status(self, request: request) -> None:
+    async def check_request_status(self, request: ClientResponse) -> None:
         """Check the status of the request and raise the proper exception if needed."""
         status_error_mapping = {
             400: TadoBadRequestError(
-                f"Bad request to Tado. Response body: {await request.text()}"
+                "Bad request to Tado. Response body: " + await request.text()
             ),
             500: TadoException(
-                f"Error {request.status} connecting to Tado. Response body: {await request.text()}"
+                "Error "
+                + str(request.status)
+                + " connecting to Tado. Response body: "
+                + await request.text()
             ),
             401: TadoAuthenticationError(
-                f"Authentication error connecting to Tado. Response body: {await request.text()}"
+                "Authentication error connecting to Tado. Response body: "
+                + await request.text()
             ),
             403: TadoForbiddenError(
-                f"Forbidden error connecting to Tado. Response body: {await request.text()}"
+                "Forbidden error connecting to Tado. Response body: "
+                + await request.text()
             ),
         }
 
         raise status_error_mapping.get(request.status) or TadoException(
-            f"Error {request.status} connecting to Tado. Response body: {await request.text()}"
+            f"Error {request.status} connecting to Tado. "
+            f"Response body: {await request.text()}"
         )
 
     async def _refresh_auth(self) -> None:
@@ -169,25 +180,25 @@ class Tado:
             self._me = GetMe.from_json(response)
         return self._me
 
-    async def get_devices(self) -> dict[str, Device]:
+    async def get_devices(self) -> list[Device]:
         """Get the devices."""
         response = await self._request(f"homes/{self._home_id}/devices")
         obj = orjson.loads(response)
         return [Device.from_dict(device) for device in obj]
 
-    async def get_mobile_devices(self) -> dict[str, MobileDevice]:
+    async def get_mobile_devices(self) -> list[MobileDevice]:
         """Get the mobile devices."""
         response = await self._request(f"homes/{self._home_id}/mobileDevices")
         obj = orjson.loads(response)
         return [MobileDevice.from_dict(device) for device in obj]
 
-    async def get_zones(self) -> dict[str, Zone]:
+    async def get_zones(self) -> list[Zone]:
         """Get the zones."""
         response = await self._request(f"homes/{self._home_id}/zones")
         obj = orjson.loads(response)
         return [Zone.from_dict(zone) for zone in obj]
 
-    async def get_zone_states(self) -> dict[str, Zone]:
+    async def get_zone_states(self) -> list[ZoneStates]:
         """Get the zone states."""
         response = await self._request(f"homes/{self._home_id}/zoneStates")
         obj = orjson.loads(response)
@@ -287,8 +298,11 @@ class Tado:
         return TemperatureOffset.from_json(response)
 
     async def _request(
-        self, uri: str, data: dict | None = None, method: str = HttpMethod.GET
-    ) -> dict[str, Any]:
+        self,
+        uri: str,
+        data: dict[str, object] | None = None,
+        method: HttpMethod = HttpMethod.GET,
+    ) -> str:
         """Handle a request to the Tado API."""
         await self._refresh_auth()
 
@@ -307,7 +321,7 @@ class Tado:
 
         try:
             async with asyncio.timeout(self.request_timeout):
-                request = await self.session.request(
+                request = await self.session.request(  # type: ignore[union-attr]
                     method=method.value, url=str(url), headers=headers, json=data
                 )
                 request.raise_for_status()
