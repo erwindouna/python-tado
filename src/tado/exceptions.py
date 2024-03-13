@@ -1,25 +1,25 @@
 """Exceptions for Tado API."""
 
 
-class TadoException(Exception):
+class TadoError(Exception):
     """Base exception for Tado API."""
 
 
-class TadoConnectionError(TadoException):
+class TadoConnectionError(TadoError):
     """Tado connection exception."""
 
 
-class TadoAuthenticationError(TadoException):
+class TadoAuthenticationError(TadoError):
     """Tado authentication exception."""
 
 
-class TadoServerError(TadoException):
+class TadoServerError(TadoError):
     """Tado server exception."""
 
 
-class TadoBadRequestError(TadoException):
+class TadoBadRequestError(TadoError):
     """Tado bad request exception."""
 
 
-class TadoForbiddenError(TadoException):
+class TadoForbiddenError(TadoError):
     """Tado forbidden exception."""

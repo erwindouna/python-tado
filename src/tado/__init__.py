@@ -3,7 +3,7 @@ from .exceptions import (
     TadoAuthenticationError,
     TadoBadRequestError,
     TadoConnectionError,
-    TadoException,
+    TadoError,
     TadoServerError,
 )
 from .tado import Tado
@@ -11,7 +11,7 @@ from .tado import Tado
 __all__ = [
     "Tado",
     "TadoConnectionError",
-    "TadoException",
+    "TadoError",
     "TadoAuthenticationError",
     "TadoServerError",
     "TadoBadRequestError",

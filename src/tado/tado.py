@@ -16,7 +16,7 @@ from tado.exceptions import (
     TadoAuthenticationError,
     TadoBadRequestError,
     TadoConnectionError,
-    TadoException,
+    TadoError,
     TadoForbiddenError,
 )
 from tado.models import (
@@ -99,7 +99,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         content_type = request.headers.get("content-type")
         if content_type and "application/json" not in content_type:
             text = await request.text()
-            raise TadoException(
+            raise TadoError(
                 "Unexpected response from Tado. Content-Type: "
                 f"{request.headers.get('content-type')}, "
                 f"Response body: {text}"
@@ -119,7 +119,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             400: TadoBadRequestError(
                 "Bad request to Tado. Response body: " + await request.text()
             ),
-            500: TadoException(
+            500: TadoError(
                 "Error "
                 + str(request.status)
                 + " connecting to Tado. Response body: "
@@ -135,7 +135,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             ),
         }
 
-        raise status_error_mapping.get(request.status) or TadoException(
+        raise status_error_mapping.get(request.status) or TadoError(
             f"Error {request.status} connecting to Tado. "
             f"Response body: {await request.text()}"
         )
