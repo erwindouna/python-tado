@@ -12,7 +12,7 @@ env:
 
 jobs:
   mypy:
-    name: mypy
+    name: Mypy
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
