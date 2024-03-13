@@ -22,7 +22,7 @@ The main usage is at the moment to act as a library within Home Assistant.
 ## Installation
 
 ```bash
-pip install vehicle
+pip install python-tado
 ```
 
 ## Usage
@@ -30,19 +30,18 @@ pip install vehicle
 ```python
 import asyncio
 
-from vehicle import RDW, Vehicle
+from tado import Tado
 
 
-async def main():
-    """Show example of fetching RDW vehicle info from Socrata API."""
-    async with RDW() as rdw:
-        vehicle: Vehicle = await rdw.vehicle(license_plate="11ZKZ3")
-        print(vehicle)
+async def main() -> None:
+    """Show example on how to use aiohttp.ClientSession."""
+    async with Tado("username", "password") as tado:
+        await tado.get_devices()
 
 
 if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
+    asyncio.run(main())
+
 ```
 
 ## Changelog & Releases
@@ -67,7 +66,7 @@ use the code or contribute to it.
 We've set up a separate document for our
 [contribution guidelines](.github/CONTRIBUTING.md).
 
-Thank you for being involved! :heart_eyes:
+Thank you for being involved!
 
 ## Setting up a development environment
 
@@ -135,3 +134,28 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+[build-shield]: https://github.com/erwindouna/python-tado/actions/workflows/tests.yaml/badge.svg
+[build]: https://github.com/erwindouna/python-tado/actions/workflows/tests.yaml
+[codecov-shield]: https://codecov.io/gh/erwindouna/python-tado/branch/main/graph/badge.svg
+[codecov]: https://codecov.io/gh/erwindouna/python-tado
+[contributors]: https://github.com/erwindouna/python-tado/graphs/contributors
+[devcontainer-shield]: https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode
+[devcontainer]: https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/erwindouna/python-tado
+[erwindouna]: https://github.com/erwindouna
+[github-sponsors-shield]: https://erwindouna.dev/wp-content/uploads/2019/12/github_sponsor.png
+[github-sponsors]: https://github.com/sponsors/erwindouna
+[keepchangelog]: http://keepachangelog.com/en/1.0.0/
+[license-shield]: https://img.shields.io/github/license/erwindouna/python-tado.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2024.svg
+[poetry-install]: https://python-poetry.org/docs/#installation
+[poetry]: https://python-poetry.org
+[pre-commit]: https://pre-commit.com/
+[project-stage-shield]: https://img.shields.io/badge/project%20stage-production%20ready-brightgreen.svg
+[pypi]: https://pypi.org/project/tado/
+[python-versions-shield]: https://img.shields.io/pypi/pyversions/tado
+[releases-shield]: https://img.shields.io/github/release/erwindouna/python-tado.svg
+[releases]: https://github.com/erwindouna/python-tado/releases
+[semver]: http://semver.org/spec/v2.0.0.html
+[sonarcloud-shield]: https://sonarcloud.io/api/project_badges/measure?project=erwindouna_python-tado&metric=alert_status
+[sonarcloud]: https://sonarcloud.io/summary/new_code?id=erwindouna_python-tado
