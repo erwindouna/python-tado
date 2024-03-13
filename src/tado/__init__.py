@@ -1,4 +1,11 @@
-"""Asychronous Python client for Tado."""
+"""Asynchronous Python client for Tado."""
+from .exceptions import (
+    TadoAuthenticationError,
+    TadoBadRequestError,
+    TadoConnectionError,
+    TadoException,
+    TadoServerError,
+)
 from .tado import Tado
 
 __all__ = [
