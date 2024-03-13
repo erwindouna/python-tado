@@ -44,6 +44,7 @@ jobs:
 
   coverage:
     runs-on: ubuntu-latest
+    name: Code coverage
     needs: pytest
     steps:
       - name: ⤵️ Check out code from GitHub
