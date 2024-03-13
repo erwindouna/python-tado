@@ -99,7 +99,7 @@ good-names = ["_", "ex", "fp", "i", "id", "j", "k", "on", "Run", "T"]
 max-attributes = 8
 
 [tool.pylint."MESSAGES CONTROL"]
-disable = ["duplicate-code", "format", "unsubscriptable-object", "no-member", "too-many-arguments", "protected-access"]
+disable = ["duplicate-code", "format", "unsubscriptable-object", "no-member", "too-many-arguments", "protected-access", "invalid-name"]
 
 [tool.pylint.SIMILARITIES]
 ignore-imports = true
@@ -125,6 +125,7 @@ ignore = [
   "EM101",   # Exception must not use a string literal, assign to variable first
   "EM102",   # Exception must not use an f-string literal, assign to variable first
   "PLR0913", # Too many arguments in function definition
+  "N815",    # Scope should not be mixedCase
 
   # Conflicts with the Ruff formatter
   "COM812",
