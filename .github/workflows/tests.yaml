@@ -35,7 +35,7 @@ jobs:
       - name: 🏗 Install dependencies
         run: poetry install --no-interaction
       - name: 🚀 Run pytest
-        run: poetry run pytest --cov vehicle tests
+        run: poetry run pytest --cov tado tests
       - name: ⬆️ Upload coverage artifact
         uses: actions/upload-artifact@v4.3.1
         with:
