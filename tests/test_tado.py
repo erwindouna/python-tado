@@ -14,7 +14,7 @@ from syrupy import SnapshotAssertion
 from tado import (
     Tado,
 )
-from tado.exceptions import TadoBadRequestError, TadoConnectionError, TadoException
+from tado.exceptions import TadoBadRequestError, TadoConnectionError, TadoError
 from tests import load_fixture
 
 from .const import TADO_API_URL, TADO_TOKEN_URL
@@ -75,7 +75,7 @@ async def test_login_invalid_content_type(
         body="Unexpected response",
     )
 
-    with pytest.raises(TadoException):
+    with pytest.raises(TadoError):
         await python_tado._login()
 
 

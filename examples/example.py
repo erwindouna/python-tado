@@ -7,9 +7,8 @@ from tado import Tado
 
 async def main() -> None:
     """Show example on how to use aiohttp.ClientSession."""
-    async with Tado("e.douna@gmail.com", "bla") as tado:
-        print(await tado.get_devices())
-        print("do stuff with tado")
+    async with Tado("username", "password") as tado:
+        await tado.get_devices()
 
 
 if __name__ == "__main__":

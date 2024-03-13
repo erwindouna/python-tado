@@ -1,8 +1,7 @@
-"""Models for the Tado API"""
+"""Models for the Tado API."""
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional
 
 from mashumaro.mixins.orjson import DataClassORJSONMixin
 
@@ -70,7 +69,7 @@ class MountingState(DataClassORJSONMixin):
 
 
 @dataclass
-class Device(DataClassORJSONMixin):
+class Device(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attributes
     """Device model represents a device in a zone."""
 
     deviceType: str
@@ -79,12 +78,12 @@ class Device(DataClassORJSONMixin):
     currentFwVersion: str
     connectionState: ConnectionState
     characteristics: Characteristics
-    inPairingMode: Optional[bool] = None
-    mountingState: Optional[MountingState] = None
-    mountingStateWithError: Optional[str] = None
-    batteryState: Optional[str] = None
-    orientation: Optional[str] = None
-    childLockEnabled: Optional[bool] = None
+    inPairingMode: bool | None = None
+    mountingState: MountingState | None = None
+    mountingStateWithError: str | None = None
+    batteryState: str | None = None
+    orientation: str | None = None
+    childLockEnabled: bool | None = None
 
 
 @dataclass
@@ -97,7 +96,7 @@ class DazzleMode(DataClassORJSONMixin):
 
 @dataclass
 class OpenWindowDetection(DataClassORJSONMixin):
-    """OpenWindowDetection model represents the open window detection settings of a zone."""
+    """OpenWindowDetection model represents the open window detection settings."""
 
     supported: bool
     enabled: bool
@@ -105,7 +104,7 @@ class OpenWindowDetection(DataClassORJSONMixin):
 
 
 @dataclass
-class Zone(DataClassORJSONMixin):
+class Zone(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attributes
     """Zone model represents a zone in a home."""
 
     id: int
@@ -124,21 +123,27 @@ class Zone(DataClassORJSONMixin):
 
 @dataclass
 class Precision(DataClassORJSONMixin):
+    """Precision model represents the precision of a temperature."""
+
     celsius: float
     fahrenheit: float
 
 
 @dataclass
 class Temperature(DataClassORJSONMixin):
+    """Temperature model represents the temperature in Celsius and Fahrenheit."""
+
     celsius: float
     fahrenheit: float
-    type: Optional[str] = None
-    precision: Optional[Precision] = None
-    timestamp: Optional[str] = None
+    type: str | None = None
+    precision: Precision | None = None
+    timestamp: str | None = None
 
 
 @dataclass
 class SolarIntensity(DataClassORJSONMixin):
+    """SolarIntensity model represents the solar intensity."""
+
     percentage: float
     timestamp: str
     type: str
@@ -146,6 +151,8 @@ class SolarIntensity(DataClassORJSONMixin):
 
 @dataclass
 class WeatherState(DataClassORJSONMixin):
+    """WeatherState model represents the weather state."""
+
     timestamp: str
     type: str
     value: str
@@ -153,21 +160,27 @@ class WeatherState(DataClassORJSONMixin):
 
 @dataclass
 class Weather(DataClassORJSONMixin):
+    """Weather model represents the weather information."""
+
     outsideTemperature: Temperature
     solarIntensity: SolarIntensity
     weatherState: WeatherState
 
 
 @dataclass
-class Home_state(DataClassORJSONMixin):
+class Home_state(DataClassORJSONMixin):  # noqa: N801
+    """Home_state model represents the state of a home."""
+
     presence: str
     presenceLocked: bool
-    showHomePresenceSwitchButton: Optional[bool] = None
-    showSwitchToAutoGeofencingButton: Optional[bool] = None
+    showHomePresenceSwitchButton: bool | None = None
+    showSwitchToAutoGeofencingButton: bool | None = None
 
 
 @dataclass
 class TemperatureRange(DataClassORJSONMixin):
+    """TemperatureRange model represents the range of a temperature."""
+
     min: float
     max: float
     step: float
@@ -175,24 +188,32 @@ class TemperatureRange(DataClassORJSONMixin):
 
 @dataclass
 class Temperatures(DataClassORJSONMixin):
+    """Temperatures model represents the temperatures in Celsius and Fahrenheit."""
+
     celsius: TemperatureRange
     fahrenheit: TemperatureRange
 
 
 @dataclass
 class Capabilities(DataClassORJSONMixin):
+    """Capabilities model represents the capabilities of a zone."""
+
     type: str
     temperatures: Temperatures
 
 
 @dataclass
 class TemperatureOffset(DataClassORJSONMixin):
+    """TemperatureOffset model represents the temperature offset."""
+
     celsius: float
     fahrenheit: float
 
 
 @dataclass
 class TemperatureSetting(DataClassORJSONMixin):
+    """TemperatureSetting model represents the temperature setting."""
+
     type: str
     power: str
     temperature: Temperature | None = None
@@ -200,25 +221,33 @@ class TemperatureSetting(DataClassORJSONMixin):
 
 @dataclass
 class Overlay(DataClassORJSONMixin):
+    """Overlay model represents the overlay settings of a zone."""
+
     type: str
     setting: TemperatureSetting
-    termination: dict
+    termination: dict[str, str]
     projectedExpiry: str | None = None
 
 
 @dataclass
 class NextScheduleChange(DataClassORJSONMixin):
+    """NextScheduleChange model represents the next schedule change."""
+
     start: str
     setting: TemperatureSetting
 
 
 @dataclass
 class Link(DataClassORJSONMixin):
+    """Link model represents the link of a zone."""
+
     state: str
 
 
 @dataclass
 class HeatingPower(DataClassORJSONMixin):
+    """HeatingPower model represents the heating power."""
+
     type: str
     percentage: float
     timestamp: str
@@ -226,6 +255,8 @@ class HeatingPower(DataClassORJSONMixin):
 
 @dataclass
 class Humidity(DataClassORJSONMixin):
+    """Humidity model represents the humidity."""
+
     type: str
     percentage: float
     timestamp: str
@@ -233,27 +264,33 @@ class Humidity(DataClassORJSONMixin):
 
 @dataclass
 class SensorDataPoints(DataClassORJSONMixin):
+    """SensorDataPoints model represents the sensor data points."""
+
     insideTemperature: Temperature
     humidity: Humidity
 
 
 @dataclass
-class ZoneState(DataClassORJSONMixin):
+class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attributes
+    """ZoneState model represents the state of a zone."""
+
     tadoMode: str
     geolocationOverride: bool
-    geolocationOverrideDisableTime: Optional[str]
-    preparation: Optional[str]
+    geolocationOverrideDisableTime: str | None
+    preparation: str | None
     setting: TemperatureSetting
     overlayType: str
     overlay: Overlay
-    openWindow: Optional[str]
-    nextTimeBlock: dict
+    openWindow: str | None
+    nextTimeBlock: dict[str, str]
     link: Link
-    activityDataPoints: dict
+    activityDataPoints: dict[str, str]
     sensorDataPoints: SensorDataPoints
-    nextScheduleChange: Optional[NextScheduleChange] = None
+    nextScheduleChange: NextScheduleChange | None = None
 
 
 @dataclass
 class ZoneStates(DataClassORJSONMixin):
+    """ZoneStates model represents the states of the zones."""
+
     zoneStates: dict[str, ZoneState]
