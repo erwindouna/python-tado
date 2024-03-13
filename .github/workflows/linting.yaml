@@ -12,7 +12,7 @@ env:
 
 jobs:
   codespell:
-    name: codespell
+    name: Codespell
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -60,7 +60,7 @@ jobs:
         run: poetry run ruff format --check .
 
   pre-commit-hooks:
-    name: pre-commit-hooks
+    name: Pre-commit-hooks
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -109,7 +109,7 @@ jobs:
         run: poetry run pre-commit run trailing-whitespace --all-files
 
   pylint:
-    name: pylint
+    name: Pylint
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -132,7 +132,7 @@ jobs:
         run: poetry run pre-commit run pylint --all-files
 
   yamllint:
-    name: yamllint
+    name: Yamllint
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
