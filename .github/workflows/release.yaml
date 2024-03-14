@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: release
-      url: https://pypi.org/p/elgato
+      url: https://pypi.org/p/python-tado-ha
     permissions:
       contents: write
       id-token: write
