@@ -1,5 +1,5 @@
 ---
-name: Release
+name: Release Test
 
 # yamllint disable-line rule:truthy
 on:
