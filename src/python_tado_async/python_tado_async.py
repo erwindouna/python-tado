@@ -13,15 +13,15 @@ from aiohttp import ClientResponse, ClientResponseError
 from aiohttp.client import ClientSession
 from yarl import URL
 
-from python_tado_ha.const import HttpMethod
-from python_tado_ha.exceptions import (
+from python_tado_async.const import HttpMethod
+from python_tado_async.exceptions import (
     TadoAuthenticationError,
     TadoBadRequestError,
     TadoConnectionError,
     TadoError,
     TadoForbiddenError,
 )
-from python_tado_ha.models import (
+from python_tado_async.models import (
     Capabilities,
     Device,
     GetMe,
@@ -55,7 +55,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         username: str,
         password: str,
         debug: bool | None = None,
-        session: ClientSession | None = None,  # pylint: disable=unused-argument
+        session: ClientSession | None = None,
     ) -> None:
         """Initialize the Tado object.
 
@@ -67,10 +67,13 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self._username: str = username
         self._password: str = password
         self._debug: bool = debug or False
+        self._session = session
+
         self._headers: dict[str, str] = {
             "Content-Type": "application/json",
             "Referer": "https://app.tado.com/",
         }
+
         self._access_token: str | None = None
         self._token_expiry: float | None = None
         self._refesh_token: str | None = None
