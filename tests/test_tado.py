@@ -9,12 +9,16 @@ import aiohttp
 import pytest
 from aiohttp import ClientResponse, ClientResponseError, RequestInfo
 from aioresponses import CallbackResult, aioresponses
-
-from syrupy import SnapshotAssertion
-from tado import (
+from python_tado_ha import (
     Tado,
 )
-from tado.exceptions import TadoBadRequestError, TadoConnectionError, TadoError
+from python_tado_ha.exceptions import (
+    TadoBadRequestError,
+    TadoConnectionError,
+    TadoError,
+)
+
+from syrupy import SnapshotAssertion
 from tests import load_fixture
 
 from .const import TADO_API_URL, TADO_TOKEN_URL
