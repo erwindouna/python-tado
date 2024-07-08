@@ -2,7 +2,7 @@
 
 import asyncio
 
-from python_tado_ha import Tado
+from python_tado_async import Tado
 
 
 async def main() -> None:
