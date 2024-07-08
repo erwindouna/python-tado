@@ -1,5 +1,5 @@
 {
-  "name": "tado",
+  "name": "python-tado-ha",
   "version": "0.0.0",
   "private": true,
   "description": "Asynchronous Python client providing Tado API, mainly usage for Home Assistant",

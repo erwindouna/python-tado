@@ -1,12 +1,13 @@
 """Asynchronous Python client for Tado."""
+
 from typing import AsyncGenerator, Generator
 
 import aiohttp
 import pytest
 from aioresponses import aioresponses
+from python_tado_ha import Tado
 
 from syrupy import SnapshotAssertion
-from tado import Tado
 from tests import load_fixture
 
 from .const import TADO_API_URL, TADO_TOKEN_URL

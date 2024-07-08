@@ -1,9 +1,11 @@
 """Asynchronous Python client for the Tado API."""
+
 from __future__ import annotations
 
 import asyncio
 import time
 from dataclasses import dataclass
+from importlib import metadata
 from typing import Self
 
 import orjson
@@ -11,15 +13,15 @@ from aiohttp import ClientResponse, ClientResponseError
 from aiohttp.client import ClientSession
 from yarl import URL
 
-from tado.const import HttpMethod
-from tado.exceptions import (
+from python_tado_ha.const import HttpMethod
+from python_tado_ha.exceptions import (
     TadoAuthenticationError,
     TadoBadRequestError,
     TadoConnectionError,
     TadoError,
     TadoForbiddenError,
 )
-from tado.models import (
+from python_tado_ha.models import (
     Capabilities,
     Device,
     GetMe,
@@ -37,6 +39,7 @@ CLIENT_SECRET = "wZaRN7rpjn3FoNyF5IFuxg9uMzYJcvOoQ8QWiIqS3hfk6gLhVlG57j5YNoZL2Rt
 AUTHORIZATION_BASE_URL = "https://auth.tado.com/oauth/authorize"
 TOKEN_URL = "https://auth.tado.com/oauth/token"  # noqa: S105
 API_URL = "my.tado.com/api/v2"
+VERSION = metadata.version(__package__)
 
 
 @dataclass
@@ -52,9 +55,15 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         username: str,
         password: str,
         debug: bool | None = None,
-        session: ClientSession | None = None,  # pylint: disable=unused-argument # noqa: ARG002
+        session: ClientSession | None = None,  # pylint: disable=unused-argument
     ) -> None:
-        """Initialize the Tado object."""
+        """Initialize the Tado object.
+
+        :param username: Tado account username.
+        :param password: Tado account password.
+        :param debug: Enable debug logging.
+        :param _session: Reserved for future use. Currently (actively used) not used.
+        """
         self._username: str = username
         self._password: str = password
         self._debug: bool = debug or False
@@ -308,9 +317,9 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
         url = URL.build(scheme="https", host=API_URL).joinpath(uri)
 
-        # versienummer nog toevoegen
         headers = {
             "Authorization": f"Bearer {self._access_token}",
+            "User-Agent": f"HomeAssistant/{VERSION}",
         }
 
         if method == HttpMethod.DELETE:
