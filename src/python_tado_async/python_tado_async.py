@@ -13,15 +13,15 @@ from aiohttp import ClientResponse, ClientResponseError
 from aiohttp.client import ClientSession
 from yarl import URL
 
-from python_tado_ha.const import HttpMethod
-from python_tado_ha.exceptions import (
+from python_tado_async.const import HttpMethod
+from python_tado_async.exceptions import (
     TadoAuthenticationError,
     TadoBadRequestError,
     TadoConnectionError,
     TadoError,
     TadoForbiddenError,
 )
-from python_tado_ha.models import (
+from python_tado_async.models import (
     Capabilities,
     Device,
     GetMe,
