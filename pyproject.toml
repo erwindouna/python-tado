@@ -16,7 +16,7 @@ homepage = "https://github.com/erwindouna/python-tado"
 keywords = ["tado", "homeassistant", "api", "async", "client"]
 license = "MIT"
 maintainers = ["Erwin Douna <e.douna@gmail.com>"]
-packages = [{ include = "tado", from = "src" }]
+packages = [{ include = "python_tado_ha", from = "src" }]
 readme = "README.md"
 repository = "https://github.com/erwindouna/python-tado"
 
