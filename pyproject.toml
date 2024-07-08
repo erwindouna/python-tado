@@ -1,5 +1,6 @@
 [tool.poetry]
 name = "python-tado-ha"
+version = "0.1.3"
 authors = ["Erwin Douna <e.douna@gmail.com>"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -18,7 +19,6 @@ maintainers = ["Erwin Douna <e.douna@gmail.com>"]
 packages = [{ include = "tado", from = "src" }]
 readme = "README.md"
 repository = "https://github.com/erwindouna/python-tado"
-version = "0.0.0"
 
 [tool.poetry.dependencies]
 aiohttp = ">=3.0.0"
@@ -56,7 +56,7 @@ show_missing = true
 
 [tool.coverage.run]
 plugins = ["covdefaults"]
-source = ["tado"]
+source = ["python_tado_ha"]
 
 [tool.mypy]
 # Specify the target platform details in config, so your developers are
@@ -98,7 +98,7 @@ good-names = ["_", "ex", "fp", "i", "id", "j", "k", "on", "Run", "T"]
 max-attributes = 8
 
 [tool.pylint."MESSAGES CONTROL"]
-disable = ["duplicate-code", "format", "unsubscriptable-object", "no-member", "too-many-arguments", "protected-access", "invalid-name"]
+disable = ["duplicate-code", "format", "unsubscriptable-object", "no-member", "too-many-arguments", "protected-access", "invalid-name", "wrong-import-order"]
 
 [tool.pylint.SIMILARITIES]
 ignore-imports = true
@@ -116,6 +116,7 @@ ignore = [
   "ANN102",  # cls... just as useless
   "ANN401",  # Opinioated warning on disallowing dynamically typed expressions
   "D203",    # Conflicts with other rules
+  "ARG002",  # Conflicts with other rules
   "D213",    # Conflicts with other rules
   "D417",    # False positives in some occasions
   "PLR2004", # Just annoying, not really useful
