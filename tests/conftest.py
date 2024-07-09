@@ -5,7 +5,7 @@ from typing import AsyncGenerator, Generator
 import aiohttp
 import pytest
 from aioresponses import aioresponses
-from python_tado_async import Tado
+from tadoasync import Tado
 
 from syrupy import SnapshotAssertion
 from tests import load_fixture
