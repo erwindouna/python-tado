@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
+from mashumaro import field_options
 from mashumaro.mixins.orjson import DataClassORJSONMixin
 
 
@@ -32,7 +33,7 @@ class DeviceMetadata(DataClassORJSONMixin):
     """DeviceMetadata model represents the metadata of a device."""
 
     platform: str
-    osVersion: str
+    os_version: str = field(metadata=field_options(alias="osVersion"))
     model: str
     locale: str
 
@@ -43,7 +44,9 @@ class MobileDevice(DataClassORJSONMixin):
 
     name: str
     id: int
-    deviceMetadata: DeviceMetadata
+    device_meta_data: DeviceMetadata = field(
+        metadata=field_options(alias="deviceMetadata")
+    )
 
 
 @dataclass
@@ -73,18 +76,30 @@ class MountingState(DataClassORJSONMixin):
 class Device(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attributes
     """Device model represents a device in a zone."""
 
-    deviceType: str
-    serialNo: str
-    shortSerialNo: str
-    currentFwVersion: str
-    connectionState: ConnectionState
+    device_type: str = field(metadata=field_options(alias="deviceType"))
+    serial_no: str = field(metadata=field_options(alias="serialNo"))
+    short_serial_no: str = field(metadata=field_options(alias="shortSerialNo"))
+    current_fw_version: str = field(metadata=field_options(alias="currentFwVersion"))
+    connection_state: ConnectionState = field(
+        metadata=field_options(alias="connectionState")
+    )
     characteristics: Characteristics
-    inPairingMode: bool | None = None
-    mountingState: MountingState | None = None
-    mountingStateWithError: str | None = None
-    batteryState: str | None = None
+    in_pairing_mode: bool | None = field(
+        default=None, metadata=field_options(alias="inPairingMode")
+    )
+    mounting_state: MountingState | None = field(
+        default=None, metadata=field_options(alias="mountingState")
+    )
+    mounting_state_with_error: str | None = field(
+        default=None, metadata=field_options(alias="mountingStateWithError")
+    )
+    battery_state: str | None = field(
+        default=None, metadata=field_options(alias="batteryState")
+    )
     orientation: str | None = None
-    childLockEnabled: bool | None = None
+    child_lock_enabled: bool | None = field(
+        default=None, metadata=field_options(alias="childLockEnabled")
+    )
 
 
 @dataclass
@@ -101,7 +116,7 @@ class OpenWindowDetection(DataClassORJSONMixin):
 
     supported: bool
     enabled: bool
-    timeoutInSeconds: int
+    timeout_in_seconds: int = field(metadata=field_options(alias="timeoutInSeconds"))
 
 
 @dataclass
@@ -111,15 +126,17 @@ class Zone(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attribute
     id: int
     name: str
     type: str
-    dateCreated: str
-    deviceTypes: list[str]
+    date_created: str = field(metadata=field_options(alias="dateCreated"))
+    device_types: list[str] = field(metadata=field_options(alias="deviceTypes"))
     devices: list[Device]
-    reportAvailable: bool
-    showScheduleSetup: bool
-    supportsDazzle: bool
-    dazzleEnabled: bool
-    dazzleMode: DazzleMode
-    openWindowDetection: OpenWindowDetection
+    report_available: bool = field(metadata=field_options(alias="reportAvailable"))
+    show_schedule_detup: bool = field(metadata=field_options(alias="showScheduleSetup"))
+    supports_dazzle: bool = field(metadata=field_options(alias="supportsDazzle"))
+    dazzle_enabled: bool = field(metadata=field_options(alias="dazzleEnabled"))
+    dazzle_mode: DazzleMode = field(metadata=field_options(alias="dazzleMode"))
+    open_window_detection: OpenWindowDetection = field(
+        metadata=field_options(alias="openWindowDetection")
+    )
 
 
 @dataclass
@@ -163,19 +180,27 @@ class WeatherState(DataClassORJSONMixin):
 class Weather(DataClassORJSONMixin):
     """Weather model represents the weather information."""
 
-    outsideTemperature: Temperature
-    solarIntensity: SolarIntensity
-    weatherState: WeatherState
+    outside_temperature: Temperature = field(
+        metadata=field_options(alias="outsideTemperature")
+    )
+    solar_intensity: SolarIntensity = field(
+        metadata=field_options(alias="solarIntensity")
+    )
+    weather_state: WeatherState = field(metadata=field_options(alias="weatherState"))
 
 
 @dataclass
-class Home_state(DataClassORJSONMixin):  # noqa: N801
-    """Home_state model represents the state of a home."""
+class HomeState(DataClassORJSONMixin):
+    """HomeState model represents the state of a home."""
 
     presence: str
-    presenceLocked: bool
-    showHomePresenceSwitchButton: bool | None = None
-    showSwitchToAutoGeofencingButton: bool | None = None
+    presence_locked: bool = field(metadata=field_options(alias="presenceLocked"))
+    show_home_presence_switch_button: bool | None = field(
+        default=None, metadata=field_options(alias="showHomePresenceSwitchButton")
+    )
+    show_switch_to_auto_geofencing_button: bool | None = field(
+        default=None, metadata=field_options(alias="showSwitchToAutoGeofencingButton")
+    )
 
 
 @dataclass
@@ -227,7 +252,9 @@ class Overlay(DataClassORJSONMixin):
     type: str
     setting: TemperatureSetting
     termination: dict[str, str]
-    projectedExpiry: str | None = None
+    projected_expiry: str | None = field(
+        default=None, metadata=field_options(alias="projectedExpiry")
+    )
 
 
 @dataclass
@@ -275,23 +302,40 @@ class SensorDataPoints(DataClassORJSONMixin):
 class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attributes
     """ZoneState model represents the state of a zone."""
 
-    tadoMode: str
-    geolocationOverride: bool
-    geolocationOverrideDisableTime: str | None
-    preparation: str | None
     setting: TemperatureSetting
-    overlayType: str
     overlay: Overlay
-    openWindow: str | None
-    nextTimeBlock: dict[str, str]
     link: Link
-    activityDataPoints: dict[str, str]
-    sensorDataPoints: SensorDataPoints
-    nextScheduleChange: NextScheduleChange | None = None
+    activity_data_points: dict[str, str] = field(
+        metadata=field_options(alias="activityDataPoints")
+    )
+    sensor_data_points: SensorDataPoints = field(
+        metadata=field_options(alias="sensorDataPoints")
+    )
+    tado_mode: str = field(metadata=field_options(alias="tadoMode"))
+    geolocation_override: bool = field(
+        metadata=field_options(alias="geolocationOverride")
+    )
+    overlay_type: str = field(metadata=field_options(alias="overlayType"))
+    next_time_block: dict[str, str] = field(
+        metadata=field_options(alias="nextTimeBlock")
+    )
+
+    geolocation_override_disable_time: str | None = field(
+        default=None, metadata=field_options(alias="geolocationOverrideDisableTime")
+    )
+    preparation: str | None = None
+    open_window: str | None = field(
+        default=None, metadata=field_options(alias="openWindow")
+    )
+    next_schedule_change: NextScheduleChange | None = field(
+        default=None, metadata=field_options(alias="nextScheduleChange")
+    )
 
 
 @dataclass
 class ZoneStates(DataClassORJSONMixin):
     """ZoneStates model represents the states of the zones."""
 
-    zoneStates: dict[str, ZoneState]
+    zone_states: dict[str, ZoneState] = field(
+        metadata=field_options(alias="zoneStates")
+    )
