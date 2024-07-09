@@ -46,28 +46,28 @@ VERSION = metadata.version(__package__)
 class Tado:  # pylint: disable=too-many-instance-attributes
     """Base class for Tado."""
 
-    session: ClientSession | None = None
-    request_timeout: int = 10
-    _close_session: bool = False
-
     def __init__(
         self,
         username: str,
         password: str,
         debug: bool | None = None,
         session: ClientSession | None = None,
+        request_timeout: int = 10,
     ) -> None:
         """Initialize the Tado object.
 
         :param username: Tado account username.
         :param password: Tado account password.
         :param debug: Enable debug logging.
-        :param _session: Reserved for future use. Currently (actively used) not used.
+        :param session: HTTP client session.
+        :param request_timeout: Timeout for HTTP requests.
         """
         self._username: str = username
         self._password: str = password
         self._debug: bool = debug or False
         self._session = session
+        self._request_timeout = request_timeout
+        self._close_session = False
 
         self._headers: dict[str, str] = {
             "Content-Type": "application/json",
@@ -82,7 +82,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self._me: GetMe | None = None
         self._auto_geofencing_supported: bool | None = None
 
-    async def _login(self) -> None:
+    async def login(self) -> None:
         """Perform login to Tado."""
         data = {
             "client_id": CLIENT_ID,
@@ -93,13 +93,13 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             "password": self._password,
         }
 
-        if self.session is None:
-            self.session = ClientSession()
+        if self._session is None:
+            self._session = ClientSession()
             self._close_session = True
 
         try:
-            async with asyncio.timeout(self.request_timeout):
-                request = await self.session.post(url=TOKEN_URL, data=data)
+            async with asyncio.timeout(self._request_timeout):
+                request = await self._session.post(url=TOKEN_URL, data=data)
                 request.raise_for_status()
         except asyncio.TimeoutError as err:
             raise TadoConnectionError(
@@ -165,13 +165,13 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             "refresh_token": self._refesh_token,
         }
 
-        if self.session is None:
-            self.session = ClientSession()
+        if self._session is None:
+            self._session = ClientSession()
             self._close_session = True
 
         try:
-            async with asyncio.timeout(self.request_timeout):
-                request = await self.session.post(url=TOKEN_URL, data=data)
+            async with asyncio.timeout(self._request_timeout):
+                request = await self._session.post(url=TOKEN_URL, data=data)
                 request.raise_for_status()
         except asyncio.TimeoutError as err:
             raise TadoConnectionError(
@@ -332,8 +332,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             headers["Mime-Type"] = "application/json;charset=UTF-8"
 
         try:
-            async with asyncio.timeout(self.request_timeout):
-                request = await self.session.request(  # type: ignore[union-attr]
+            async with asyncio.timeout(self._request_timeout):
+                request = await self._session.request(  # type: ignore[union-attr]
                     method=method.value, url=str(url), headers=headers, json=data
                 )
                 request.raise_for_status()
@@ -348,12 +348,12 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
     async def close(self) -> None:
         """Close open client session."""
-        if self.session and self._close_session:
-            await self.session.close()
+        if self._session and self._close_session:
+            await self._session.close()
 
     async def __aenter__(self) -> Self:
         """Async enter."""
-        await self._login()
+        await self.login()
         return self
 
     async def __aexit__(self, *_exc_info: object) -> None:
