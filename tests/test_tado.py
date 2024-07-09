@@ -33,13 +33,13 @@ async def test_create_session(
         status=200,
         body=load_fixture("me.json"),
     )
-    async with aiohttp.ClientSession() as session:
-        tado = Tado(username="username", password="password", session=session)
+    async with aiohttp.ClientSession():
+        tado = Tado(username="username", password="password")
         await tado.get_me()
-        assert tado.session is not None
-        assert not tado.session.closed
+        assert tado._session is not None
+        assert not tado._session.closed
         await tado.close()
-        assert tado.session.closed
+        assert tado._session.closed
 
 
 async def test_login_success(responses: aioresponses) -> None:
@@ -51,7 +51,23 @@ async def test_login_success(responses: aioresponses) -> None:
     )
     async with aiohttp.ClientSession() as session:
         tado = Tado(username="username", password="password", session=session)
-        await tado._login()
+        await tado.login()
+        assert tado._access_token == "test_access_token"
+        assert tado._token_expiry is not None
+        assert tado._token_expiry > time.time()
+        assert tado._refesh_token == "test_refresh_token"
+
+
+async def test_login_success_no_session(responses: aioresponses) -> None:
+    """Test login success."""
+    responses.get(
+        f"{TADO_API_URL}/me",
+        status=200,
+        body=load_fixture("me.json"),
+    )
+    async with aiohttp.ClientSession():
+        tado = Tado(username="username", password="password")
+        await tado.login()
         assert tado._access_token == "test_access_token"
         assert tado._token_expiry is not None
         assert tado._token_expiry > time.time()
@@ -65,7 +81,7 @@ async def test_login_timeout(python_tado: Tado, responses: aioresponses) -> None
         exception=asyncio.TimeoutError(),
     )
     with pytest.raises(TadoConnectionError):
-        await python_tado._login()
+        await python_tado.login()
 
 
 async def test_login_invalid_content_type(
@@ -80,7 +96,7 @@ async def test_login_invalid_content_type(
     )
 
     with pytest.raises(TadoError):
-        await python_tado._login()
+        await python_tado.login()
 
 
 async def test_login_client_response_error(python_tado: Tado) -> None:
@@ -99,7 +115,7 @@ async def test_login_client_response_error(python_tado: Tado) -> None:
     with patch("aiohttp.ClientSession.post", new=mock_post), pytest.raises(
         TadoBadRequestError
     ):
-        await python_tado._login()
+        await python_tado.login()
 
 
 async def test_refresh_auth_success(responses: aioresponses) -> None:
