@@ -238,7 +238,7 @@
     }),
   })
 # ---
-# name: test_get_zone_states_ac_power
+# name: test_get_zone_states_ac_power[zone_states_ac_power.dry.json]
   list([
     dict({
       'zone_states': dict({
@@ -264,6 +264,7 @@
           'overlay': dict({
             'projected_expiry': None,
             'setting': dict({
+              'mode': 'FAN',
               'power': 'ON',
               'temperature': None,
               'type': 'AIR_CONDITIONING',
@@ -295,6 +296,76 @@
             }),
           }),
           'setting': dict({
+            'mode': 'FAN',
+            'power': 'ON',
+            'temperature': None,
+            'type': 'AIR_CONDITIONING',
+          }),
+          'tado_mode': 'HOME',
+        }),
+      }),
+    }),
+  ])
+# ---
+# name: test_get_zone_states_ac_power[zone_states_ac_power.fan.json]
+  list([
+    dict({
+      'zone_states': dict({
+        '1': dict({
+          'activity_data_points': dict({
+            'ac_power': dict({
+              'timestamp': '2024-07-05T04:02:40.867Z',
+              'type': 'POWER',
+              'value': 'ON',
+            }),
+            'heating_power': None,
+          }),
+          'geolocation_override': False,
+          'geolocation_override_disable_time': None,
+          'link': dict({
+            'state': 'ONLINE',
+          }),
+          'next_schedule_change': None,
+          'next_time_block': dict({
+            'start': '2024-07-05T08:00:00.000Z',
+          }),
+          'open_window': None,
+          'overlay': dict({
+            'projected_expiry': None,
+            'setting': dict({
+              'mode': 'DRY',
+              'power': 'ON',
+              'temperature': None,
+              'type': 'AIR_CONDITIONING',
+            }),
+            'termination': dict({
+              'projectedExpiry': None,
+              'type': 'TADO_MODE',
+              'typeSkillBasedApp': 'TADO_MODE',
+            }),
+            'type': 'MANUAL',
+          }),
+          'overlay_type': 'MANUAL',
+          'preparation': None,
+          'sensor_data_points': dict({
+            'humidity': dict({
+              'percentage': 62.0,
+              'timestamp': '2024-07-05T04:02:07.396Z',
+              'type': 'PERCENTAGE',
+            }),
+            'inside_temperature': dict({
+              'celsius': 25.01,
+              'fahrenheit': 77.02,
+              'precision': dict({
+                'celsius': 0.1,
+                'fahrenheit': 0.1,
+              }),
+              'timestamp': '2024-07-05T04:02:07.396Z',
+              'type': 'TEMPERATURE',
+            }),
+          }),
+          'setting': dict({
+            'mode': 'DRY',
             'power': 'ON',
             'temperature': None,
             'type': 'AIR_CONDITIONING',
@@ -325,6 +396,7 @@
           }),
           'next_schedule_change': dict({
             'setting': dict({
+              'mode': None,
               'power': 'ON',
               'temperature': dict({
                 'celsius': 18.0,
@@ -344,6 +416,7 @@
           'overlay': dict({
             'projected_expiry': None,
             'setting': dict({
+              'mode': None,
               'power': 'ON',
               'temperature': dict({
                 'celsius': 17.0,
@@ -381,6 +454,7 @@
             }),
           }),
           'setting': dict({
+            'mode': None,
             'power': 'ON',
             'temperature': dict({
               'celsius': 17.0,
@@ -415,6 +489,7 @@
           'overlay': dict({
             'projected_expiry': None,
             'setting': dict({
+              'mode': None,
               'power': 'ON',
               'temperature': dict({
                 'celsius': 15.0,
@@ -452,6 +527,7 @@
             }),
           }),
           'setting': dict({
+            'mode': None,
             'power': 'ON',
             'temperature': dict({
               'celsius': 15.0,
@@ -480,6 +556,7 @@
           }),
           'next_schedule_change': dict({
             'setting': dict({
+              'mode': None,
               'power': 'ON',
               'temperature': dict({
                 'celsius': 18.0,
@@ -499,6 +576,7 @@
           'overlay': dict({
             'projected_expiry': None,
             'setting': dict({
+              'mode': None,
               'power': 'ON',
               'temperature': dict({
                 'celsius': 17.0,
@@ -536,6 +614,7 @@
             }),
           }),
           'setting': dict({
+            'mode': None,
             'power': 'ON',
             'temperature': dict({
               'celsius': 17.0,
@@ -564,6 +643,7 @@
           }),
           'next_schedule_change': dict({
             'setting': dict({
+              'mode': None,
               'power': 'ON',
               'temperature': dict({
                 'celsius': 18.0,
@@ -583,6 +663,7 @@
           'overlay': dict({
             'projected_expiry': None,
             'setting': dict({
+              'mode': None,
               'power': 'OFF',
               'temperature': None,
               'type': 'HEATING',
@@ -614,6 +695,7 @@
             }),
           }),
           'setting': dict({
+            'mode': None,
             'power': 'OFF',
             'temperature': None,
             'type': 'HEATING',
