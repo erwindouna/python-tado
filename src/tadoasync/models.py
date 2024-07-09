@@ -48,6 +48,29 @@ class MobileDevice(DataClassORJSONMixin):
         metadata=field_options(alias="deviceMetadata")
     )
     settings: MobileSettings
+    location: MobileLocation | None
+
+
+@dataclass
+class MobileLocation(DataClassORJSONMixin):
+    """MobileLocation model represents the user's mobile device location."""
+
+    stale: bool
+    at_home: bool = field(metadata=field_options(alias="atHome"))
+    bearing_from_home: MobileBearingFromHome = field(
+        metadata=field_options(alias="bearingFromHome")
+    )
+    relative_distance_from_home_fence: float = field(
+        metadata=field_options(alias="relativeDistanceFromHomeFence")
+    )
+
+
+@dataclass
+class MobileBearingFromHome(DataClassORJSONMixin):
+    """MobileBearingFromHome model represents the bearing from home."""
+
+    degrees: float
+    radians: float
 
 
 @dataclass

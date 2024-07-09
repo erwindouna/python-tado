@@ -1,4 +1,4 @@
-# Python: Asynchronous Python client providing RDW vehicle information
+# Asynchronous Python client for the Tado API
 
 [![GitHub Release][releases-shield]][releases]
 [![Python Versions][python-versions-shield]][pypi]
