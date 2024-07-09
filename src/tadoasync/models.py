@@ -48,7 +48,7 @@ class MobileDevice(DataClassORJSONMixin):
         metadata=field_options(alias="deviceMetadata")
     )
     settings: MobileSettings
-    location: MobileLocation | None
+    location: MobileLocation | None = field(default=None)
 
 
 @dataclass
