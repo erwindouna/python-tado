@@ -301,7 +301,7 @@
               'timestamp': '2024-02-27T20:37:02.553Z',
               'type': 'PERCENTAGE',
             }),
-            'insideTemperature': dict({
+            'inside_temperature': dict({
               'celsius': 17.98,
               'fahrenheit': 64.36,
               'precision': dict({
@@ -371,7 +371,7 @@
               'timestamp': '2024-02-27T20:38:14.791Z',
               'type': 'PERCENTAGE',
             }),
-            'insideTemperature': dict({
+            'inside_temperature': dict({
               'celsius': 14.89,
               'fahrenheit': 58.8,
               'precision': dict({
@@ -454,7 +454,7 @@
               'timestamp': '2024-02-27T20:37:12.297Z',
               'type': 'PERCENTAGE',
             }),
-            'insideTemperature': dict({
+            'inside_temperature': dict({
               'celsius': 17.52,
               'fahrenheit': 63.54,
               'precision': dict({
@@ -531,7 +531,7 @@
               'timestamp': '2024-02-27T20:37:20.931Z',
               'type': 'PERCENTAGE',
             }),
-            'insideTemperature': dict({
+            'inside_temperature': dict({
               'celsius': 18.57,
               'fahrenheit': 65.43,
               'precision': dict({

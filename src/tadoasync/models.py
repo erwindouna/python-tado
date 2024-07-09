@@ -333,7 +333,9 @@ class Humidity(DataClassORJSONMixin):
 class SensorDataPoints(DataClassORJSONMixin):
     """SensorDataPoints model represents the sensor data points."""
 
-    insideTemperature: Temperature
+    inside_temperature: Temperature = field(
+        metadata=field_options(alias="insideTemperature")
+    )
     humidity: Humidity
 
 
