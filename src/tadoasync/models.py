@@ -276,11 +276,12 @@ class TemperatureOffset(DataClassORJSONMixin):
 
 
 @dataclass
-class TemperatureSetting(DataClassORJSONMixin):
+class Setting(DataClassORJSONMixin):
     """TemperatureSetting model represents the temperature setting."""
 
     type: str
     power: str
+    mode: str | None = None
     temperature: Temperature | None = None
 
 
@@ -289,7 +290,7 @@ class Overlay(DataClassORJSONMixin):
     """Overlay model represents the overlay settings of a zone."""
 
     type: str
-    setting: TemperatureSetting
+    setting: Setting
     termination: dict[str, str]
     projected_expiry: str | None = field(
         default=None, metadata=field_options(alias="projectedExpiry")
@@ -301,7 +302,7 @@ class NextScheduleChange(DataClassORJSONMixin):
     """NextScheduleChange model represents the next schedule change."""
 
     start: str
-    setting: TemperatureSetting
+    setting: Setting
 
 
 @dataclass
@@ -352,7 +353,7 @@ class SensorDataPoints(DataClassORJSONMixin):
 class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attributes
     """ZoneState model represents the state of a zone."""
 
-    setting: TemperatureSetting
+    setting: Setting
     overlay: Overlay
     link: Link
     activity_data_points: ActivityDataPoints = field(

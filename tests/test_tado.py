@@ -220,14 +220,25 @@ async def test_get_zone_states_heating_power(
     assert await python_tado.get_zone_states() == snapshot
 
 
+@pytest.mark.parametrize(
+    ("fixture_file"),
+    [
+        # Go through the different modes
+        ("zone_states_ac_power.dry.json"),
+        ("zone_states_ac_power.fan.json"),
+    ],
+)
 async def test_get_zone_states_ac_power(
-    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+    fixture_file: str,
+    python_tado: Tado,
+    responses: aioresponses,
+    snapshot: SnapshotAssertion,
 ) -> None:
     """Test get zone states."""
     responses.get(
         f"{TADO_API_URL}/homes/1/zoneStates",
         status=200,
-        body=load_fixture("zone_states_ac_power.json"),
+        body=load_fixture(fixture_file),
     )
     assert await python_tado.get_zone_states() == snapshot
 
