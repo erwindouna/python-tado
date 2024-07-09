@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "python-tado-async"
-version = "0.1.5"
+name = "tadoasync"
+version = "0.1.6"
 authors = ["Erwin Douna <e.douna@gmail.com>"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -16,7 +16,7 @@ homepage = "https://github.com/erwindouna/python-tado"
 keywords = ["tado", "homeassistant", "api", "async", "client"]
 license = "MIT"
 maintainers = ["Erwin Douna <e.douna@gmail.com>"]
-packages = [{ include = "python_tado_async", from = "src" }]
+packages = [{ include = "tadoasync", from = "src" }]
 readme = "README.md"
 repository = "https://github.com/erwindouna/python-tado"
 
@@ -56,7 +56,7 @@ show_missing = true
 
 [tool.coverage.run]
 plugins = ["covdefaults"]
-source = ["python_tado_async"]
+source = ["tadoasync"]
 
 [tool.mypy]
 # Specify the target platform details in config, so your developers are

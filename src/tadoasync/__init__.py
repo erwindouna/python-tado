@@ -7,7 +7,7 @@ from .exceptions import (
     TadoError,
     TadoServerError,
 )
-from .python_tado_async import Tado
+from .tadoasync import Tado
 
 __all__ = [
     "Tado",

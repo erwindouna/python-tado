@@ -9,10 +9,10 @@ import aiohttp
 import pytest
 from aiohttp import ClientResponse, ClientResponseError, RequestInfo
 from aioresponses import CallbackResult, aioresponses
-from python_tado_async import (
+from tadoasync import (
     Tado,
 )
-from python_tado_async.exceptions import (
+from tadoasync.exceptions import (
     TadoBadRequestError,
     TadoConnectionError,
     TadoError,

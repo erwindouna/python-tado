@@ -31,7 +31,7 @@ pip install python-tado
 ```python
 import asyncio
 
-from tado import Tado
+from tadoasync import Tado
 
 
 async def main() -> None:
