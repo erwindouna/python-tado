@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-tado-async"
-version = "0.1.4"
+version = "0.1.5"
 authors = ["Erwin Douna <e.douna@gmail.com>"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",

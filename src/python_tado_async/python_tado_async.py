@@ -25,7 +25,7 @@ from python_tado_async.models import (
     Capabilities,
     Device,
     GetMe,
-    Home_state,
+    HomeState,
     MobileDevice,
     TemperatureOffset,
     Weather,
@@ -218,20 +218,20 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             zone_id: ZoneState.from_dict(zone_state_dict)
             for zone_id, zone_state_dict in obj["zoneStates"].items()
         }
-        return [ZoneStates(zoneStates=zone_states)]
+        return [ZoneStates(zone_states=zone_states)]
 
     async def get_weather(self) -> Weather:
         """Get the weather."""
         response = await self._request(f"homes/{self._home_id}/weather")
         return Weather.from_json(response)
 
-    async def get_home_state(self) -> Home_state:
+    async def get_home_state(self) -> HomeState:
         """Get the home state."""
         response = await self._request(f"homes/{self._home_id}/state")
-        home_state = Home_state.from_json(response)
-
+        home_state = HomeState.from_json(response)
         self._auto_geofencing_supported = (
-            home_state.showSwitchToAutoGeofencingButton or not home_state.presenceLocked
+            home_state.show_switch_to_auto_geofencing_button
+            or not home_state.presence_locked
         )
 
         return home_state

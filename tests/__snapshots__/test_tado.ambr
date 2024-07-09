@@ -25,134 +25,134 @@
 # name: test_get_devices
   list([
     dict({
-      'batteryState': None,
+      'battery_state': None,
       'characteristics': dict({
         'capabilities': list([
           'RADIO_ENCRYPTION_KEY_ACCESS',
         ]),
       }),
-      'childLockEnabled': None,
-      'connectionState': dict({
+      'child_lock_enabled': None,
+      'connection_state': dict({
         'timestamp': '2024-02-27T20:13:45.407Z',
         'value': True,
       }),
-      'currentFwVersion': '92.1',
-      'deviceType': 'IB01',
-      'inPairingMode': False,
-      'mountingState': None,
-      'mountingStateWithError': None,
+      'current_fw_version': '92.1',
+      'device_type': 'IB01',
+      'in_pairing_mode': False,
+      'mounting_state': None,
+      'mounting_state_with_error': None,
       'orientation': None,
-      'serialNo': 'SerialNo1',
-      'shortSerialNo': 'ShortSerialNo1',
+      'serial_no': 'SerialNo1',
+      'short_serial_no': 'ShortSerialNo1',
     }),
     dict({
-      'batteryState': 'NORMAL',
+      'battery_state': 'NORMAL',
       'characteristics': dict({
         'capabilities': list([
           'INSIDE_TEMPERATURE_MEASUREMENT',
           'IDENTIFY',
         ]),
       }),
-      'childLockEnabled': True,
-      'connectionState': dict({
+      'child_lock_enabled': True,
+      'connection_state': dict({
         'timestamp': '2024-02-27T20:20:20.921Z',
         'value': True,
       }),
-      'currentFwVersion': '95.1',
-      'deviceType': 'VA02',
-      'inPairingMode': None,
-      'mountingState': dict({
+      'current_fw_version': '95.1',
+      'device_type': 'VA02',
+      'in_pairing_mode': None,
+      'mounting_state': dict({
         'timestamp': '2024-02-19T17:23:30.537Z',
         'value': 'CALIBRATED',
       }),
-      'mountingStateWithError': 'CALIBRATED',
+      'mounting_state_with_error': 'CALIBRATED',
       'orientation': 'HORIZONTAL',
-      'serialNo': 'SerialNo2',
-      'shortSerialNo': 'ShortSerialNo2',
+      'serial_no': 'SerialNo2',
+      'short_serial_no': 'ShortSerialNo2',
     }),
     dict({
-      'batteryState': 'NORMAL',
+      'battery_state': 'NORMAL',
       'characteristics': dict({
         'capabilities': list([
           'INSIDE_TEMPERATURE_MEASUREMENT',
           'IDENTIFY',
         ]),
       }),
-      'childLockEnabled': True,
-      'connectionState': dict({
+      'child_lock_enabled': True,
+      'connection_state': dict({
         'timestamp': '2024-02-27T20:23:13.342Z',
         'value': True,
       }),
-      'currentFwVersion': '95.1',
-      'deviceType': 'VA02',
-      'inPairingMode': None,
-      'mountingState': dict({
+      'current_fw_version': '95.1',
+      'device_type': 'VA02',
+      'in_pairing_mode': None,
+      'mounting_state': dict({
         'timestamp': '2024-02-26T13:33:10.647Z',
         'value': 'CALIBRATED',
       }),
-      'mountingStateWithError': 'CALIBRATED',
+      'mounting_state_with_error': 'CALIBRATED',
       'orientation': 'HORIZONTAL',
-      'serialNo': 'SerialNo3',
-      'shortSerialNo': 'ShortSerialNo3',
+      'serial_no': 'SerialNo3',
+      'short_serial_no': 'ShortSerialNo3',
     }),
     dict({
-      'batteryState': 'NORMAL',
+      'battery_state': 'NORMAL',
       'characteristics': dict({
         'capabilities': list([
           'INSIDE_TEMPERATURE_MEASUREMENT',
           'IDENTIFY',
         ]),
       }),
-      'childLockEnabled': True,
-      'connectionState': dict({
+      'child_lock_enabled': True,
+      'connection_state': dict({
         'timestamp': '2024-02-27T20:23:02.849Z',
         'value': True,
       }),
-      'currentFwVersion': '95.1',
-      'deviceType': 'VA02',
-      'inPairingMode': None,
-      'mountingState': dict({
+      'current_fw_version': '95.1',
+      'device_type': 'VA02',
+      'in_pairing_mode': None,
+      'mounting_state': dict({
         'timestamp': '2023-10-09T15:39:08.131Z',
         'value': 'CALIBRATED',
       }),
-      'mountingStateWithError': 'CALIBRATED',
+      'mounting_state_with_error': 'CALIBRATED',
       'orientation': 'HORIZONTAL',
-      'serialNo': 'SerialNo4',
-      'shortSerialNo': 'ShortSerialNo4',
+      'serial_no': 'SerialNo4',
+      'short_serial_no': 'ShortSerialNo4',
     }),
     dict({
-      'batteryState': 'NORMAL',
+      'battery_state': 'NORMAL',
       'characteristics': dict({
         'capabilities': list([
           'INSIDE_TEMPERATURE_MEASUREMENT',
           'IDENTIFY',
         ]),
       }),
-      'childLockEnabled': True,
-      'connectionState': dict({
+      'child_lock_enabled': True,
+      'connection_state': dict({
         'timestamp': '2024-02-27T20:16:13.890Z',
         'value': True,
       }),
-      'currentFwVersion': '95.1',
-      'deviceType': 'VA02',
-      'inPairingMode': None,
-      'mountingState': dict({
+      'current_fw_version': '95.1',
+      'device_type': 'VA02',
+      'in_pairing_mode': None,
+      'mounting_state': dict({
         'timestamp': '2024-02-04T10:17:00.266Z',
         'value': 'CALIBRATED',
       }),
-      'mountingStateWithError': 'CALIBRATED',
+      'mounting_state_with_error': 'CALIBRATED',
       'orientation': 'HORIZONTAL',
-      'serialNo': 'SerialNo5',
-      'shortSerialNo': 'ShortSerialNo5',
+      'serial_no': 'SerialNo5',
+      'short_serial_no': 'ShortSerialNo5',
     }),
   ])
 # ---
 # name: test_get_home_state
   dict({
     'presence': 'HOME',
-    'presenceLocked': True,
-    'showHomePresenceSwitchButton': True,
-    'showSwitchToAutoGeofencingButton': None,
+    'presence_locked': True,
+    'show_home_presence_switch_button': True,
+    'show_switch_to_auto_geofencing_button': None,
   })
 # ---
 # name: test_get_me
@@ -173,20 +173,20 @@
 # name: test_get_mobile_devices
   list([
     dict({
-      'deviceMetadata': dict({
+      'device_meta_data': dict({
         'locale': 'nl',
         'model': 'Model1',
-        'osVersion': '14',
+        'os_version': '14',
         'platform': 'Android',
       }),
       'id': 123456,
       'name': 'User1',
     }),
     dict({
-      'deviceMetadata': dict({
+      'device_meta_data': dict({
         'locale': 'nl',
         'model': 'Model2',
-        'osVersion': '14',
+        'os_version': '14',
         'platform': 'Android',
       }),
       'id': 789012,
@@ -196,7 +196,7 @@
 # ---
 # name: test_get_weather
   dict({
-    'outsideTemperature': dict({
+    'outside_temperature': dict({
       'celsius': 2.29,
       'fahrenheit': 36.12,
       'precision': dict({
@@ -206,12 +206,12 @@
       'timestamp': '2024-02-27T20:29:49.360Z',
       'type': 'TEMPERATURE',
     }),
-    'solarIntensity': dict({
+    'solar_intensity': dict({
       'percentage': 0.0,
       'timestamp': '2024-02-27T20:29:49.360Z',
       'type': 'PERCENTAGE',
     }),
-    'weatherState': dict({
+    'weather_state': dict({
       'timestamp': '2024-02-27T20:29:49.360Z',
       'type': 'WEATHER_STATE',
       'value': 'NIGHT_CLOUDY',
@@ -221,21 +221,21 @@
 # name: test_get_zone_states
   list([
     dict({
-      'zoneStates': dict({
+      'zone_states': dict({
         '1': dict({
-          'activityDataPoints': dict({
+          'activity_data_points': dict({
             'heatingPower': dict({
               'percentage': 0.0,
               'timestamp': '2024-02-27T20:30:01.259Z',
               'type': 'PERCENTAGE',
             }),
           }),
-          'geolocationOverride': False,
-          'geolocationOverrideDisableTime': None,
+          'geolocation_override': False,
+          'geolocation_override_disable_time': None,
           'link': dict({
             'state': 'ONLINE',
           }),
-          'nextScheduleChange': dict({
+          'next_schedule_change': dict({
             'setting': dict({
               'power': 'ON',
               'temperature': dict({
@@ -249,12 +249,12 @@
             }),
             'start': '2024-02-27T21:00:00Z',
           }),
-          'nextTimeBlock': dict({
+          'next_time_block': dict({
             'start': '2024-02-27T21:00:00.000Z',
           }),
-          'openWindow': None,
+          'open_window': None,
           'overlay': dict({
-            'projectedExpiry': None,
+            'projected_expiry': None,
             'setting': dict({
               'power': 'ON',
               'temperature': dict({
@@ -273,9 +273,9 @@
             }),
             'type': 'MANUAL',
           }),
-          'overlayType': 'MANUAL',
+          'overlay_type': 'MANUAL',
           'preparation': None,
-          'sensorDataPoints': dict({
+          'sensor_data_points': dict({
             'humidity': dict({
               'percentage': 51.0,
               'timestamp': '2024-02-27T20:37:02.553Z',
@@ -303,28 +303,28 @@
             }),
             'type': 'HEATING',
           }),
-          'tadoMode': 'HOME',
+          'tado_mode': 'HOME',
         }),
         '2': dict({
-          'activityDataPoints': dict({
+          'activity_data_points': dict({
             'heatingPower': dict({
               'percentage': 11.0,
               'timestamp': '2024-02-27T20:37:22.791Z',
               'type': 'PERCENTAGE',
             }),
           }),
-          'geolocationOverride': False,
-          'geolocationOverrideDisableTime': None,
+          'geolocation_override': False,
+          'geolocation_override_disable_time': None,
           'link': dict({
             'state': 'ONLINE',
           }),
-          'nextScheduleChange': None,
-          'nextTimeBlock': dict({
+          'next_schedule_change': None,
+          'next_time_block': dict({
             'start': '2024-02-27T21:00:00.000Z',
           }),
-          'openWindow': None,
+          'open_window': None,
           'overlay': dict({
-            'projectedExpiry': None,
+            'projected_expiry': None,
             'setting': dict({
               'power': 'ON',
               'temperature': dict({
@@ -343,9 +343,9 @@
             }),
             'type': 'MANUAL',
           }),
-          'overlayType': 'MANUAL',
+          'overlay_type': 'MANUAL',
           'preparation': None,
-          'sensorDataPoints': dict({
+          'sensor_data_points': dict({
             'humidity': dict({
               'percentage': 56.9,
               'timestamp': '2024-02-27T20:38:14.791Z',
@@ -373,22 +373,22 @@
             }),
             'type': 'HEATING',
           }),
-          'tadoMode': 'HOME',
+          'tado_mode': 'HOME',
         }),
         '3': dict({
-          'activityDataPoints': dict({
+          'activity_data_points': dict({
             'heatingPower': dict({
               'percentage': 0.0,
               'timestamp': '2024-02-27T20:28:21.301Z',
               'type': 'PERCENTAGE',
             }),
           }),
-          'geolocationOverride': False,
-          'geolocationOverrideDisableTime': None,
+          'geolocation_override': False,
+          'geolocation_override_disable_time': None,
           'link': dict({
             'state': 'ONLINE',
           }),
-          'nextScheduleChange': dict({
+          'next_schedule_change': dict({
             'setting': dict({
               'power': 'ON',
               'temperature': dict({
@@ -402,12 +402,12 @@
             }),
             'start': '2024-02-27T21:00:00Z',
           }),
-          'nextTimeBlock': dict({
+          'next_time_block': dict({
             'start': '2024-02-27T21:00:00.000Z',
           }),
-          'openWindow': None,
+          'open_window': None,
           'overlay': dict({
-            'projectedExpiry': None,
+            'projected_expiry': None,
             'setting': dict({
               'power': 'ON',
               'temperature': dict({
@@ -426,9 +426,9 @@
             }),
             'type': 'MANUAL',
           }),
-          'overlayType': 'MANUAL',
+          'overlay_type': 'MANUAL',
           'preparation': None,
-          'sensorDataPoints': dict({
+          'sensor_data_points': dict({
             'humidity': dict({
               'percentage': 55.5,
               'timestamp': '2024-02-27T20:37:12.297Z',
@@ -456,22 +456,22 @@
             }),
             'type': 'HEATING',
           }),
-          'tadoMode': 'HOME',
+          'tado_mode': 'HOME',
         }),
         '4': dict({
-          'activityDataPoints': dict({
+          'activity_data_points': dict({
             'heatingPower': dict({
               'percentage': 0.0,
               'timestamp': '2024-02-27T20:27:18.903Z',
               'type': 'PERCENTAGE',
             }),
           }),
-          'geolocationOverride': False,
-          'geolocationOverrideDisableTime': None,
+          'geolocation_override': False,
+          'geolocation_override_disable_time': None,
           'link': dict({
             'state': 'ONLINE',
           }),
-          'nextScheduleChange': dict({
+          'next_schedule_change': dict({
             'setting': dict({
               'power': 'ON',
               'temperature': dict({
@@ -485,12 +485,12 @@
             }),
             'start': '2024-02-27T21:00:00Z',
           }),
-          'nextTimeBlock': dict({
+          'next_time_block': dict({
             'start': '2024-02-27T21:00:00.000Z',
           }),
-          'openWindow': None,
+          'open_window': None,
           'overlay': dict({
-            'projectedExpiry': None,
+            'projected_expiry': None,
             'setting': dict({
               'power': 'OFF',
               'temperature': None,
@@ -503,9 +503,9 @@
             }),
             'type': 'MANUAL',
           }),
-          'overlayType': 'MANUAL',
+          'overlay_type': 'MANUAL',
           'preparation': None,
-          'sensorDataPoints': dict({
+          'sensor_data_points': dict({
             'humidity': dict({
               'percentage': 63.3,
               'timestamp': '2024-02-27T20:37:20.931Z',
@@ -527,7 +527,7 @@
             'temperature': None,
             'type': 'HEATING',
           }),
-          'tadoMode': 'HOME',
+          'tado_mode': 'HOME',
         }),
       }),
     }),
@@ -536,199 +536,199 @@
 # name: test_get_zones
   list([
     dict({
-      'dateCreated': '2023-04-12T12:58:12.737Z',
-      'dazzleEnabled': True,
-      'dazzleMode': dict({
+      'date_created': '2023-04-12T12:58:12.737Z',
+      'dazzle_enabled': True,
+      'dazzle_mode': dict({
         'enabled': True,
         'supported': True,
       }),
-      'deviceTypes': list([
+      'device_types': list([
         'VA02',
       ]),
       'devices': list([
         dict({
-          'batteryState': 'NORMAL',
+          'battery_state': 'NORMAL',
           'characteristics': dict({
             'capabilities': list([
               'INSIDE_TEMPERATURE_MEASUREMENT',
               'IDENTIFY',
             ]),
           }),
-          'childLockEnabled': True,
-          'connectionState': dict({
+          'child_lock_enabled': True,
+          'connection_state': dict({
             'timestamp': '2024-02-27T20:30:13.976Z',
             'value': True,
           }),
-          'currentFwVersion': '95.1',
-          'deviceType': 'VA02',
-          'inPairingMode': None,
-          'mountingState': dict({
+          'current_fw_version': '95.1',
+          'device_type': 'VA02',
+          'in_pairing_mode': None,
+          'mounting_state': dict({
             'timestamp': '2024-02-04T10:17:00.266Z',
             'value': 'CALIBRATED',
           }),
-          'mountingStateWithError': 'CALIBRATED',
+          'mounting_state_with_error': 'CALIBRATED',
           'orientation': 'HORIZONTAL',
-          'serialNo': 'Serial1',
-          'shortSerialNo': 'ShortSerial1',
+          'serial_no': 'Serial1',
+          'short_serial_no': 'ShortSerial1',
         }),
       ]),
       'id': 2,
       'name': 'Zone1',
-      'openWindowDetection': dict({
+      'open_window_detection': dict({
         'enabled': False,
         'supported': True,
-        'timeoutInSeconds': 900,
+        'timeout_in_seconds': 900,
       }),
-      'reportAvailable': False,
-      'showScheduleSetup': False,
-      'supportsDazzle': True,
+      'report_available': False,
+      'show_schedule_detup': False,
+      'supports_dazzle': True,
       'type': 'HEATING',
     }),
     dict({
-      'dateCreated': '2023-01-29T16:02:14.530Z',
-      'dazzleEnabled': True,
-      'dazzleMode': dict({
+      'date_created': '2023-01-29T16:02:14.530Z',
+      'dazzle_enabled': True,
+      'dazzle_mode': dict({
         'enabled': True,
         'supported': True,
       }),
-      'deviceTypes': list([
+      'device_types': list([
         'VA02',
       ]),
       'devices': list([
         dict({
-          'batteryState': 'NORMAL',
+          'battery_state': 'NORMAL',
           'characteristics': dict({
             'capabilities': list([
               'INSIDE_TEMPERATURE_MEASUREMENT',
               'IDENTIFY',
             ]),
           }),
-          'childLockEnabled': True,
-          'connectionState': dict({
+          'child_lock_enabled': True,
+          'connection_state': dict({
             'timestamp': '2024-02-27T20:32:05.188Z',
             'value': True,
           }),
-          'currentFwVersion': '95.1',
-          'deviceType': 'VA02',
-          'inPairingMode': None,
-          'mountingState': dict({
+          'current_fw_version': '95.1',
+          'device_type': 'VA02',
+          'in_pairing_mode': None,
+          'mounting_state': dict({
             'timestamp': '2023-10-09T15:39:08.131Z',
             'value': 'CALIBRATED',
           }),
-          'mountingStateWithError': 'CALIBRATED',
+          'mounting_state_with_error': 'CALIBRATED',
           'orientation': 'HORIZONTAL',
-          'serialNo': 'Serial2',
-          'shortSerialNo': 'ShortSerial2',
+          'serial_no': 'Serial2',
+          'short_serial_no': 'ShortSerial2',
         }),
       ]),
       'id': 1,
       'name': 'Zone2',
-      'openWindowDetection': dict({
+      'open_window_detection': dict({
         'enabled': False,
         'supported': True,
-        'timeoutInSeconds': 900,
+        'timeout_in_seconds': 900,
       }),
-      'reportAvailable': False,
-      'showScheduleSetup': True,
-      'supportsDazzle': True,
+      'report_available': False,
+      'show_schedule_detup': True,
+      'supports_dazzle': True,
       'type': 'HEATING',
     }),
     dict({
-      'dateCreated': '2023-04-14T07:52:56.352Z',
-      'dazzleEnabled': True,
-      'dazzleMode': dict({
+      'date_created': '2023-04-14T07:52:56.352Z',
+      'dazzle_enabled': True,
+      'dazzle_mode': dict({
         'enabled': True,
         'supported': True,
       }),
-      'deviceTypes': list([
+      'device_types': list([
         'VA02',
       ]),
       'devices': list([
         dict({
-          'batteryState': 'NORMAL',
+          'battery_state': 'NORMAL',
           'characteristics': dict({
             'capabilities': list([
               'INSIDE_TEMPERATURE_MEASUREMENT',
               'IDENTIFY',
             ]),
           }),
-          'childLockEnabled': True,
-          'connectionState': dict({
+          'child_lock_enabled': True,
+          'connection_state': dict({
             'timestamp': '2024-02-27T20:31:11.417Z',
             'value': True,
           }),
-          'currentFwVersion': '95.1',
-          'deviceType': 'VA02',
-          'inPairingMode': None,
-          'mountingState': dict({
+          'current_fw_version': '95.1',
+          'device_type': 'VA02',
+          'in_pairing_mode': None,
+          'mounting_state': dict({
             'timestamp': '2024-02-26T13:33:10.647Z',
             'value': 'CALIBRATED',
           }),
-          'mountingStateWithError': 'CALIBRATED',
+          'mounting_state_with_error': 'CALIBRATED',
           'orientation': 'HORIZONTAL',
-          'serialNo': 'Serial3',
-          'shortSerialNo': 'ShortSerial3',
+          'serial_no': 'Serial3',
+          'short_serial_no': 'ShortSerial3',
         }),
       ]),
       'id': 3,
       'name': 'Zone3',
-      'openWindowDetection': dict({
+      'open_window_detection': dict({
         'enabled': False,
         'supported': True,
-        'timeoutInSeconds': 900,
+        'timeout_in_seconds': 900,
       }),
-      'reportAvailable': False,
-      'showScheduleSetup': True,
-      'supportsDazzle': True,
+      'report_available': False,
+      'show_schedule_detup': True,
+      'supports_dazzle': True,
       'type': 'HEATING',
     }),
     dict({
-      'dateCreated': '2023-04-14T07:58:45.196Z',
-      'dazzleEnabled': True,
-      'dazzleMode': dict({
+      'date_created': '2023-04-14T07:58:45.196Z',
+      'dazzle_enabled': True,
+      'dazzle_mode': dict({
         'enabled': True,
         'supported': True,
       }),
-      'deviceTypes': list([
+      'device_types': list([
         'VA02',
       ]),
       'devices': list([
         dict({
-          'batteryState': 'NORMAL',
+          'battery_state': 'NORMAL',
           'characteristics': dict({
             'capabilities': list([
               'INSIDE_TEMPERATURE_MEASUREMENT',
               'IDENTIFY',
             ]),
           }),
-          'childLockEnabled': True,
-          'connectionState': dict({
+          'child_lock_enabled': True,
+          'connection_state': dict({
             'timestamp': '2024-02-27T20:33:21.903Z',
             'value': True,
           }),
-          'currentFwVersion': '95.1',
-          'deviceType': 'VA02',
-          'inPairingMode': None,
-          'mountingState': dict({
+          'current_fw_version': '95.1',
+          'device_type': 'VA02',
+          'in_pairing_mode': None,
+          'mounting_state': dict({
             'timestamp': '2024-02-19T17:23:30.537Z',
             'value': 'CALIBRATED',
           }),
-          'mountingStateWithError': 'CALIBRATED',
+          'mounting_state_with_error': 'CALIBRATED',
           'orientation': 'HORIZONTAL',
-          'serialNo': 'Serial4',
-          'shortSerialNo': 'ShortSerial4',
+          'serial_no': 'Serial4',
+          'short_serial_no': 'ShortSerial4',
         }),
       ]),
       'id': 4,
       'name': 'Zone4',
-      'openWindowDetection': dict({
+      'open_window_detection': dict({
         'enabled': False,
         'supported': True,
-        'timeoutInSeconds': 900,
+        'timeout_in_seconds': 900,
       }),
-      'reportAvailable': False,
-      'showScheduleSetup': True,
-      'supportsDazzle': True,
+      'report_available': False,
+      'show_schedule_detup': True,
+      'supports_dazzle': True,
       'type': 'HEATING',
     }),
   ])
