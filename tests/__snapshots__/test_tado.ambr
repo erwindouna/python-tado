@@ -238,13 +238,81 @@
     }),
   })
 # ---
-# name: test_get_zone_states
+# name: test_get_zone_states_ac_power
   list([
     dict({
       'zone_states': dict({
         '1': dict({
           'activity_data_points': dict({
-            'heatingPower': dict({
+            'ac_power': dict({
+              'timestamp': '2024-07-05T04:02:40.867Z',
+              'type': 'POWER',
+              'value': 'ON',
+            }),
+            'heating_power': None,
+          }),
+          'geolocation_override': False,
+          'geolocation_override_disable_time': None,
+          'link': dict({
+            'state': 'ONLINE',
+          }),
+          'next_schedule_change': None,
+          'next_time_block': dict({
+            'start': '2024-07-05T08:00:00.000Z',
+          }),
+          'open_window': None,
+          'overlay': dict({
+            'projected_expiry': None,
+            'setting': dict({
+              'power': 'ON',
+              'temperature': None,
+              'type': 'AIR_CONDITIONING',
+            }),
+            'termination': dict({
+              'projectedExpiry': None,
+              'type': 'TADO_MODE',
+              'typeSkillBasedApp': 'TADO_MODE',
+            }),
+            'type': 'MANUAL',
+          }),
+          'overlay_type': 'MANUAL',
+          'preparation': None,
+          'sensor_data_points': dict({
+            'humidity': dict({
+              'percentage': 62.0,
+              'timestamp': '2024-07-05T04:02:07.396Z',
+              'type': 'PERCENTAGE',
+            }),
+            'inside_temperature': dict({
+              'celsius': 25.01,
+              'fahrenheit': 77.02,
+              'precision': dict({
+                'celsius': 0.1,
+                'fahrenheit': 0.1,
+              }),
+              'timestamp': '2024-07-05T04:02:07.396Z',
+              'type': 'TEMPERATURE',
+            }),
+          }),
+          'setting': dict({
+            'power': 'ON',
+            'temperature': None,
+            'type': 'AIR_CONDITIONING',
+          }),
+          'tado_mode': 'HOME',
+        }),
+      }),
+    }),
+  ])
+# ---
+# name: test_get_zone_states_heating_power
+  list([
+    dict({
+      'zone_states': dict({
+        '1': dict({
+          'activity_data_points': dict({
+            'ac_power': None,
+            'heating_power': dict({
               'percentage': 0.0,
               'timestamp': '2024-02-27T20:30:01.259Z',
               'type': 'PERCENTAGE',
@@ -327,7 +395,8 @@
         }),
         '2': dict({
           'activity_data_points': dict({
-            'heatingPower': dict({
+            'ac_power': None,
+            'heating_power': dict({
               'percentage': 11.0,
               'timestamp': '2024-02-27T20:37:22.791Z',
               'type': 'PERCENTAGE',
@@ -397,7 +466,8 @@
         }),
         '3': dict({
           'activity_data_points': dict({
-            'heatingPower': dict({
+            'ac_power': None,
+            'heating_power': dict({
               'percentage': 0.0,
               'timestamp': '2024-02-27T20:28:21.301Z',
               'type': 'PERCENTAGE',
@@ -480,7 +550,8 @@
         }),
         '4': dict({
           'activity_data_points': dict({
-            'heatingPower': dict({
+            'ac_power': None,
+            'heating_power': dict({
               'percentage': 0.0,
               'timestamp': '2024-02-27T20:27:18.903Z',
               'type': 'PERCENTAGE',
