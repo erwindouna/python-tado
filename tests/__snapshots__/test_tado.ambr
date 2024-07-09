@@ -181,6 +181,11 @@
       }),
       'id': 123456,
       'name': 'User1',
+      'settings': dict({
+        'geo_tracking_enabled': True,
+        'on_demand_log_retrieval_enabled': False,
+        'special_offers_enabled': True,
+      }),
     }),
     dict({
       'device_meta_data': dict({
@@ -191,6 +196,11 @@
       }),
       'id': 789012,
       'name': 'User2',
+      'settings': dict({
+        'geo_tracking_enabled': False,
+        'on_demand_log_retrieval_enabled': False,
+        'special_offers_enabled': True,
+      }),
     }),
   ])
 # ---

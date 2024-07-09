@@ -47,6 +47,22 @@ class MobileDevice(DataClassORJSONMixin):
     device_meta_data: DeviceMetadata = field(
         metadata=field_options(alias="deviceMetadata")
     )
+    settings: MobileSettings
+
+
+@dataclass
+class MobileSettings(DataClassORJSONMixin):
+    """MobileSettings model represents the user's mobile device settings."""
+
+    geo_tracking_enabled: bool = field(
+        metadata=field_options(alias="geoTrackingEnabled")
+    )
+    special_offers_enabled: bool = field(
+        metadata=field_options(alias="specialOffersEnabled")
+    )
+    on_demand_log_retrieval_enabled: bool = field(
+        metadata=field_options(alias="onDemandLogRetrievalEnabled")
+    )
 
 
 @dataclass
