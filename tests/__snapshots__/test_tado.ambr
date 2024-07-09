@@ -180,6 +180,15 @@
         'platform': 'Android',
       }),
       'id': 123456,
+      'location': dict({
+        'at_home': True,
+        'bearing_from_home': dict({
+          'degrees': 21.4215315376382,
+          'radians': 0.37387625615159,
+        }),
+        'relative_distance_from_home_fence': 0.0,
+        'stale': False,
+      }),
       'name': 'User1',
       'settings': dict({
         'geo_tracking_enabled': True,
@@ -195,6 +204,7 @@
         'platform': 'Android',
       }),
       'id': 789012,
+      'location': None,
       'name': 'User2',
       'settings': dict({
         'geo_tracking_enabled': False,

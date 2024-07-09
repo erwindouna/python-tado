@@ -7,7 +7,15 @@
       "specialOffersEnabled": true,
       "onDemandLogRetrievalEnabled": false
     },
-    "location": null,
+    "location": {
+      "stale": false,
+      "atHome": true,
+      "bearingFromHome": {
+        "degrees": 21.4215315376382,
+        "radians": 0.37387625615159
+      },
+      "relativeDistanceFromHomeFence": 0.0
+    },
     "deviceMetadata": {
       "platform": "Android",
       "osVersion": "14",
@@ -23,6 +31,7 @@
       "specialOffersEnabled": true,
       "onDemandLogRetrievalEnabled": false
     },
+    "location": null,
     "deviceMetadata": {
       "platform": "Android",
       "osVersion": "14",
