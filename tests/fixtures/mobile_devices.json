@@ -31,7 +31,6 @@
       "specialOffersEnabled": true,
       "onDemandLogRetrievalEnabled": false
     },
-    "location": null,
     "deviceMetadata": {
       "platform": "Android",
       "osVersion": "14",

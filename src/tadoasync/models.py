@@ -48,7 +48,7 @@ class MobileDevice(DataClassORJSONMixin):
         metadata=field_options(alias="deviceMetadata")
     )
     settings: MobileSettings
-    location: MobileLocation | None
+    location: MobileLocation | None = field(default=None)
 
 
 @dataclass
@@ -321,6 +321,15 @@ class HeatingPower(DataClassORJSONMixin):
 
 
 @dataclass
+class AcPower(DataClassORJSONMixin):
+    """AcPower model represents the AC power."""
+
+    type: str
+    timestamp: str
+    value: str
+
+
+@dataclass
 class Humidity(DataClassORJSONMixin):
     """Humidity model represents the humidity."""
 
@@ -333,7 +342,9 @@ class Humidity(DataClassORJSONMixin):
 class SensorDataPoints(DataClassORJSONMixin):
     """SensorDataPoints model represents the sensor data points."""
 
-    insideTemperature: Temperature
+    inside_temperature: Temperature = field(
+        metadata=field_options(alias="insideTemperature")
+    )
     humidity: Humidity
 
 
@@ -344,7 +355,7 @@ class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attr
     setting: TemperatureSetting
     overlay: Overlay
     link: Link
-    activity_data_points: dict[str, str] = field(
+    activity_data_points: ActivityDataPoints = field(
         metadata=field_options(alias="activityDataPoints")
     )
     sensor_data_points: SensorDataPoints = field(
@@ -368,6 +379,18 @@ class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attr
     )
     next_schedule_change: NextScheduleChange | None = field(
         default=None, metadata=field_options(alias="nextScheduleChange")
+    )
+
+
+@dataclass
+class ActivityDataPoints(DataClassORJSONMixin):
+    """ActivityDataPoints model represents the activity data points."""
+
+    ac_power: AcPower | None = field(
+        default=None, metadata=field_options(alias="acPower")
+    )
+    heating_power: HeatingPower | None = field(
+        default=None, metadata=field_options(alias="heatingPower")
     )
 
 
