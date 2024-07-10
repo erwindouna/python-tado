@@ -283,6 +283,8 @@ class Setting(DataClassORJSONMixin):
     power: str
     mode: str | None = None
     temperature: Temperature | None = None
+    fan_speed: str | None = None
+    swing: str | None = None
 
 
 @dataclass

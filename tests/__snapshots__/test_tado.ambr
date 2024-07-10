@@ -264,8 +264,10 @@
           'overlay': dict({
             'projected_expiry': None,
             'setting': dict({
+              'fan_speed': None,
               'mode': 'FAN',
               'power': 'ON',
+              'swing': None,
               'temperature': None,
               'type': 'AIR_CONDITIONING',
             }),
@@ -296,8 +298,10 @@
             }),
           }),
           'setting': dict({
+            'fan_speed': None,
             'mode': 'FAN',
             'power': 'ON',
+            'swing': None,
             'temperature': None,
             'type': 'AIR_CONDITIONING',
           }),
@@ -333,8 +337,10 @@
           'overlay': dict({
             'projected_expiry': None,
             'setting': dict({
+              'fan_speed': None,
               'mode': 'DRY',
               'power': 'ON',
+              'swing': None,
               'temperature': None,
               'type': 'AIR_CONDITIONING',
             }),
@@ -365,8 +371,10 @@
             }),
           }),
           'setting': dict({
+            'fan_speed': None,
             'mode': 'DRY',
             'power': 'ON',
+            'swing': None,
             'temperature': None,
             'type': 'AIR_CONDITIONING',
           }),
@@ -396,8 +404,10 @@
           }),
           'next_schedule_change': dict({
             'setting': dict({
+              'fan_speed': None,
               'mode': None,
               'power': 'ON',
+              'swing': None,
               'temperature': dict({
                 'celsius': 18.0,
                 'fahrenheit': 64.4,
@@ -416,8 +426,10 @@
           'overlay': dict({
             'projected_expiry': None,
             'setting': dict({
+              'fan_speed': None,
               'mode': None,
               'power': 'ON',
+              'swing': None,
               'temperature': dict({
                 'celsius': 17.0,
                 'fahrenheit': 62.6,
@@ -454,8 +466,10 @@
             }),
           }),
           'setting': dict({
+            'fan_speed': None,
             'mode': None,
             'power': 'ON',
+            'swing': None,
             'temperature': dict({
               'celsius': 17.0,
               'fahrenheit': 62.6,
@@ -489,8 +503,10 @@
           'overlay': dict({
             'projected_expiry': None,
             'setting': dict({
+              'fan_speed': None,
               'mode': None,
               'power': 'ON',
+              'swing': None,
               'temperature': dict({
                 'celsius': 15.0,
                 'fahrenheit': 59.0,
@@ -527,8 +543,10 @@
             }),
           }),
           'setting': dict({
+            'fan_speed': None,
             'mode': None,
             'power': 'ON',
+            'swing': None,
             'temperature': dict({
               'celsius': 15.0,
               'fahrenheit': 59.0,
@@ -556,8 +574,10 @@
           }),
           'next_schedule_change': dict({
             'setting': dict({
+              'fan_speed': None,
               'mode': None,
               'power': 'ON',
+              'swing': None,
               'temperature': dict({
                 'celsius': 18.0,
                 'fahrenheit': 64.4,
@@ -576,8 +596,10 @@
           'overlay': dict({
             'projected_expiry': None,
             'setting': dict({
+              'fan_speed': None,
               'mode': None,
               'power': 'ON',
+              'swing': None,
               'temperature': dict({
                 'celsius': 17.0,
                 'fahrenheit': 62.6,
@@ -614,8 +636,10 @@
             }),
           }),
           'setting': dict({
+            'fan_speed': None,
             'mode': None,
             'power': 'ON',
+            'swing': None,
             'temperature': dict({
               'celsius': 17.0,
               'fahrenheit': 62.6,
@@ -643,8 +667,10 @@
           }),
           'next_schedule_change': dict({
             'setting': dict({
+              'fan_speed': None,
               'mode': None,
               'power': 'ON',
+              'swing': None,
               'temperature': dict({
                 'celsius': 18.0,
                 'fahrenheit': 64.4,
@@ -663,8 +689,10 @@
           'overlay': dict({
             'projected_expiry': None,
             'setting': dict({
+              'fan_speed': None,
               'mode': None,
               'power': 'OFF',
+              'swing': None,
               'temperature': None,
               'type': 'HEATING',
             }),
@@ -695,8 +723,10 @@
             }),
           }),
           'setting': dict({
+            'fan_speed': None,
             'mode': None,
             'power': 'OFF',
+            'swing': None,
             'temperature': None,
             'type': 'HEATING',
           }),
