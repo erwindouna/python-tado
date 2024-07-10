@@ -381,22 +381,50 @@ async def test_request_client_response_error(python_tado: Tado) -> None:
         await python_tado._request("me")
 
 
-async def test_get_me_timeout(python_tado: Tado, responses: aioresponses) -> None:
+async def test_get_me_timeout(responses: aioresponses) -> None:
     """Test timeout during get me."""
+    responses.post(
+        "https://auth.tado.com/oauth/token",
+        payload={
+            "access_token": "test_access_token",
+            "expires_in": 3600,
+            "refresh_token": "test_refresh_token",
+            "token_type": "bearer",
+        },
+        status=200,
+    )
+    responses.post(
+        TADO_TOKEN_URL,
+        status=200,
+        payload={
+            "access_token": "test_access_token",
+            "expires_in": 3600,
+            "refresh_token": "test_refresh_token",
+        },
+    )
+    responses.get(
+        f"{TADO_API_URL}/me",
+        status=200,
+        body=load_fixture("me.json"),
+    )
 
     # Faking a timeout by sleeping
-    async def response_handler(_: str, **_kwargs: Any) -> CallbackResult:
+    async def response_handler(_: str, **_kwargs: Any) -> CallbackResult:  # pylint: disable=unused-argument
         """Response handler for this test."""
-        await asyncio.sleep(10)
+        await asyncio.sleep(2)  # Simulate a delay that exceeds the request timeout
         return CallbackResult(body="Goodmorning!")
 
     responses.get(
         f"{TADO_API_URL}/homes/1/devices",
+        body=load_fixture("devices.json"),
         callback=response_handler,
     )
 
-    with pytest.raises(TadoConnectionError):
-        await python_tado.get_devices()
+    async with aiohttp.ClientSession() as session, Tado(
+        username="username", password="password", request_timeout=1, session=session
+    ) as tado:
+        with pytest.raises(TadoConnectionError):
+            assert await tado.get_devices()
 
 
 async def test_close_session() -> None:
