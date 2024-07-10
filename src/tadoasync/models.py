@@ -283,8 +283,19 @@ class Setting(DataClassORJSONMixin):
     power: str
     mode: str | None = None
     temperature: Temperature | None = None
-    fan_speed: str | None = None
+    fan_speed: str | None = field(
+        default=None, metadata=field_options(alias="fanSpeed")
+    )
+    fan_level: str | None = field(
+        default=None, metadata=field_options(alias="fanLevel")
+    )
     swing: str | None = None
+    vertical_swing: str | None = field(
+        default=None, metadata=field_options(alias="verticalSwing")
+    )
+    horizontal_swing: str | None = field(
+        default=None, metadata=field_options(alias="horizontalSwing")
+    )
 
 
 @dataclass
@@ -293,7 +304,20 @@ class Overlay(DataClassORJSONMixin):
 
     type: str
     setting: Setting
-    termination: dict[str, str]
+    termination: Termination
+    projected_expiry: str | None = field(
+        default=None, metadata=field_options(alias="projectedExpiry")
+    )
+
+
+@dataclass
+class Termination(DataClassORJSONMixin):
+    """Termination model represents the termination settings of a zone."""
+
+    type: str
+    type_skill_based_app: str | None = field(
+        default=None, metadata=field_options(alias="typeSkillBasedApp")
+    )
     projected_expiry: str | None = field(
         default=None, metadata=field_options(alias="projectedExpiry")
     )
@@ -321,6 +345,8 @@ class HeatingPower(DataClassORJSONMixin):
     type: str
     percentage: float
     timestamp: str
+    # Check if this is still used!
+    value: str | None = None
 
 
 @dataclass
@@ -382,6 +408,21 @@ class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attr
     )
     next_schedule_change: NextScheduleChange | None = field(
         default=None, metadata=field_options(alias="nextScheduleChange")
+    )
+    termination_condition: TerminationCondition | None = field(
+        default=None, metadata=field_options(alias="terminationCondition")
+    )
+
+    # Updated data from the callback
+
+
+@dataclass
+class TerminationCondition(DataClassORJSONMixin):
+    """TerminationCondition model represents the termination condition."""
+
+    type: str | None = None
+    duration_in_seconds: int | None = field(
+        default=None, metadata=field_options(alias="durationInSeconds")
     )
 
 

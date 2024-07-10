@@ -13,7 +13,27 @@ from aiohttp import ClientResponse, ClientResponseError
 from aiohttp.client import ClientSession
 from yarl import URL
 
-from tadoasync.const import HttpMethod
+from tadoasync.const import (
+    CONST_AWAY,
+    CONST_FAN_AUTO,
+    CONST_FAN_OFF,
+    CONST_FAN_SPEED_AUTO,
+    CONST_FAN_SPEED_OFF,
+    CONST_HORIZONTAL_SWING_OFF,
+    CONST_HVAC_COOL,
+    CONST_HVAC_HEAT,
+    CONST_HVAC_IDLE,
+    CONST_HVAC_OFF,
+    CONST_LINK_OFFLINE,
+    CONST_MODE_OFF,
+    CONST_MODE_SMART_SCHEDULE,
+    CONST_VERTICAL_SWING_OFF,
+    DEFAULT_TADO_PRECISION,
+    TADO_HVAC_ACTION_TO_MODES,
+    TADO_MODES_TO_HVAC_ACTION,
+    TYPE_AIR_CONDITIONING,
+    HttpMethod,
+)
 from tadoasync.exceptions import (
     TadoAuthenticationError,
     TadoBadRequestError,
@@ -81,6 +101,212 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self._home_id: int | None = None
         self._me: GetMe | None = None
         self._auto_geofencing_supported: bool | None = None
+
+        # Temperature and Humidity
+        self._current_temp: float | None = None
+        self._current_temp_timestamp: str | None = None
+        self._current_humidity: float | None = None
+        self._current_humidity_timestamp: str | None = None
+        self._target_temp: float | None = None
+        self._precision: float = DEFAULT_TADO_PRECISION
+
+        # HVAC settings
+        self._current_hvac_action: str | None = None
+        self._current_hvac_mode: str | None = None
+        self._current_fan_speed: str | None = None
+        self._current_fan_level: str | None = None
+        self._current_swing_mode: str | None = None
+        self._current_vertical_swing_mode: str | None = None
+        self._current_horizontal_swing_mode: str | None = None
+
+        # Power and Connection
+        self._connection: str | None = None
+        self._available: bool = False
+        self._power: str | None = None
+        self._ac_power: str | None = None
+        self._heating_power: str | None = None
+        self._ac_power_timestamp: str | None = None
+        self._heating_power_timestamp: str | None = None
+        self._heating_power_percentage: float | None = None
+
+        # Tado specific features
+        self._tado_mode: str | None = None
+        self._overlay_active: bool | None = None
+        self._overlay_termination_type: str | None = None
+        self._overlay_termination_timestamp: str | None = None
+        self._default_overlay_termination_type: str | None = None
+        self._default_overlay_termination_duration: int | None = None
+        self._preparation: bool | None = None
+        self._open_window: bool | None = None
+        self._open_window_detected: bool | None = None
+        self._open_window_attr: dict[str, str] | None = None
+        self._is_away: bool = False
+        self._link: str | None = None
+
+    @property
+    def preparation(self) -> bool | None:
+        """Zone is preparing to heat."""
+        return self._preparation
+
+    @property
+    def open_window(self) -> bool | None:
+        """Window is open."""
+        return self._open_window
+
+    @property
+    def open_window_detected(self) -> bool | None:
+        """Window is opened."""
+        return self._open_window_detected
+
+    @property
+    def open_window_attr(self) -> dict[str, str] | None:
+        """Window open attributes."""
+        return self._open_window_attr
+
+    @property
+    def current_temp(self) -> float | None:
+        """Temperature of the zone."""
+        return self._current_temp
+
+    @property
+    def current_temp_timestamp(self) -> str | None:
+        """Temperature of the zone timestamp."""
+        return self._current_temp_timestamp
+
+    @property
+    def connection(self) -> str | None:
+        """Up or down internet connection."""
+        return self._connection
+
+    @property
+    def tado_mode(self) -> str | None:
+        """Tado mode."""
+        return self._tado_mode
+
+    @property
+    def overlay_active(self) -> bool | None:
+        """Overlay acitive."""
+        return self._current_hvac_mode != CONST_MODE_SMART_SCHEDULE
+
+    @property
+    def overlay_termination_type(self) -> str | None:
+        """Overlay termination type (what happens when period ends)."""
+        return self._overlay_termination_type
+
+    @property
+    def overlay_termination_time(self) -> str | None:
+        """Overlay termination time."""
+        return self._overlay_termination_timestamp
+
+    @property
+    def current_humidity(self) -> float | None:
+        """Humidity of the zone."""
+        return self._current_humidity
+
+    @property
+    def current_humidity_timestamp(self) -> str | None:
+        """Humidity of the zone timestamp."""
+        return self._current_humidity_timestamp
+
+    @property
+    def ac_power_timestamp(self) -> str | None:
+        """AC power timestamp."""
+        return self._ac_power_timestamp
+
+    @property
+    def heating_power_timestamp(self) -> str | None:
+        """Heating power timestamp."""
+        return self._heating_power_timestamp
+
+    @property
+    def ac_power(self) -> str | None:
+        """AC power."""
+        return self._ac_power
+
+    @property
+    def heating_power(self) -> str | None:
+        """Heating power."""
+        return self._heating_power
+
+    @property
+    def heating_power_percentage(self) -> float | None:
+        """Heating power percentage."""
+        return self._heating_power_percentage
+
+    @property
+    def is_away(self) -> bool:
+        """Is Away (not home)."""
+        return self._is_away
+
+    @property
+    def power(self) -> str | None:
+        """Power is on."""
+        return self._power
+
+    @property
+    def current_hvac_action(self) -> str | None:
+        """HVAC Action (home assistant const)."""
+        return self._current_hvac_action
+
+    @property
+    def current_fan_speed(self) -> str | None:
+        """TADO Fan speed (tado const)."""
+        return self._current_fan_speed
+
+    @property
+    def current_fan_level(self) -> str | None:
+        """TADO Fan level (tado const)."""
+        return self._current_fan_level
+
+    @property
+    def link(self) -> str | None:
+        """Link (internet connection state)."""
+        return self._link
+
+    @property
+    def precision(self) -> float:
+        """Precision of temp units."""
+        return self._precision
+
+    @property
+    def current_hvac_mode(self) -> str | None:
+        """TADO HVAC Mode (tado const)."""
+        return self._current_hvac_mode
+
+    @property
+    def current_swing_mode(self) -> str | None:
+        """TADO SWING Mode (tado const)."""
+        return self._current_swing_mode
+
+    @property
+    def current_vertical_swing_mode(self) -> str | None:
+        """TADO VERTICAL SWING Mode (tado const)."""
+        return self._current_vertical_swing_mode
+
+    @property
+    def current_horizontal_swing_mode(self) -> str | None:
+        """TADO HORIZONTAL SWING Mode (tado const)."""
+        return self._current_horizontal_swing_mode
+
+    @property
+    def target_temp(self) -> float | None:
+        """Target temperature (C)."""
+        return self._target_temp
+
+    @property
+    def available(self) -> bool:
+        """Device is available and link is up."""
+        return self._available
+
+    @property
+    def default_overlay_termination_type(self) -> str | None:
+        """Zone default overlay type."""
+        return self._default_overlay_termination_type
+
+    @property
+    def default_overlay_termination_duration(self) -> int | None:
+        """Zone default overlay duration."""
+        return self._default_overlay_termination_duration
 
     async def login(self) -> None:
         """Perform login to Tado."""
@@ -220,6 +446,14 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         }
         return [ZoneStates(zone_states=zone_states)]
 
+    async def get_zone_state(self, zone_id: int) -> ZoneState:
+        """Get the zone state."""
+        response = await self._request(f"homes/{self._home_id}/zones/{zone_id}/state")
+        # First let it update the data
+        await self.update_zone_data(ZoneState.from_json(response))
+        # Then return the final data
+        return ZoneState.from_json(response)
+
     async def get_weather(self) -> Weather:
         """Get the weather."""
         response = await self._request(f"homes/{self._home_id}/weather")
@@ -345,6 +579,189 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             await self.check_request_status(request)
 
         return await request.text()
+
+    async def update_zone_data(self, data: ZoneState) -> None:  # pylint: disable=too-many-branches
+        """Update the zone data."""
+        if data.sensor_data_points is not None:
+            if data.sensor_data_points.inside_temperature is not None:
+                temperature = float(data.sensor_data_points.inside_temperature.celsius)
+                self._current_temp = temperature
+                self._current_temp_timestamp = (
+                    data.sensor_data_points.inside_temperature.timestamp
+                )
+                if data.sensor_data_points.inside_temperature.precision is not None:
+                    self._precision = (
+                        data.sensor_data_points.inside_temperature.precision.celsius
+                    )
+
+            if data.sensor_data_points.humidity is not None:
+                humidity = float(data.sensor_data_points.humidity.percentage)
+                self._current_humidity = humidity
+                self._current_humidity_timestamp = (
+                    data.sensor_data_points.humidity.timestamp
+                )
+
+        if data.tado_mode is not None:
+            self._is_away = data.tado_mode == CONST_AWAY
+            self._tado_mode = data.tado_mode
+
+        if data.link is not None:
+            self._link = data.link.state
+
+        self._current_hvac_action = CONST_HVAC_OFF
+
+        if data.setting is not None:
+            # Temperature setting will not exist when device is off
+            if (
+                hasattr(data.setting, "temperature")
+                and data.setting.temperature is not None
+            ):
+                setting = float(data.setting.temperature.celsius)
+                self._target_temp = setting
+
+            self._current_fan_speed = None
+            self._current_fan_level = None
+            # If there is no overlay, the mode will always be
+            # "SMART_SCHEDULE"
+            self._current_hvac_mode = CONST_MODE_OFF
+            self._current_swing_mode = CONST_MODE_OFF
+            self._current_vertical_swing_mode = CONST_VERTICAL_SWING_OFF
+            self._current_horizontal_swing_mode = CONST_HORIZONTAL_SWING_OFF
+
+            if data.setting.mode is not None:
+                # v3 devices use mode
+                self._current_hvac_mode = data.setting.mode
+
+            if data.setting.swing is not None:
+                self._current_swing_mode = data.setting.swing
+
+            if data.setting.vertical_swing is not None:
+                self._current_vertical_swing_mode = data.setting.vertical_swing
+
+            if data.setting.horizontal_swing is not None:
+                self._current_horizontal_swing_mode = data.setting.horizontal_swing
+
+            self._power = data.setting.power
+            if self._power == "ON":
+                self._current_hvac_action = CONST_HVAC_IDLE
+                if (
+                    not hasattr(data.setting, "mode")
+                    and hasattr(data.setting, "type")
+                    and data.setting.type in TADO_HVAC_ACTION_TO_MODES
+                ):
+                    # v2 devices do not have mode so we have to figure it out from type
+                    self._current_hvac_mode = TADO_HVAC_ACTION_TO_MODES[
+                        data.setting.type
+                    ]
+
+            # Not all devices have fans
+            if data.setting.fan_speed is not None:
+                self._current_fan_speed = (
+                    data.setting.fan_speed
+                    if hasattr(setting, "fan_speed")
+                    else CONST_FAN_AUTO
+                    if self._power == "ON"
+                    else CONST_FAN_OFF
+                )
+            elif (
+                data.setting.type is not None
+                and data.setting.type == TYPE_AIR_CONDITIONING
+            ):
+                self._current_fan_speed = (
+                    CONST_FAN_AUTO if self._power == "ON" else CONST_FAN_OFF
+                )
+
+            if data.setting.fan_level is not None:
+                self._current_fan_level = (
+                    data.setting.fan_level
+                    if hasattr(data.setting, "fan_level")
+                    else CONST_FAN_SPEED_AUTO
+                    if self._power == "ON"
+                    else CONST_FAN_SPEED_OFF
+                )
+
+        self._preparation = (
+            hasattr(data, "preparation") and data.preparation is not None
+        )
+        self._open_window = (
+            hasattr(data, "open_window") and data.open_window is not None
+        )
+        self._open_window_detected = (
+            hasattr(data, "open_window_detected")
+            and data.open_window_detected is not None
+        )
+
+        # Assuming data.open_window is of type 'str | dict[str, str] | None'
+        # Never seen it but it could happen to be dict? Validate with Tado Devs
+        self._open_window_attr = {}
+        if self._open_window and isinstance(data.open_window, dict):
+            self._open_window_attr = data.open_window
+
+        if data.activity_data_points is not None:
+            if data.activity_data_points.ac_power is not None:
+                self._ac_power = data.activity_data_points.ac_power.value
+                self._ac_power_timestamp = data.activity_data_points.ac_power.timestamp
+                if (
+                    data.activity_data_points.ac_power.value == "ON"
+                    and self._power == "ON"
+                ):
+                    # acPower means the unit has power so we need to map the mode
+                    self._current_hvac_action = TADO_MODES_TO_HVAC_ACTION.get(
+                        self._current_hvac_mode, CONST_HVAC_COOL
+                    )
+
+            if data.activity_data_points.heating_power is not None:
+                # This needs to be validated if this is actually in!
+                self._heating_power = self._heating_power = (
+                    data.activity_data_points.heating_power.value
+                    if data.activity_data_points.heating_power
+                    else None
+                )
+                self._heating_power_timestamp = (
+                    data.activity_data_points.heating_power.timestamp
+                )
+                self._heating_power_percentage = float(
+                    data.activity_data_points.heating_power.percentage
+                    if hasattr(data.activity_data_points.heating_power, "percentage")
+                    else 0
+                )
+
+                if self._heating_power_percentage > 0.0 and self._power == "ON":
+                    self._current_hvac_action = CONST_HVAC_HEAT
+
+        # If there is no overlay
+        # then we are running the smart schedule
+        self._overlay_termination_type = None
+        self._overlay_termination_timestamp = None
+        if data.overlay is not None:
+            if hasattr(data.overlay, "termination") and hasattr(
+                data.overlay.termination, "type"
+            ):
+                self._overlay_termination_type = data.overlay.termination.type
+                self._overlay_termination_timestamp = (
+                    data.overlay.termination.projected_expiry
+                    if hasattr(data.overlay.termination, "projected_expiry")
+                    else None
+                )
+        else:
+            self._current_hvac_mode = CONST_MODE_SMART_SCHEDULE
+
+        self._connection = (
+            getattr(data.connection_state, "value", None)
+            if hasattr(data, "connection_state")
+            else None
+        )
+        self._available = self._link != CONST_LINK_OFFLINE
+
+        if data.termination_condition is not None:
+            self._default_overlay_termination_type = (
+                data.termination_condition.type
+                if data.termination_condition.type
+                else None
+            )
+            self._default_overlay_termination_duration = getattr(
+                data.termination_condition, "duration_in_seconds", None
+            )
 
     async def close(self) -> None:
         """Close open client session."""
