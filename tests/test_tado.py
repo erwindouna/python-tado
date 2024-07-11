@@ -1,6 +1,7 @@
 """Tests for the Python Tado."""
 
 import asyncio
+import os
 import time
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
@@ -40,6 +41,13 @@ async def test_create_session(
         assert not tado._session.closed
         await tado.close()
         assert tado._session.closed
+
+
+async def test_close_session() -> None:
+    """Test not closing the session when the session does not exist."""
+    tado = Tado(username="username", password="password")
+    tado._close_session = True
+    await tado.close()
 
 
 async def test_login_success(responses: aioresponses) -> None:
@@ -381,26 +389,113 @@ async def test_request_client_response_error(python_tado: Tado) -> None:
         await python_tado._request("me")
 
 
-async def test_get_me_timeout(python_tado: Tado, responses: aioresponses) -> None:
+fixtures_files = [
+    f for f in os.listdir("tests/fixtures/zone_state") if f.endswith(".json")
+]
+
+
+@pytest.mark.parametrize(
+    ("fixture_file"),
+    fixtures_files,
+)
+async def test_get_zone_state(
+    fixture_file: str,
+    python_tado: Tado,
+    responses: aioresponses,
+    snapshot: SnapshotAssertion,
+) -> None:
+    """Test get zone states."""
+    zone_id = 1
+    responses.get(
+        f"{TADO_API_URL}/homes/1/zones/{zone_id}/state",
+        status=200,
+        body=load_fixture(fixture_file, folder="zone_state"),
+    )
+    assert await python_tado.get_zone_state(zone_id) == snapshot
+    properties_to_test = [
+        "preparation",
+        "open_window",
+        "open_window_detected",
+        "open_window_attr",
+        "current_temp",
+        "current_temp_timestamp",
+        "connection",
+        "tado_mode",
+        "overlay_active",
+        "overlay_termination_type",
+        "overlay_termination_time",
+        "current_humidity",
+        "current_humidity_timestamp",
+        "ac_power_timestamp",
+        "heating_power_timestamp",
+        "ac_power",
+        "heating_power",
+        "heating_power_percentage",
+        "is_away",
+        "power",
+        "current_hvac_action",
+        "current_fan_speed",
+        "current_fan_level",
+        "link",
+        "precision",
+        "current_hvac_mode",
+        "current_swing_mode",
+        "current_vertical_swing_mode",
+        "current_horizontal_swing_mode",
+        "target_temp",
+        "available",
+        "default_overlay_termination_type",
+        "default_overlay_termination_duration",
+    ]
+    for prop in properties_to_test:
+        actual_value = getattr(python_tado, prop)
+        expected_value = snapshot(name=prop)
+        assert (
+            actual_value == expected_value
+        ), f"Expected {prop} to be {expected_value}, got {actual_value} instead."
+
+
+async def test_get_me_timeout(responses: aioresponses) -> None:
     """Test timeout during get me."""
+    responses.post(
+        "https://auth.tado.com/oauth/token",
+        payload={
+            "access_token": "test_access_token",
+            "expires_in": 3600,
+            "refresh_token": "test_refresh_token",
+            "token_type": "bearer",
+        },
+        status=200,
+    )
+    responses.post(
+        TADO_TOKEN_URL,
+        status=200,
+        payload={
+            "access_token": "test_access_token",
+            "expires_in": 3600,
+            "refresh_token": "test_refresh_token",
+        },
+    )
+    responses.get(
+        f"{TADO_API_URL}/me",
+        status=200,
+        body=load_fixture("me.json"),
+    )
 
     # Faking a timeout by sleeping
-    async def response_handler(_: str, **_kwargs: Any) -> CallbackResult:
+    async def response_handler(_: str, **_kwargs: Any) -> CallbackResult:  # pylint: disable=unused-argument
         """Response handler for this test."""
-        await asyncio.sleep(10)
+        await asyncio.sleep(1)  # Simulate a delay that exceeds the request timeout
         return CallbackResult(body="Goodmorning!")
 
     responses.get(
         f"{TADO_API_URL}/homes/1/devices",
+        body=load_fixture("devices.json"),
         callback=response_handler,
     )
 
-    with pytest.raises(TadoConnectionError):
-        await python_tado.get_devices()
-
-
-async def test_close_session() -> None:
-    """Test not closing the session when the session does not exist."""
-    tado = Tado(username="username", password="password")
-    tado._close_session = True
-    await tado.close()
+    async with aiohttp.ClientSession() as session, Tado(
+        username="username", password="password", request_timeout=0, session=session
+    ) as tado:
+        with pytest.raises(TadoConnectionError):
+            assert await tado.get_devices()

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Any
 
 from mashumaro import field_options
 from mashumaro.mixins.orjson import DataClassORJSONMixin
@@ -187,13 +188,23 @@ class Precision(DataClassORJSONMixin):
 
 
 @dataclass
+class InsideTemperature(DataClassORJSONMixin):
+    """InsideTemperature model represents the temperature in Celsius and Fahrenheit."""
+
+    celsius: float
+    fahrenheit: float
+    precision: Precision
+    type: str | None = None
+    timestamp: str | None = None
+
+
+@dataclass
 class Temperature(DataClassORJSONMixin):
     """Temperature model represents the temperature in Celsius and Fahrenheit."""
 
     celsius: float
     fahrenheit: float
     type: str | None = None
-    precision: Precision | None = None
     timestamp: str | None = None
 
 
@@ -283,6 +294,19 @@ class Setting(DataClassORJSONMixin):
     power: str
     mode: str | None = None
     temperature: Temperature | None = None
+    fan_speed: str | None = field(
+        default=None, metadata=field_options(alias="fanSpeed")
+    )
+    fan_level: str | None = field(
+        default=None, metadata=field_options(alias="fanLevel")
+    )
+    swing: str | None = None
+    vertical_swing: str | None = field(
+        default=None, metadata=field_options(alias="verticalSwing")
+    )
+    horizontal_swing: str | None = field(
+        default=None, metadata=field_options(alias="horizontalSwing")
+    )
 
 
 @dataclass
@@ -291,7 +315,20 @@ class Overlay(DataClassORJSONMixin):
 
     type: str
     setting: Setting
-    termination: dict[str, str]
+    termination: Termination | None = None
+    projected_expiry: str | None = field(
+        default=None, metadata=field_options(alias="projectedExpiry")
+    )
+
+
+@dataclass
+class Termination(DataClassORJSONMixin):
+    """Termination model represents the termination settings of a zone."""
+
+    type: str
+    type_skill_based_app: str | None = field(
+        default=None, metadata=field_options(alias="typeSkillBasedApp")
+    )
     projected_expiry: str | None = field(
         default=None, metadata=field_options(alias="projectedExpiry")
     )
@@ -319,6 +356,8 @@ class HeatingPower(DataClassORJSONMixin):
     type: str
     percentage: float
     timestamp: str
+    # Check if this is still used!
+    value: str | None = None
 
 
 @dataclass
@@ -343,7 +382,7 @@ class Humidity(DataClassORJSONMixin):
 class SensorDataPoints(DataClassORJSONMixin):
     """SensorDataPoints model represents the sensor data points."""
 
-    inside_temperature: Temperature = field(
+    inside_temperature: InsideTemperature = field(
         metadata=field_options(alias="insideTemperature")
     )
     humidity: Humidity
@@ -354,13 +393,9 @@ class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attr
     """ZoneState model represents the state of a zone."""
 
     setting: Setting
-    overlay: Overlay
     link: Link
     activity_data_points: ActivityDataPoints = field(
         metadata=field_options(alias="activityDataPoints")
-    )
-    sensor_data_points: SensorDataPoints = field(
-        metadata=field_options(alias="sensorDataPoints")
     )
     tado_mode: str = field(metadata=field_options(alias="tadoMode"))
     geolocation_override: bool = field(
@@ -371,15 +406,44 @@ class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attr
         metadata=field_options(alias="nextTimeBlock")
     )
 
+    sensor_data_points: SensorDataPoints | dict[Any, Any] = field(
+        default_factory=dict, metadata=field_options(alias="sensorDataPoints")
+    )
+    overlay: Overlay | None = None
     geolocation_override_disable_time: str | None = field(
         default=None, metadata=field_options(alias="geolocationOverrideDisableTime")
     )
     preparation: str | None = None
-    open_window: str | None = field(
+    open_window: OpenWindow | None = field(
         default=None, metadata=field_options(alias="openWindow")
     )
     next_schedule_change: NextScheduleChange | None = field(
         default=None, metadata=field_options(alias="nextScheduleChange")
+    )
+    termination_condition: TerminationCondition | None = field(
+        default=None, metadata=field_options(alias="terminationCondition")
+    )
+
+
+@dataclass
+class OpenWindow(DataClassORJSONMixin):
+    """OpenWindow model represents the open window settings of a zone."""
+
+    detected_time: str = field(metadata=field_options(alias="detectedTime"))
+    duration_in_seconds: int = field(metadata=field_options(alias="durationInSeconds"))
+    expiry: str
+    remaining_time_in_seconds: int = field(
+        metadata=field_options(alias="remainingTimeInSeconds")
+    )
+
+
+@dataclass
+class TerminationCondition(DataClassORJSONMixin):
+    """TerminationCondition model represents the termination condition."""
+
+    type: str | None = None
+    duration_in_seconds: int | None = field(
+        default=None, metadata=field_options(alias="durationInSeconds")
     )
 
 
