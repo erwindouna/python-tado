@@ -382,7 +382,6 @@ class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attr
     """ZoneState model represents the state of a zone."""
 
     setting: Setting
-    overlay: Overlay
     link: Link
     activity_data_points: ActivityDataPoints = field(
         metadata=field_options(alias="activityDataPoints")
@@ -399,6 +398,7 @@ class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attr
         metadata=field_options(alias="nextTimeBlock")
     )
 
+    overlay: Overlay | None = None
     geolocation_override_disable_time: str | None = field(
         default=None, metadata=field_options(alias="geolocationOverrideDisableTime")
     )
@@ -412,8 +412,6 @@ class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attr
     termination_condition: TerminationCondition | None = field(
         default=None, metadata=field_options(alias="terminationCondition")
     )
-
-    # Updated data from the callback
 
 
 @dataclass

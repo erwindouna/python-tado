@@ -1,6 +1,7 @@
 """Tests for the Python Tado."""
 
 import asyncio
+import os
 import time
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
@@ -379,6 +380,31 @@ async def test_request_client_response_error(python_tado: Tado) -> None:
         TadoBadRequestError
     ):
         await python_tado._request("me")
+
+
+fixtures_files = [
+    f for f in os.listdir("tests/fixtures/zone_state") if f.endswith(".json")
+]
+
+
+@pytest.mark.parametrize(
+    ("fixture_file"),
+    fixtures_files,
+)
+async def test_get_zone_state(
+    fixture_file: str,
+    python_tado: Tado,
+    responses: aioresponses,
+    snapshot: SnapshotAssertion,
+) -> None:
+    """Test get zone states."""
+    zone_id = 1
+    responses.get(
+        f"{TADO_API_URL}/homes/1/zones/{zone_id}/state",
+        status=200,
+        body=load_fixture(fixture_file, folder="zone_state"),
+    )
+    assert await python_tado.get_zone_state(zone_id) == snapshot
 
 
 async def test_get_me_timeout(responses: aioresponses) -> None:
