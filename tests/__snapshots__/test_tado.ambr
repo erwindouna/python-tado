@@ -219,10 +219,6 @@
     'outside_temperature': dict({
       'celsius': 2.29,
       'fahrenheit': 36.12,
-      'precision': dict({
-        'celsius': 0.01,
-        'fahrenheit': 0.01,
-      }),
       'timestamp': '2024-02-27T20:29:49.360Z',
       'type': 'TEMPERATURE',
     }),
@@ -270,7 +266,6 @@
         'temperature': dict({
           'celsius': 16.11,
           'fahrenheit': 61.0,
-          'precision': None,
           'timestamp': None,
           'type': None,
         }),
@@ -313,7 +308,6 @@
       'temperature': dict({
         'celsius': 16.11,
         'fahrenheit': 61.0,
-        'precision': None,
         'timestamp': None,
         'type': None,
       }),
@@ -323,6 +317,106 @@
     'tado_mode': 'HOME',
     'termination_condition': None,
   })
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][ac_power]
+  'OFF'
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][ac_power_timestamp]
+  '2020-03-06T17:38:30.302Z'
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][available]
+  True
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][connection]
+  None
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][current_fan_speed]
+  'AUTO'
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][current_humidity]
+  50.4
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][current_humidity_timestamp]
+  '2020-03-06T18:06:09.546Z'
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][current_hvac_action]
+  'IDLE'
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][current_hvac_mode]
+  'HEAT'
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][current_temp]
+  21.4
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][current_temp_timestamp]
+  '2020-03-06T18:06:09.546Z'
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][heating_power_percentage]
+  None
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][heating_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][open_window_attr]
+  dict({
+  })
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][overlay_termination_type]
+  'TADO_MODE'
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][power]
+  'ON'
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[hvac_action_heat.json][target_temp]
+  16.11
 # ---
 # name: test_get_zone_state[smartac3.auto_mode.json]
   dict({
@@ -398,6 +492,106 @@
     'termination_condition': None,
   })
 # ---
+# name: test_get_zone_state[smartac3.auto_mode.json][ac_power]
+  'ON'
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][ac_power_timestamp]
+  '2020-03-05T03:56:38.627Z'
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][available]
+  True
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][connection]
+  None
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][current_fan_speed]
+  'AUTO'
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][current_humidity]
+  62.5
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][current_humidity_timestamp]
+  '2020-03-05T03:55:38.160Z'
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][current_hvac_action]
+  'COOLING'
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][current_hvac_mode]
+  'AUTO'
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][current_temp]
+  24.8
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][current_temp_timestamp]
+  '2020-03-05T03:55:38.160Z'
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][heating_power_percentage]
+  None
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][heating_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][open_window_attr]
+  dict({
+  })
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][overlay_termination_type]
+  'TADO_MODE'
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][power]
+  'ON'
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[smartac3.auto_mode.json][target_temp]
+  None
+# ---
 # name: test_get_zone_state[smartac3.cool_mode.json]
   dict({
     'activity_data_points': dict({
@@ -430,7 +624,6 @@
         'temperature': dict({
           'celsius': 17.78,
           'fahrenheit': 64.0,
-          'precision': None,
           'timestamp': None,
           'type': None,
         }),
@@ -473,7 +666,6 @@
       'temperature': dict({
         'celsius': 17.78,
         'fahrenheit': 64.0,
-        'precision': None,
         'timestamp': None,
         'type': None,
       }),
@@ -483,6 +675,106 @@
     'tado_mode': 'HOME',
     'termination_condition': None,
   })
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][ac_power]
+  'ON'
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][ac_power_timestamp]
+  '2020-03-05T04:01:07.162Z'
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][available]
+  True
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][connection]
+  None
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][current_fan_speed]
+  'AUTO'
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][current_humidity]
+  60.9
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][current_humidity_timestamp]
+  '2020-03-05T03:57:38.850Z'
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][current_hvac_action]
+  'COOLING'
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][current_hvac_mode]
+  'COOL'
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][current_temp]
+  24.76
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][current_temp_timestamp]
+  '2020-03-05T03:57:38.850Z'
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][heating_power_percentage]
+  None
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][heating_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][open_window_attr]
+  dict({
+  })
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][overlay_termination_type]
+  'TADO_MODE'
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][power]
+  'ON'
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[smartac3.cool_mode.json][target_temp]
+  17.78
 # ---
 # name: test_get_zone_state[smartac3.dry_mode.json]
   dict({
@@ -558,6 +850,106 @@
     'termination_condition': None,
   })
 # ---
+# name: test_get_zone_state[smartac3.dry_mode.json][ac_power]
+  'ON'
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][ac_power_timestamp]
+  '2020-03-05T04:02:40.867Z'
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][available]
+  True
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][connection]
+  None
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][current_fan_speed]
+  'AUTO'
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][current_humidity]
+  62.0
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][current_humidity_timestamp]
+  '2020-03-05T04:02:07.396Z'
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][current_hvac_action]
+  'DRYING'
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][current_hvac_mode]
+  'DRY'
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][current_temp]
+  25.01
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][current_temp_timestamp]
+  '2020-03-05T04:02:07.396Z'
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][heating_power_percentage]
+  None
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][heating_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][open_window_attr]
+  dict({
+  })
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][overlay_termination_type]
+  'TADO_MODE'
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][power]
+  'ON'
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[smartac3.dry_mode.json][target_temp]
+  None
+# ---
 # name: test_get_zone_state[smartac3.fan_mode.json]
   dict({
     'activity_data_points': dict({
@@ -632,6 +1024,106 @@
     'termination_condition': None,
   })
 # ---
+# name: test_get_zone_state[smartac3.fan_mode.json][ac_power]
+  'ON'
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][ac_power_timestamp]
+  '2020-03-05T04:03:44.328Z'
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][available]
+  True
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][connection]
+  None
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][current_fan_speed]
+  'AUTO'
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][current_humidity]
+  62.0
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][current_humidity_timestamp]
+  '2020-03-05T04:02:07.396Z'
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][current_hvac_action]
+  'FAN'
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][current_hvac_mode]
+  'FAN'
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][current_temp]
+  25.01
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][current_temp_timestamp]
+  '2020-03-05T04:02:07.396Z'
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][heating_power_percentage]
+  None
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][heating_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][open_window_attr]
+  dict({
+  })
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][overlay_termination_type]
+  'TADO_MODE'
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][power]
+  'ON'
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[smartac3.fan_mode.json][target_temp]
+  None
+# ---
 # name: test_get_zone_state[smartac3.heat_mode.json]
   dict({
     'activity_data_points': dict({
@@ -664,7 +1156,6 @@
         'temperature': dict({
           'celsius': 16.11,
           'fahrenheit': 61.0,
-          'precision': None,
           'timestamp': None,
           'type': None,
         }),
@@ -707,7 +1198,6 @@
       'temperature': dict({
         'celsius': 16.11,
         'fahrenheit': 61.0,
-        'precision': None,
         'timestamp': None,
         'type': None,
       }),
@@ -717,6 +1207,106 @@
     'tado_mode': 'HOME',
     'termination_condition': None,
   })
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][ac_power]
+  'ON'
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][ac_power_timestamp]
+  '2020-03-05T03:59:36.390Z'
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][available]
+  True
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][connection]
+  None
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][current_fan_speed]
+  'AUTO'
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][current_humidity]
+  60.9
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][current_humidity_timestamp]
+  '2020-03-05T03:57:38.850Z'
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][current_hvac_action]
+  'HEATING'
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][current_hvac_mode]
+  'HEAT'
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][current_temp]
+  24.76
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][current_temp_timestamp]
+  '2020-03-05T03:57:38.850Z'
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][heating_power_percentage]
+  None
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][heating_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][open_window_attr]
+  dict({
+  })
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][overlay_termination_type]
+  'TADO_MODE'
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][power]
+  'ON'
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[smartac3.heat_mode.json][target_temp]
+  16.11
 # ---
 # name: test_get_zone_state[smartac3.hvac_off.json]
   dict({
@@ -792,6 +1382,106 @@
     'termination_condition': None,
   })
 # ---
+# name: test_get_zone_state[smartac3.hvac_off.json][ac_power]
+  'OFF'
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][ac_power_timestamp]
+  '2020-02-29T05:34:10.318Z'
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][available]
+  True
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][connection]
+  None
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][current_fan_speed]
+  'OFF'
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][current_humidity]
+  48.2
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][current_humidity_timestamp]
+  '2020-03-05T01:21:44.089Z'
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][current_hvac_action]
+  'OFF'
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][current_hvac_mode]
+  'OFF'
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][current_temp]
+  21.44
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][current_temp_timestamp]
+  '2020-03-05T01:21:44.089Z'
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][heating_power_percentage]
+  None
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][heating_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][is_away]
+  True
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][open_window_attr]
+  dict({
+  })
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][overlay_termination_type]
+  'MANUAL'
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][power]
+  'OFF'
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][tado_mode]
+  'AWAY'
+# ---
+# name: test_get_zone_state[smartac3.hvac_off.json][target_temp]
+  None
+# ---
 # name: test_get_zone_state[smartac3.manual_off.json]
   dict({
     'activity_data_points': dict({
@@ -866,6 +1556,106 @@
     'termination_condition': None,
   })
 # ---
+# name: test_get_zone_state[smartac3.manual_off.json][ac_power]
+  'OFF'
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][ac_power_timestamp]
+  '2020-03-05T04:05:08.804Z'
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][available]
+  True
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][connection]
+  None
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][current_fan_speed]
+  'OFF'
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][current_humidity]
+  62.0
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][current_humidity_timestamp]
+  '2020-03-05T04:02:07.396Z'
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][current_hvac_action]
+  'OFF'
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][current_hvac_mode]
+  'OFF'
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][current_temp]
+  25.01
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][current_temp_timestamp]
+  '2020-03-05T04:02:07.396Z'
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][heating_power_percentage]
+  None
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][heating_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][open_window_attr]
+  dict({
+  })
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][overlay_termination_type]
+  'MANUAL'
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][power]
+  'OFF'
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[smartac3.manual_off.json][target_temp]
+  None
+# ---
 # name: test_get_zone_state[smartac3.offline.json]
   dict({
     'activity_data_points': dict({
@@ -898,7 +1688,6 @@
         'temperature': dict({
           'celsius': 17.78,
           'fahrenheit': 64.0,
-          'precision': None,
           'timestamp': None,
           'type': None,
         }),
@@ -941,7 +1730,6 @@
       'temperature': dict({
         'celsius': 17.78,
         'fahrenheit': 64.0,
-        'precision': None,
         'timestamp': None,
         'type': None,
       }),
@@ -951,6 +1739,106 @@
     'tado_mode': 'HOME',
     'termination_condition': None,
   })
+# ---
+# name: test_get_zone_state[smartac3.offline.json][ac_power]
+  'OFF'
+# ---
+# name: test_get_zone_state[smartac3.offline.json][ac_power_timestamp]
+  '2020-02-29T18:42:26.683Z'
+# ---
+# name: test_get_zone_state[smartac3.offline.json][available]
+  False
+# ---
+# name: test_get_zone_state[smartac3.offline.json][connection]
+  None
+# ---
+# name: test_get_zone_state[smartac3.offline.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[smartac3.offline.json][current_fan_speed]
+  'AUTO'
+# ---
+# name: test_get_zone_state[smartac3.offline.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.offline.json][current_humidity]
+  61.6
+# ---
+# name: test_get_zone_state[smartac3.offline.json][current_humidity_timestamp]
+  '2020-03-03T21:23:57.846Z'
+# ---
+# name: test_get_zone_state[smartac3.offline.json][current_hvac_action]
+  'IDLE'
+# ---
+# name: test_get_zone_state[smartac3.offline.json][current_hvac_mode]
+  'COOL'
+# ---
+# name: test_get_zone_state[smartac3.offline.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.offline.json][current_temp]
+  25.05
+# ---
+# name: test_get_zone_state[smartac3.offline.json][current_temp_timestamp]
+  '2020-03-03T21:23:57.846Z'
+# ---
+# name: test_get_zone_state[smartac3.offline.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.offline.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[smartac3.offline.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[smartac3.offline.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[smartac3.offline.json][heating_power_percentage]
+  None
+# ---
+# name: test_get_zone_state[smartac3.offline.json][heating_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[smartac3.offline.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[smartac3.offline.json][link]
+  'OFFLINE'
+# ---
+# name: test_get_zone_state[smartac3.offline.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[smartac3.offline.json][open_window_attr]
+  dict({
+  })
+# ---
+# name: test_get_zone_state[smartac3.offline.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[smartac3.offline.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[smartac3.offline.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[smartac3.offline.json][overlay_termination_type]
+  'TADO_MODE'
+# ---
+# name: test_get_zone_state[smartac3.offline.json][power]
+  'ON'
+# ---
+# name: test_get_zone_state[smartac3.offline.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[smartac3.offline.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[smartac3.offline.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[smartac3.offline.json][target_temp]
+  17.78
 # ---
 # name: test_get_zone_state[smartac3.smart_mode.json]
   dict({
@@ -1002,7 +1890,6 @@
       'temperature': dict({
         'celsius': 20.0,
         'fahrenheit': 68.0,
-        'precision': None,
         'timestamp': None,
         'type': None,
       }),
@@ -1012,6 +1899,106 @@
     'tado_mode': 'HOME',
     'termination_condition': None,
   })
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][ac_power]
+  'OFF'
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][ac_power_timestamp]
+  '2020-03-05T03:52:22.253Z'
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][available]
+  True
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][connection]
+  None
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][current_fan_speed]
+  'AUTO'
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][current_humidity]
+  60.0
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][current_humidity_timestamp]
+  '2020-03-05T03:50:24.769Z'
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][current_hvac_action]
+  'IDLE'
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][current_hvac_mode]
+  'SMART_SCHEDULE'
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][current_temp]
+  24.43
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][current_temp_timestamp]
+  '2020-03-05T03:50:24.769Z'
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][heating_power_percentage]
+  None
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][heating_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][open_window_attr]
+  dict({
+  })
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][overlay_active]
+  False
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][power]
+  'ON'
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[smartac3.smart_mode.json][target_temp]
+  20.0
 # ---
 # name: test_get_zone_state[smartac3.turning_off.json]
   dict({
@@ -1087,6 +2074,106 @@
     'termination_condition': None,
   })
 # ---
+# name: test_get_zone_state[smartac3.turning_off.json][ac_power]
+  'ON'
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][ac_power_timestamp]
+  '2020-03-06T19:05:21.835Z'
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][available]
+  True
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][connection]
+  None
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][current_fan_speed]
+  'OFF'
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][current_humidity]
+  49.2
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][current_humidity_timestamp]
+  '2020-03-06T19:06:13.185Z'
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][current_hvac_action]
+  'OFF'
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][current_hvac_mode]
+  'OFF'
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][current_temp]
+  21.4
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][current_temp_timestamp]
+  '2020-03-06T19:06:13.185Z'
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][heating_power_percentage]
+  None
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][heating_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][open_window_attr]
+  dict({
+  })
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][overlay_termination_type]
+  'MANUAL'
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][power]
+  'OFF'
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[smartac3.turning_off.json][target_temp]
+  None
+# ---
 # name: test_get_zone_state[smartac3.with_swing.json]
   dict({
     'activity_data_points': dict({
@@ -1113,7 +2200,6 @@
         'temperature': dict({
           'celsius': 23.0,
           'fahrenheit': 73.4,
-          'precision': None,
           'timestamp': None,
           'type': None,
         }),
@@ -1156,7 +2242,6 @@
       'temperature': dict({
         'celsius': 20.0,
         'fahrenheit': 68.0,
-        'precision': None,
         'timestamp': None,
         'type': None,
       }),
@@ -1166,6 +2251,106 @@
     'tado_mode': 'HOME',
     'termination_condition': None,
   })
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][ac_power]
+  'ON'
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][ac_power_timestamp]
+  '2020-03-27T23:02:22.260Z'
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][available]
+  True
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][connection]
+  None
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][current_fan_speed]
+  'AUTO'
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][current_humidity]
+  42.3
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][current_humidity_timestamp]
+  '2020-03-28T02:09:27.830Z'
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][current_hvac_action]
+  'HEATING'
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][current_hvac_mode]
+  'SMART_SCHEDULE'
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][current_swing_mode]
+  'ON'
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][current_temp]
+  20.88
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][current_temp_timestamp]
+  '2020-03-28T02:09:27.830Z'
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][heating_power_percentage]
+  None
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][heating_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][open_window_attr]
+  dict({
+  })
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][overlay_active]
+  False
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][power]
+  'ON'
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[smartac3.with_swing.json][target_temp]
+  20.0
 # ---
 # name: test_get_zone_state[tadov2.heating.auto_mode.json]
   dict({
@@ -1194,7 +2379,6 @@
         'temperature': dict({
           'celsius': 21.0,
           'fahrenheit': 69.8,
-          'precision': None,
           'timestamp': None,
           'type': None,
         }),
@@ -1237,7 +2421,6 @@
       'temperature': dict({
         'celsius': 20.0,
         'fahrenheit': 68.0,
-        'precision': None,
         'timestamp': None,
         'type': None,
       }),
@@ -1247,6 +2430,106 @@
     'tado_mode': 'HOME',
     'termination_condition': None,
   })
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][ac_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][ac_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][available]
+  True
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][connection]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][current_fan_speed]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][current_humidity]
+  45.2
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][current_humidity_timestamp]
+  '2020-03-10T07:44:11.947Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][current_hvac_action]
+  'IDLE'
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][current_hvac_mode]
+  'SMART_SCHEDULE'
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][current_temp]
+  20.65
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][current_temp_timestamp]
+  '2020-03-10T07:44:11.947Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][heating_power_percentage]
+  0.0
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][heating_power_timestamp]
+  '2020-03-10T07:47:45.978Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][open_window_attr]
+  dict({
+  })
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][overlay_active]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][power]
+  'ON'
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[tadov2.heating.auto_mode.json][target_temp]
+  20.0
 # ---
 # name: test_get_zone_state[tadov2.heating.manual_mode.json]
   dict({
@@ -1275,7 +2558,6 @@
         'temperature': dict({
           'celsius': 21.0,
           'fahrenheit': 69.8,
-          'precision': None,
           'timestamp': None,
           'type': None,
         }),
@@ -1300,7 +2582,6 @@
         'temperature': dict({
           'celsius': 20.5,
           'fahrenheit': 68.9,
-          'precision': None,
           'timestamp': None,
           'type': None,
         }),
@@ -1343,7 +2624,6 @@
       'temperature': dict({
         'celsius': 20.5,
         'fahrenheit': 68.9,
-        'precision': None,
         'timestamp': None,
         'type': None,
       }),
@@ -1353,6 +2633,106 @@
     'tado_mode': 'HOME',
     'termination_condition': None,
   })
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][ac_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][ac_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][available]
+  True
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][connection]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][current_fan_speed]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][current_humidity]
+  45.2
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][current_humidity_timestamp]
+  '2020-03-10T07:44:11.947Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][current_hvac_action]
+  'IDLE'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][current_hvac_mode]
+  'OFF'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][current_temp]
+  20.65
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][current_temp_timestamp]
+  '2020-03-10T07:44:11.947Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][heating_power_percentage]
+  0.0
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][heating_power_timestamp]
+  '2020-03-10T07:47:45.978Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][open_window_attr]
+  dict({
+  })
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][overlay_termination_type]
+  'MANUAL'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][power]
+  'ON'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode.json][target_temp]
+  20.5
 # ---
 # name: test_get_zone_state[tadov2.heating.off_mode.json]
   dict({
@@ -1381,7 +2761,6 @@
         'temperature': dict({
           'celsius': 21.0,
           'fahrenheit': 69.8,
-          'precision': None,
           'timestamp': None,
           'type': None,
         }),
@@ -1447,6 +2826,106 @@
     'tado_mode': 'HOME',
     'termination_condition': None,
   })
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][ac_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][ac_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][available]
+  True
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][connection]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][current_fan_speed]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][current_humidity]
+  45.2
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][current_humidity_timestamp]
+  '2020-03-10T07:44:11.947Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][current_hvac_action]
+  'OFF'
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][current_hvac_mode]
+  'OFF'
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][current_temp]
+  20.65
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][current_temp_timestamp]
+  '2020-03-10T07:44:11.947Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][heating_power_percentage]
+  0.0
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][heating_power_timestamp]
+  '2020-03-10T07:47:45.978Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][open_window_attr]
+  dict({
+  })
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][overlay_termination_type]
+  'MANUAL'
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][power]
+  'OFF'
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[tadov2.heating.off_mode.json][target_temp]
+  None
 # ---
 # name: test_get_zone_states_ac_power[zone_states_ac_power.dry.json]
   list([
@@ -1638,7 +3117,6 @@
               'temperature': dict({
                 'celsius': 18.0,
                 'fahrenheit': 64.4,
-                'precision': None,
                 'timestamp': None,
                 'type': None,
               }),
@@ -1663,7 +3141,6 @@
               'temperature': dict({
                 'celsius': 17.0,
                 'fahrenheit': 62.6,
-                'precision': None,
                 'timestamp': None,
                 'type': None,
               }),
@@ -1706,7 +3183,6 @@
             'temperature': dict({
               'celsius': 17.0,
               'fahrenheit': 62.6,
-              'precision': None,
               'timestamp': None,
               'type': None,
             }),
@@ -1748,7 +3224,6 @@
               'temperature': dict({
                 'celsius': 15.0,
                 'fahrenheit': 59.0,
-                'precision': None,
                 'timestamp': None,
                 'type': None,
               }),
@@ -1791,7 +3266,6 @@
             'temperature': dict({
               'celsius': 15.0,
               'fahrenheit': 59.0,
-              'precision': None,
               'timestamp': None,
               'type': None,
             }),
@@ -1827,7 +3301,6 @@
               'temperature': dict({
                 'celsius': 18.0,
                 'fahrenheit': 64.4,
-                'precision': None,
                 'timestamp': None,
                 'type': None,
               }),
@@ -1852,7 +3325,6 @@
               'temperature': dict({
                 'celsius': 17.0,
                 'fahrenheit': 62.6,
-                'precision': None,
                 'timestamp': None,
                 'type': None,
               }),
@@ -1895,7 +3367,6 @@
             'temperature': dict({
               'celsius': 17.0,
               'fahrenheit': 62.6,
-              'precision': None,
               'timestamp': None,
               'type': None,
             }),
@@ -1931,7 +3402,6 @@
               'temperature': dict({
                 'celsius': 18.0,
                 'fahrenheit': 64.4,
-                'precision': None,
                 'timestamp': None,
                 'type': None,
               }),

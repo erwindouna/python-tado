@@ -580,103 +580,88 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
     async def update_zone_data(self, data: ZoneState) -> None:  # pylint: disable=too-many-branches
         """Update the zone data."""
-        if data.sensor_data_points is not None:
-            if data.sensor_data_points.inside_temperature is not None:
-                temperature = float(data.sensor_data_points.inside_temperature.celsius)
-                self._current_temp = temperature
-                self._current_temp_timestamp = (
-                    data.sensor_data_points.inside_temperature.timestamp
-                )
-                if data.sensor_data_points.inside_temperature.precision is not None:
-                    self._precision = (
-                        data.sensor_data_points.inside_temperature.precision.celsius
-                    )
+        # TODO: fix this when the water heater information comes in. Water heaters appear to have an empty dict
+        if hasattr(data, "sensor_data_points") and data.sensor_data_points is not None:
+            temperature = float(data.sensor_data_points.inside_temperature.celsius)
+            self._current_temp = temperature
+            self._current_temp_timestamp = (
+                data.sensor_data_points.inside_temperature.timestamp
+            )
+            self._precision = (
+                data.sensor_data_points.inside_temperature.precision.celsius
+            )
 
-            if data.sensor_data_points.humidity is not None:
-                humidity = float(data.sensor_data_points.humidity.percentage)
-                self._current_humidity = humidity
-                self._current_humidity_timestamp = (
-                    data.sensor_data_points.humidity.timestamp
-                )
+            humidity = float(data.sensor_data_points.humidity.percentage)
+            self._current_humidity = humidity
+            self._current_humidity_timestamp = (
+                data.sensor_data_points.humidity.timestamp
+            )
 
-        if data.tado_mode is not None:
             self._is_away = data.tado_mode == CONST_AWAY
             self._tado_mode = data.tado_mode
-
-        if data.link is not None:
             self._link = data.link.state
+            self._current_hvac_action = CONST_HVAC_OFF
 
-        self._current_hvac_action = CONST_HVAC_OFF
+        # Temperature setting will not exist when device is off
+        if (
+            hasattr(data.setting, "temperature")
+            and data.setting.temperature is not None
+        ):
+            setting = float(data.setting.temperature.celsius)
+            self._target_temp = setting
 
-        if data.setting is not None:
-            # Temperature setting will not exist when device is off
+        self._current_fan_speed = None
+        self._current_fan_level = None
+        # If there is no overlay, the mode will always be
+        # "SMART_SCHEDULE"
+        self._current_hvac_mode = CONST_MODE_OFF
+        self._current_swing_mode = CONST_MODE_OFF
+        self._current_vertical_swing_mode = CONST_VERTICAL_SWING_OFF
+        self._current_horizontal_swing_mode = CONST_HORIZONTAL_SWING_OFF
+
+        if data.setting.mode is not None:
+            # V3 devices use mode
+            self._current_hvac_mode = data.setting.mode
+
+        self._current_swing_mode = data.setting.swing
+        self._current_vertical_swing_mode = data.setting.vertical_swing
+        self._current_horizontal_swing_mode = data.setting.horizontal_swing
+
+        self._power = data.setting.power
+        if self._power == "ON":
+            self._current_hvac_action = CONST_HVAC_IDLE
             if (
-                hasattr(data.setting, "temperature")
-                and data.setting.temperature is not None
+                not hasattr(data.setting, "mode")
+                and hasattr(data.setting, "type")
+                and data.setting.type in TADO_HVAC_ACTION_TO_MODES
             ):
-                setting = float(data.setting.temperature.celsius)
-                self._target_temp = setting
+                # V2 devices do not have mode so we have to figure it out from type
+                self._current_hvac_mode = TADO_HVAC_ACTION_TO_MODES[data.setting.type]
 
-            self._current_fan_speed = None
-            self._current_fan_level = None
-            # If there is no overlay, the mode will always be
-            # "SMART_SCHEDULE"
-            self._current_hvac_mode = CONST_MODE_OFF
-            self._current_swing_mode = CONST_MODE_OFF
-            self._current_vertical_swing_mode = CONST_VERTICAL_SWING_OFF
-            self._current_horizontal_swing_mode = CONST_HORIZONTAL_SWING_OFF
+        # Not all devices have fans
+        if data.setting.fan_speed is not None:
+            self._current_fan_speed = (
+                data.setting.fan_speed
+                if hasattr(setting, "fan_speed")
+                else CONST_FAN_AUTO
+                if self._power == "ON"
+                else CONST_FAN_OFF
+            )
+        elif (
+            data.setting.type is not None and data.setting.type == TYPE_AIR_CONDITIONING
+        ):
+            self._current_fan_speed = (
+                CONST_FAN_AUTO if self._power == "ON" else CONST_FAN_OFF
+            )
 
-            if data.setting.mode is not None:
-                # v3 devices use mode
-                self._current_hvac_mode = data.setting.mode
-
-            if data.setting.swing is not None:
-                self._current_swing_mode = data.setting.swing
-
-            if data.setting.vertical_swing is not None:
-                self._current_vertical_swing_mode = data.setting.vertical_swing
-
-            if data.setting.horizontal_swing is not None:
-                self._current_horizontal_swing_mode = data.setting.horizontal_swing
-
-            self._power = data.setting.power
-            if self._power == "ON":
-                self._current_hvac_action = CONST_HVAC_IDLE
-                if (
-                    not hasattr(data.setting, "mode")
-                    and hasattr(data.setting, "type")
-                    and data.setting.type in TADO_HVAC_ACTION_TO_MODES
-                ):
-                    # v2 devices do not have mode so we have to figure it out from type
-                    self._current_hvac_mode = TADO_HVAC_ACTION_TO_MODES[
-                        data.setting.type
-                    ]
-
-            # Not all devices have fans
-            if data.setting.fan_speed is not None:
-                self._current_fan_speed = (
-                    data.setting.fan_speed
-                    if hasattr(setting, "fan_speed")
-                    else CONST_FAN_AUTO
-                    if self._power == "ON"
-                    else CONST_FAN_OFF
-                )
-            elif (
-                data.setting.type is not None
-                and data.setting.type == TYPE_AIR_CONDITIONING
-            ):
-                self._current_fan_speed = (
-                    CONST_FAN_AUTO if self._power == "ON" else CONST_FAN_OFF
-                )
-
-            if data.setting.fan_level is not None:
-                self._current_fan_level = (
-                    data.setting.fan_level
-                    if hasattr(data.setting, "fan_level")
-                    else CONST_FAN_SPEED_AUTO
-                    if self._power == "ON"
-                    else CONST_FAN_SPEED_OFF
-                )
+        if data.setting.fan_level is not None:
+            self._current_fan_level = (
+                data.setting.fan_level
+                if hasattr(data.setting, "fan_level")
+                else CONST_FAN_SPEED_AUTO
+                if self._power == "ON"
+                else CONST_FAN_SPEED_OFF
+            )
 
         self._preparation = (
             hasattr(data, "preparation") and data.preparation is not None

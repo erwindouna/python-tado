@@ -187,13 +187,23 @@ class Precision(DataClassORJSONMixin):
 
 
 @dataclass
+class InsideTemperature(DataClassORJSONMixin):
+    """InsideTemperature model represents the temperature in Celsius and Fahrenheit."""
+
+    celsius: float
+    fahrenheit: float
+    precision: Precision
+    type: str | None = None
+    timestamp: str | None = None
+
+
+@dataclass
 class Temperature(DataClassORJSONMixin):
     """Temperature model represents the temperature in Celsius and Fahrenheit."""
 
     celsius: float
     fahrenheit: float
     type: str | None = None
-    precision: Precision | None = None
     timestamp: str | None = None
 
 
@@ -371,7 +381,7 @@ class Humidity(DataClassORJSONMixin):
 class SensorDataPoints(DataClassORJSONMixin):
     """SensorDataPoints model represents the sensor data points."""
 
-    inside_temperature: Temperature = field(
+    inside_temperature: InsideTemperature = field(
         metadata=field_options(alias="insideTemperature")
     )
     humidity: Humidity
