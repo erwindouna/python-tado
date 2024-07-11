@@ -449,9 +449,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
     async def get_zone_state(self, zone_id: int) -> ZoneState:
         """Get the zone state."""
         response = await self._request(f"homes/{self._home_id}/zones/{zone_id}/state")
-        # First let it update the data
         await self.update_zone_data(ZoneState.from_json(response))
-        # Then return the final data
         return ZoneState.from_json(response)
 
     async def get_weather(self) -> Weather:

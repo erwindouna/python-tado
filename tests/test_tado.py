@@ -411,7 +411,7 @@ async def test_get_me_timeout(responses: aioresponses) -> None:
     # Faking a timeout by sleeping
     async def response_handler(_: str, **_kwargs: Any) -> CallbackResult:  # pylint: disable=unused-argument
         """Response handler for this test."""
-        await asyncio.sleep(2)  # Simulate a delay that exceeds the request timeout
+        await asyncio.sleep(1)  # Simulate a delay that exceeds the request timeout
         return CallbackResult(body="Goodmorning!")
 
     responses.get(
@@ -421,7 +421,7 @@ async def test_get_me_timeout(responses: aioresponses) -> None:
     )
 
     async with aiohttp.ClientSession() as session, Tado(
-        username="username", password="password", request_timeout=1, session=session
+        username="username", password="password", request_timeout=0, session=session
     ) as tado:
         with pytest.raises(TadoConnectionError):
             assert await tado.get_devices()
