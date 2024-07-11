@@ -11,7 +11,6 @@
 [![Quality Gate Status][sonarcloud-shield]][sonarcloud]
 [![Open in Dev Containers][devcontainer-shield]][devcontainer]
 
-
 Asynchronous Python client to control Tado devices.
 
 ## About

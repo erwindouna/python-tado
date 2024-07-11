@@ -5,24 +5,35 @@
   "preparation": null,
   "setting": {
     "type": "HEATING",
-    "power": "OFF",
-    "temperature": null
+    "power": "ON",
+
+    "temperature": {
+      "celsius": 20.5,
+      "fahrenheit": 68.9
+    }
   },
   "overlayType": "MANUAL",
   "overlay": {
     "type": "MANUAL",
     "setting": {
       "type": "HEATING",
-      "power": "OFF",
-      "temperature": null
-    },
-    "termination": {
-      "type": "MANUAL",
-      "typeSkillBasedApp": "MANUAL",
-      "projectedExpiry": null
+      "power": "ON",
+      "temperature": {
+        "celsius": 20.5,
+        "fahrenheit": 68.9
+      }
     }
   },
-  "openWindow": null,
+  "terminationCondition": {
+    "type": "MANUAL",
+    "durationInSeconds": 300
+  },
+  "openWindow": {
+    "detectedTime": "2020-03-10T07:44:11.947Z",
+    "durationInSeconds": 300,
+    "expiry": "2020-03-10T07:49:11.947Z",
+    "remainingTimeInSeconds": 60
+  },
   "nextScheduleChange": {
     "start": "2020-03-10T17:00:00Z",
     "setting": {
@@ -43,7 +54,7 @@
   "activityDataPoints": {
     "heatingPower": {
       "type": "PERCENTAGE",
-      "percentage": 0.0,
+      "percentage": 20.0,
       "timestamp": "2020-03-10T07:47:45.978Z"
     }
   },

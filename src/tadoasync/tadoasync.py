@@ -47,6 +47,8 @@ from tadoasync.models import (
     GetMe,
     HomeState,
     MobileDevice,
+    OpenWindow,
+    SensorDataPoints,
     TemperatureOffset,
     Weather,
     Zone,
@@ -139,7 +141,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self._preparation: bool | None = None
         self._open_window: bool | None = None
         self._open_window_detected: bool | None = None
-        self._open_window_attr: dict[str, str] | None = None
+        self._open_window_attr: OpenWindow | None = None
         self._is_away: bool = False
         self._link: str | None = None
 
@@ -159,7 +161,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         return self._open_window_detected
 
     @property
-    def open_window_attr(self) -> dict[str, str] | None:
+    def open_window_attr(self) -> OpenWindow | None:
         """Window open attributes."""
         return self._open_window_attr
 
@@ -580,8 +582,11 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
     async def update_zone_data(self, data: ZoneState) -> None:  # pylint: disable=too-many-branches
         """Update the zone data."""
-        # TODO: fix this when the water heater information comes in. Water heaters appear to have an empty dict
-        if hasattr(data, "sensor_data_points") and data.sensor_data_points is not None:
+        if (isinstance(data.sensor_data_points, SensorDataPoints)) and (
+            hasattr(data, "sensor_data_points")
+            and data.sensor_data_points
+            and data.sensor_data_points != {}
+        ):
             temperature = float(data.sensor_data_points.inside_temperature.celsius)
             self._current_temp = temperature
             self._current_temp_timestamp = (
@@ -631,8 +636,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         if self._power == "ON":
             self._current_hvac_action = CONST_HVAC_IDLE
             if (
-                not hasattr(data.setting, "mode")
-                and hasattr(data.setting, "type")
+                data.setting.mode is None
+                and data.setting.type
                 and data.setting.type in TADO_HVAC_ACTION_TO_MODES
             ):
                 # V2 devices do not have mode so we have to figure it out from type
@@ -654,14 +659,13 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                 CONST_FAN_AUTO if self._power == "ON" else CONST_FAN_OFF
             )
 
-        if data.setting.fan_level is not None:
-            self._current_fan_level = (
-                data.setting.fan_level
-                if hasattr(data.setting, "fan_level")
-                else CONST_FAN_SPEED_AUTO
-                if self._power == "ON"
-                else CONST_FAN_SPEED_OFF
-            )
+        self._current_fan_level = (
+            data.setting.fan_level
+            if hasattr(data.setting, "fan_level")
+            else CONST_FAN_SPEED_AUTO
+            if self._power == "ON"
+            else CONST_FAN_SPEED_OFF
+        )
 
         self._preparation = (
             hasattr(data, "preparation") and data.preparation is not None
@@ -676,50 +680,41 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
         # Assuming data.open_window is of type 'str | dict[str, str] | None'
         # Never seen it but it could happen to be dict? Validate with Tado Devs
-        self._open_window_attr = {}
-        if self._open_window and isinstance(data.open_window, dict):
+        if self._open_window:
             self._open_window_attr = data.open_window
 
-        if data.activity_data_points is not None:
-            if data.activity_data_points.ac_power is not None:
-                self._ac_power = data.activity_data_points.ac_power.value
-                self._ac_power_timestamp = data.activity_data_points.ac_power.timestamp
-                if (
-                    data.activity_data_points.ac_power.value == "ON"
-                    and self._power == "ON"
-                ):
-                    # acPower means the unit has power so we need to map the mode
-                    self._current_hvac_action = TADO_MODES_TO_HVAC_ACTION.get(
-                        self._current_hvac_mode, CONST_HVAC_COOL
-                    )
-
-            if data.activity_data_points.heating_power is not None:
-                # This needs to be validated if this is actually in!
-                self._heating_power = self._heating_power = (
-                    data.activity_data_points.heating_power.value
-                    if data.activity_data_points.heating_power
-                    else None
-                )
-                self._heating_power_timestamp = (
-                    data.activity_data_points.heating_power.timestamp
-                )
-                self._heating_power_percentage = float(
-                    data.activity_data_points.heating_power.percentage
-                    if hasattr(data.activity_data_points.heating_power, "percentage")
-                    else 0
+        if data.activity_data_points.ac_power is not None:
+            self._ac_power = data.activity_data_points.ac_power.value
+            self._ac_power_timestamp = data.activity_data_points.ac_power.timestamp
+            if data.activity_data_points.ac_power.value == "ON" and self._power == "ON":
+                # acPower means the unit has power so we need to map the mode
+                self._current_hvac_action = TADO_MODES_TO_HVAC_ACTION.get(
+                    self._current_hvac_mode, CONST_HVAC_COOL
                 )
 
-                if self._heating_power_percentage > 0.0 and self._power == "ON":
-                    self._current_hvac_action = CONST_HVAC_HEAT
+        if data.activity_data_points.heating_power is not None:
+            # This needs to be validated if this is actually in!
+            self._heating_power = self._heating_power = (
+                data.activity_data_points.heating_power.value
+                if data.activity_data_points.heating_power
+                else None
+            )
+            self._heating_power_timestamp = (
+                data.activity_data_points.heating_power.timestamp
+            )
+            self._heating_power_percentage = float(
+                data.activity_data_points.heating_power.percentage
+                if hasattr(data.activity_data_points.heating_power, "percentage")
+                else 0
+            )
 
-        # If there is no overlay
-        # then we are running the smart schedule
-        self._overlay_termination_type = None
-        self._overlay_termination_timestamp = None
+            # Put the HVAC action to heating if ther's a power percentage and powen = ON
+            if self._heating_power_percentage > 0.0 and self._power == "ON":
+                self._current_hvac_action = CONST_HVAC_HEAT
+
+        # If there is no overlay, then we are running the smart schedule
         if data.overlay is not None:
-            if hasattr(data.overlay, "termination") and hasattr(
-                data.overlay.termination, "type"
-            ):
+            if data.overlay.termination:
                 self._overlay_termination_type = data.overlay.termination.type
                 self._overlay_termination_timestamp = (
                     data.overlay.termination.projected_expiry
@@ -736,7 +731,10 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         )
         self._available = self._link != CONST_LINK_OFFLINE
 
-        if data.termination_condition is not None:
+        if (
+            hasattr(data, "termination_condition")
+            and data.termination_condition is not None
+        ):
             self._default_overlay_termination_type = (
                 data.termination_condition.type
                 if data.termination_condition.type

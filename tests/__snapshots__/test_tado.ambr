@@ -388,8 +388,7 @@
   False
 # ---
 # name: test_get_zone_state[hvac_action_heat.json][open_window_attr]
-  dict({
-  })
+  None
 # ---
 # name: test_get_zone_state[hvac_action_heat.json][open_window_detected]
   False
@@ -562,8 +561,7 @@
   False
 # ---
 # name: test_get_zone_state[smartac3.auto_mode.json][open_window_attr]
-  dict({
-  })
+  None
 # ---
 # name: test_get_zone_state[smartac3.auto_mode.json][open_window_detected]
   False
@@ -746,8 +744,7 @@
   False
 # ---
 # name: test_get_zone_state[smartac3.cool_mode.json][open_window_attr]
-  dict({
-  })
+  None
 # ---
 # name: test_get_zone_state[smartac3.cool_mode.json][open_window_detected]
   False
@@ -920,8 +917,7 @@
   False
 # ---
 # name: test_get_zone_state[smartac3.dry_mode.json][open_window_attr]
-  dict({
-  })
+  None
 # ---
 # name: test_get_zone_state[smartac3.dry_mode.json][open_window_detected]
   False
@@ -1094,8 +1090,7 @@
   False
 # ---
 # name: test_get_zone_state[smartac3.fan_mode.json][open_window_attr]
-  dict({
-  })
+  None
 # ---
 # name: test_get_zone_state[smartac3.fan_mode.json][open_window_detected]
   False
@@ -1278,8 +1273,7 @@
   False
 # ---
 # name: test_get_zone_state[smartac3.heat_mode.json][open_window_attr]
-  dict({
-  })
+  None
 # ---
 # name: test_get_zone_state[smartac3.heat_mode.json][open_window_detected]
   False
@@ -1452,8 +1446,7 @@
   False
 # ---
 # name: test_get_zone_state[smartac3.hvac_off.json][open_window_attr]
-  dict({
-  })
+  None
 # ---
 # name: test_get_zone_state[smartac3.hvac_off.json][open_window_detected]
   False
@@ -1626,8 +1619,7 @@
   False
 # ---
 # name: test_get_zone_state[smartac3.manual_off.json][open_window_attr]
-  dict({
-  })
+  None
 # ---
 # name: test_get_zone_state[smartac3.manual_off.json][open_window_detected]
   False
@@ -1810,8 +1802,7 @@
   False
 # ---
 # name: test_get_zone_state[smartac3.offline.json][open_window_attr]
-  dict({
-  })
+  None
 # ---
 # name: test_get_zone_state[smartac3.offline.json][open_window_detected]
   False
@@ -1970,8 +1961,7 @@
   False
 # ---
 # name: test_get_zone_state[smartac3.smart_mode.json][open_window_attr]
-  dict({
-  })
+  None
 # ---
 # name: test_get_zone_state[smartac3.smart_mode.json][open_window_detected]
   False
@@ -2144,8 +2134,7 @@
   False
 # ---
 # name: test_get_zone_state[smartac3.turning_off.json][open_window_attr]
-  dict({
-  })
+  None
 # ---
 # name: test_get_zone_state[smartac3.turning_off.json][open_window_detected]
   False
@@ -2322,8 +2311,7 @@
   False
 # ---
 # name: test_get_zone_state[smartac3.with_swing.json][open_window_attr]
-  dict({
-  })
+  None
 # ---
 # name: test_get_zone_state[smartac3.with_swing.json][open_window_detected]
   False
@@ -2501,8 +2489,7 @@
   False
 # ---
 # name: test_get_zone_state[tadov2.heating.auto_mode.json][open_window_attr]
-  dict({
-  })
+  None
 # ---
 # name: test_get_zone_state[tadov2.heating.auto_mode.json][open_window_detected]
   False
@@ -2665,7 +2652,7 @@
   'IDLE'
 # ---
 # name: test_get_zone_state[tadov2.heating.manual_mode.json][current_hvac_mode]
-  'OFF'
+  'HEAT'
 # ---
 # name: test_get_zone_state[tadov2.heating.manual_mode.json][current_swing_mode]
   None
@@ -2704,8 +2691,7 @@
   False
 # ---
 # name: test_get_zone_state[tadov2.heating.manual_mode.json][open_window_attr]
-  dict({
-  })
+  None
 # ---
 # name: test_get_zone_state[tadov2.heating.manual_mode.json][open_window_detected]
   False
@@ -2732,6 +2718,647 @@
   'HOME'
 # ---
 # name: test_get_zone_state[tadov2.heating.manual_mode.json][target_temp]
+  20.5
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json]
+  dict({
+    'activity_data_points': dict({
+      'ac_power': None,
+      'heating_power': dict({
+        'percentage': 20.0,
+        'timestamp': '2020-03-10T07:47:45.978Z',
+        'type': 'PERCENTAGE',
+        'value': None,
+      }),
+    }),
+    'geolocation_override': False,
+    'geolocation_override_disable_time': None,
+    'link': dict({
+      'state': 'ONLINE',
+    }),
+    'next_schedule_change': dict({
+      'setting': dict({
+        'fan_level': None,
+        'fan_speed': None,
+        'horizontal_swing': None,
+        'mode': None,
+        'power': 'ON',
+        'swing': None,
+        'temperature': dict({
+          'celsius': 21.0,
+          'fahrenheit': 69.8,
+          'timestamp': None,
+          'type': None,
+        }),
+        'type': 'HEATING',
+        'vertical_swing': None,
+      }),
+      'start': '2020-03-10T17:00:00Z',
+    }),
+    'next_time_block': dict({
+      'start': '2020-03-10T17:00:00.000Z',
+    }),
+    'open_window': dict({
+      'detected_time': '2020-03-10T07:44:11.947Z',
+      'duration_in_seconds': 300,
+      'expiry': '2020-03-10T07:49:11.947Z',
+      'remaining_time_in_seconds': 60,
+    }),
+    'overlay': dict({
+      'projected_expiry': None,
+      'setting': dict({
+        'fan_level': None,
+        'fan_speed': None,
+        'horizontal_swing': None,
+        'mode': None,
+        'power': 'ON',
+        'swing': None,
+        'temperature': dict({
+          'celsius': 20.5,
+          'fahrenheit': 68.9,
+          'timestamp': None,
+          'type': None,
+        }),
+        'type': 'HEATING',
+        'vertical_swing': None,
+      }),
+      'termination': dict({
+        'projected_expiry': None,
+        'type': 'MANUAL',
+        'type_skill_based_app': 'MANUAL',
+      }),
+      'type': 'MANUAL',
+    }),
+    'overlay_type': 'MANUAL',
+    'preparation': None,
+    'sensor_data_points': dict({
+      'humidity': dict({
+        'percentage': 45.2,
+        'timestamp': '2020-03-10T07:44:11.947Z',
+        'type': 'PERCENTAGE',
+      }),
+      'inside_temperature': dict({
+        'celsius': 20.65,
+        'fahrenheit': 69.17,
+        'precision': dict({
+          'celsius': 0.1,
+          'fahrenheit': 0.1,
+        }),
+        'timestamp': '2020-03-10T07:44:11.947Z',
+        'type': 'TEMPERATURE',
+      }),
+    }),
+    'setting': dict({
+      'fan_level': None,
+      'fan_speed': None,
+      'horizontal_swing': None,
+      'mode': None,
+      'power': 'ON',
+      'swing': None,
+      'temperature': dict({
+        'celsius': 20.5,
+        'fahrenheit': 68.9,
+        'timestamp': None,
+        'type': None,
+      }),
+      'type': 'HEATING',
+      'vertical_swing': None,
+    }),
+    'tado_mode': 'HOME',
+    'termination_condition': dict({
+      'duration_in_seconds': 300,
+      'type': 'MANUAL',
+    }),
+  })
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][ac_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][ac_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][available]
+  True
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][connection]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][current_fan_speed]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][current_humidity]
+  45.2
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][current_humidity_timestamp]
+  '2020-03-10T07:44:11.947Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][current_hvac_action]
+  'HEATING'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][current_hvac_mode]
+  'HEAT'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][current_temp]
+  20.65
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][current_temp_timestamp]
+  '2020-03-10T07:44:11.947Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][default_overlay_termination_duration]
+  300
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][default_overlay_termination_type]
+  'MANUAL'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][heating_power_percentage]
+  20.0
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][heating_power_timestamp]
+  '2020-03-10T07:47:45.978Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][open_window]
+  True
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][open_window_attr]
+  dict({
+    'detected_time': '2020-03-10T07:44:11.947Z',
+    'duration_in_seconds': 300,
+    'expiry': '2020-03-10T07:49:11.947Z',
+    'remaining_time_in_seconds': 60,
+  })
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][overlay_termination_type]
+  'MANUAL'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][power]
+  'ON'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_mode.json][target_temp]
+  20.5
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json]
+  dict({
+    'activity_data_points': dict({
+      'ac_power': None,
+      'heating_power': dict({
+        'percentage': 20.0,
+        'timestamp': '2020-03-10T07:47:45.978Z',
+        'type': 'PERCENTAGE',
+        'value': None,
+      }),
+    }),
+    'geolocation_override': False,
+    'geolocation_override_disable_time': None,
+    'link': dict({
+      'state': 'ONLINE',
+    }),
+    'next_schedule_change': dict({
+      'setting': dict({
+        'fan_level': None,
+        'fan_speed': None,
+        'horizontal_swing': None,
+        'mode': None,
+        'power': 'ON',
+        'swing': None,
+        'temperature': dict({
+          'celsius': 21.0,
+          'fahrenheit': 69.8,
+          'timestamp': None,
+          'type': None,
+        }),
+        'type': 'HEATING',
+        'vertical_swing': None,
+      }),
+      'start': '2020-03-10T17:00:00Z',
+    }),
+    'next_time_block': dict({
+      'start': '2020-03-10T17:00:00.000Z',
+    }),
+    'open_window': dict({
+      'detected_time': '2020-03-10T07:44:11.947Z',
+      'duration_in_seconds': 300,
+      'expiry': '2020-03-10T07:49:11.947Z',
+      'remaining_time_in_seconds': 60,
+    }),
+    'overlay': dict({
+      'projected_expiry': None,
+      'setting': dict({
+        'fan_level': None,
+        'fan_speed': None,
+        'horizontal_swing': None,
+        'mode': None,
+        'power': 'ON',
+        'swing': None,
+        'temperature': dict({
+          'celsius': 20.5,
+          'fahrenheit': 68.9,
+          'timestamp': None,
+          'type': None,
+        }),
+        'type': 'HEATING',
+        'vertical_swing': None,
+      }),
+      'termination': None,
+      'type': 'MANUAL',
+    }),
+    'overlay_type': 'MANUAL',
+    'preparation': None,
+    'sensor_data_points': dict({
+      'humidity': dict({
+        'percentage': 45.2,
+        'timestamp': '2020-03-10T07:44:11.947Z',
+        'type': 'PERCENTAGE',
+      }),
+      'inside_temperature': dict({
+        'celsius': 20.65,
+        'fahrenheit': 69.17,
+        'precision': dict({
+          'celsius': 0.1,
+          'fahrenheit': 0.1,
+        }),
+        'timestamp': '2020-03-10T07:44:11.947Z',
+        'type': 'TEMPERATURE',
+      }),
+    }),
+    'setting': dict({
+      'fan_level': None,
+      'fan_speed': None,
+      'horizontal_swing': None,
+      'mode': None,
+      'power': 'ON',
+      'swing': None,
+      'temperature': dict({
+        'celsius': 20.5,
+        'fahrenheit': 68.9,
+        'timestamp': None,
+        'type': None,
+      }),
+      'type': 'HEATING',
+      'vertical_swing': None,
+    }),
+    'tado_mode': 'HOME',
+    'termination_condition': dict({
+      'duration_in_seconds': 300,
+      'type': 'MANUAL',
+    }),
+  })
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][ac_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][ac_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][available]
+  True
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][connection]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][current_fan_speed]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][current_humidity]
+  45.2
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][current_humidity_timestamp]
+  '2020-03-10T07:44:11.947Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][current_hvac_action]
+  'HEATING'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][current_hvac_mode]
+  'HEAT'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][current_temp]
+  20.65
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][current_temp_timestamp]
+  '2020-03-10T07:44:11.947Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][default_overlay_termination_duration]
+  300
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][default_overlay_termination_type]
+  'MANUAL'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][heating_power_percentage]
+  20.0
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][heating_power_timestamp]
+  '2020-03-10T07:47:45.978Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][open_window]
+  True
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][open_window_attr]
+  dict({
+    'detected_time': '2020-03-10T07:44:11.947Z',
+    'duration_in_seconds': 300,
+    'expiry': '2020-03-10T07:49:11.947Z',
+    'remaining_time_in_seconds': 60,
+  })
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][power]
+  'ON'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_no_termination.json][target_temp]
+  20.5
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json]
+  dict({
+    'activity_data_points': dict({
+      'ac_power': None,
+      'heating_power': dict({
+        'percentage': 20.0,
+        'timestamp': '2020-03-10T07:47:45.978Z',
+        'type': 'PERCENTAGE',
+        'value': None,
+      }),
+    }),
+    'geolocation_override': False,
+    'geolocation_override_disable_time': None,
+    'link': dict({
+      'state': 'ONLINE',
+    }),
+    'next_schedule_change': dict({
+      'setting': dict({
+        'fan_level': None,
+        'fan_speed': None,
+        'horizontal_swing': None,
+        'mode': None,
+        'power': 'ON',
+        'swing': None,
+        'temperature': dict({
+          'celsius': 21.0,
+          'fahrenheit': 69.8,
+          'timestamp': None,
+          'type': None,
+        }),
+        'type': 'HEATING',
+        'vertical_swing': None,
+      }),
+      'start': '2020-03-10T17:00:00Z',
+    }),
+    'next_time_block': dict({
+      'start': '2020-03-10T17:00:00.000Z',
+    }),
+    'open_window': dict({
+      'detected_time': '2020-03-10T07:44:11.947Z',
+      'duration_in_seconds': 300,
+      'expiry': '2020-03-10T07:49:11.947Z',
+      'remaining_time_in_seconds': 60,
+    }),
+    'overlay': dict({
+      'projected_expiry': None,
+      'setting': dict({
+        'fan_level': None,
+        'fan_speed': None,
+        'horizontal_swing': None,
+        'mode': None,
+        'power': 'ON',
+        'swing': None,
+        'temperature': dict({
+          'celsius': 20.5,
+          'fahrenheit': 68.9,
+          'timestamp': None,
+          'type': None,
+        }),
+        'type': 'HEATING',
+        'vertical_swing': None,
+      }),
+      'termination': dict({
+        'projected_expiry': None,
+        'type': 'MANUAL',
+        'type_skill_based_app': 'MANUAL',
+      }),
+      'type': 'MANUAL',
+    }),
+    'overlay_type': 'MANUAL',
+    'preparation': None,
+    'sensor_data_points': dict({
+      'humidity': dict({
+        'percentage': 45.2,
+        'timestamp': '2020-03-10T07:44:11.947Z',
+        'type': 'PERCENTAGE',
+      }),
+      'inside_temperature': dict({
+        'celsius': 20.65,
+        'fahrenheit': 69.17,
+        'precision': dict({
+          'celsius': 0.1,
+          'fahrenheit': 0.1,
+        }),
+        'timestamp': '2020-03-10T07:44:11.947Z',
+        'type': 'TEMPERATURE',
+      }),
+    }),
+    'setting': dict({
+      'fan_level': None,
+      'fan_speed': None,
+      'horizontal_swing': None,
+      'mode': None,
+      'power': 'ON',
+      'swing': None,
+      'temperature': dict({
+        'celsius': 20.5,
+        'fahrenheit': 68.9,
+        'timestamp': None,
+        'type': None,
+      }),
+      'type': 'HEATING',
+      'vertical_swing': None,
+    }),
+    'tado_mode': 'HOME',
+    'termination_condition': dict({
+      'duration_in_seconds': 300,
+      'type': 'MANUAL',
+    }),
+  })
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][ac_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][ac_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][available]
+  True
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][connection]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][current_fan_speed]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][current_humidity]
+  45.2
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][current_humidity_timestamp]
+  '2020-03-10T07:44:11.947Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][current_hvac_action]
+  'HEATING'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][current_hvac_mode]
+  'HEAT'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][current_temp]
+  20.65
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][current_temp_timestamp]
+  '2020-03-10T07:44:11.947Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][default_overlay_termination_duration]
+  300
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][default_overlay_termination_type]
+  'MANUAL'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][heating_power_percentage]
+  20.0
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][heating_power_timestamp]
+  '2020-03-10T07:47:45.978Z'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][link]
+  'ONLINE'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][open_window]
+  True
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][open_window_attr]
+  dict({
+    'detected_time': '2020-03-10T07:44:11.947Z',
+    'duration_in_seconds': 300,
+    'expiry': '2020-03-10T07:49:11.947Z',
+    'remaining_time_in_seconds': 60,
+  })
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][overlay_termination_type]
+  'MANUAL'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][power]
+  'ON'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][tado_mode]
+  'HOME'
+# ---
+# name: test_get_zone_state[tadov2.heating.manual_mode_open_window.json][target_temp]
   20.5
 # ---
 # name: test_get_zone_state[tadov2.heating.off_mode.json]
@@ -2897,8 +3524,7 @@
   False
 # ---
 # name: test_get_zone_state[tadov2.heating.off_mode.json][open_window_attr]
-  dict({
-  })
+  None
 # ---
 # name: test_get_zone_state[tadov2.heating.off_mode.json][open_window_detected]
   False
@@ -2925,6 +3551,503 @@
   'HOME'
 # ---
 # name: test_get_zone_state[tadov2.heating.off_mode.json][target_temp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json]
+  dict({
+    'activity_data_points': dict({
+      'ac_power': None,
+      'heating_power': None,
+    }),
+    'geolocation_override': False,
+    'geolocation_override_disable_time': None,
+    'link': dict({
+      'state': 'ONLINE',
+    }),
+    'next_schedule_change': dict({
+      'setting': dict({
+        'fan_level': None,
+        'fan_speed': None,
+        'horizontal_swing': None,
+        'mode': None,
+        'power': 'OFF',
+        'swing': None,
+        'temperature': None,
+        'type': 'HOT_WATER',
+        'vertical_swing': None,
+      }),
+      'start': '2020-03-10T22:00:00Z',
+    }),
+    'next_time_block': dict({
+      'start': '2020-03-10T22:00:00.000Z',
+    }),
+    'open_window': None,
+    'overlay': None,
+    'overlay_type': None,
+    'preparation': None,
+    'sensor_data_points': dict({
+    }),
+    'setting': dict({
+      'fan_level': None,
+      'fan_speed': None,
+      'horizontal_swing': None,
+      'mode': None,
+      'power': 'ON',
+      'swing': None,
+      'temperature': dict({
+        'celsius': 65.0,
+        'fahrenheit': 149.0,
+        'timestamp': None,
+        'type': None,
+      }),
+      'type': 'HOT_WATER',
+      'vertical_swing': None,
+    }),
+    'tado_mode': 'HOME',
+    'termination_condition': None,
+  })
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][ac_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][ac_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][available]
+  True
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][connection]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][current_fan_speed]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][current_humidity]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][current_humidity_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][current_hvac_action]
+  'IDLE'
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][current_hvac_mode]
+  'SMART_SCHEDULE'
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][current_temp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][current_temp_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][heating_power_percentage]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][heating_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][link]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][open_window_attr]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][overlay_active]
+  False
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][power]
+  'ON'
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][tado_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.auto_mode.json][target_temp]
+  65.0
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json]
+  dict({
+    'activity_data_points': dict({
+      'ac_power': None,
+      'heating_power': None,
+    }),
+    'geolocation_override': False,
+    'geolocation_override_disable_time': None,
+    'link': dict({
+      'state': 'ONLINE',
+    }),
+    'next_schedule_change': dict({
+      'setting': dict({
+        'fan_level': None,
+        'fan_speed': None,
+        'horizontal_swing': None,
+        'mode': None,
+        'power': 'OFF',
+        'swing': None,
+        'temperature': None,
+        'type': 'HOT_WATER',
+        'vertical_swing': None,
+      }),
+      'start': '2020-03-10T22:00:00Z',
+    }),
+    'next_time_block': dict({
+      'start': '2020-03-10T22:00:00.000Z',
+    }),
+    'open_window': None,
+    'overlay': dict({
+      'projected_expiry': None,
+      'setting': dict({
+        'fan_level': None,
+        'fan_speed': None,
+        'horizontal_swing': None,
+        'mode': None,
+        'power': 'ON',
+        'swing': None,
+        'temperature': dict({
+          'celsius': 55.0,
+          'fahrenheit': 131.0,
+          'timestamp': None,
+          'type': None,
+        }),
+        'type': 'HOT_WATER',
+        'vertical_swing': None,
+      }),
+      'termination': dict({
+        'projected_expiry': None,
+        'type': 'MANUAL',
+        'type_skill_based_app': 'MANUAL',
+      }),
+      'type': 'MANUAL',
+    }),
+    'overlay_type': 'MANUAL',
+    'preparation': None,
+    'sensor_data_points': dict({
+    }),
+    'setting': dict({
+      'fan_level': None,
+      'fan_speed': None,
+      'horizontal_swing': None,
+      'mode': None,
+      'power': 'ON',
+      'swing': None,
+      'temperature': dict({
+        'celsius': 55.0,
+        'fahrenheit': 131.0,
+        'timestamp': None,
+        'type': None,
+      }),
+      'type': 'HOT_WATER',
+      'vertical_swing': None,
+    }),
+    'tado_mode': 'HOME',
+    'termination_condition': None,
+  })
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][ac_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][ac_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][available]
+  True
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][connection]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][current_fan_speed]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][current_humidity]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][current_humidity_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][current_hvac_action]
+  'IDLE'
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][current_hvac_mode]
+  'HEATING'
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][current_temp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][current_temp_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][heating_power_percentage]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][heating_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][link]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][open_window_attr]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][overlay_termination_type]
+  'MANUAL'
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][power]
+  'ON'
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][tado_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.manual_mode.json][target_temp]
+  55.0
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json]
+  dict({
+    'activity_data_points': dict({
+      'ac_power': None,
+      'heating_power': None,
+    }),
+    'geolocation_override': False,
+    'geolocation_override_disable_time': None,
+    'link': dict({
+      'state': 'ONLINE',
+    }),
+    'next_schedule_change': dict({
+      'setting': dict({
+        'fan_level': None,
+        'fan_speed': None,
+        'horizontal_swing': None,
+        'mode': None,
+        'power': 'OFF',
+        'swing': None,
+        'temperature': None,
+        'type': 'HOT_WATER',
+        'vertical_swing': None,
+      }),
+      'start': '2020-03-10T22:00:00Z',
+    }),
+    'next_time_block': dict({
+      'start': '2020-03-10T22:00:00.000Z',
+    }),
+    'open_window': None,
+    'overlay': dict({
+      'projected_expiry': None,
+      'setting': dict({
+        'fan_level': None,
+        'fan_speed': None,
+        'horizontal_swing': None,
+        'mode': None,
+        'power': 'OFF',
+        'swing': None,
+        'temperature': None,
+        'type': 'HOT_WATER',
+        'vertical_swing': None,
+      }),
+      'termination': dict({
+        'projected_expiry': None,
+        'type': 'MANUAL',
+        'type_skill_based_app': 'MANUAL',
+      }),
+      'type': 'MANUAL',
+    }),
+    'overlay_type': 'MANUAL',
+    'preparation': None,
+    'sensor_data_points': dict({
+    }),
+    'setting': dict({
+      'fan_level': None,
+      'fan_speed': None,
+      'horizontal_swing': None,
+      'mode': None,
+      'power': 'OFF',
+      'swing': None,
+      'temperature': None,
+      'type': 'HOT_WATER',
+      'vertical_swing': None,
+    }),
+    'tado_mode': 'HOME',
+    'termination_condition': None,
+  })
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][ac_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][ac_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][available]
+  True
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][connection]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][current_fan_level]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][current_fan_speed]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][current_horizontal_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][current_humidity]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][current_humidity_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][current_hvac_action]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][current_hvac_mode]
+  'OFF'
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][current_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][current_temp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][current_temp_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][current_vertical_swing_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][default_overlay_termination_duration]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][default_overlay_termination_type]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][heating_power]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][heating_power_percentage]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][heating_power_timestamp]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][is_away]
+  False
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][link]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][open_window]
+  False
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][open_window_attr]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][open_window_detected]
+  False
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][overlay_active]
+  True
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][overlay_termination_time]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][overlay_termination_type]
+  'MANUAL'
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][power]
+  'OFF'
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][precision]
+  0.1
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][preparation]
+  False
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][tado_mode]
+  None
+# ---
+# name: test_get_zone_state[tadov2.water_heater.off_mode.json][target_temp]
   None
 # ---
 # name: test_get_zone_states_ac_power[zone_states_ac_power.dry.json]
