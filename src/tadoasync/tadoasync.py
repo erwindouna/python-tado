@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import asyncio
+import json
 import time
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from importlib import metadata
 from typing import Self
 
@@ -61,6 +63,7 @@ CLIENT_SECRET = "wZaRN7rpjn3FoNyF5IFuxg9uMzYJcvOoQ8QWiIqS3hfk6gLhVlG57j5YNoZL2Rt
 AUTHORIZATION_BASE_URL = "https://auth.tado.com/oauth/authorize"
 TOKEN_URL = "https://auth.tado.com/oauth/token"  # noqa: S105
 API_URL = "my.tado.com/api/v2"
+EIQ_URL = "energy-insights.tado.com/api"
 VERSION = metadata.version(__package__)
 
 
@@ -543,16 +546,34 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         response = await self._request(f"devices/{serial_no}/{attribute}")
         return TemperatureOffset.from_json(response)
 
+    async def set_meter_readings(
+        self, date: str | None = None, reading: int = 0
+    ) -> str:
+        """Set the meter readings."""
+        if date is None:
+            date = datetime.now(timezone.utc).isoformat()
+
+        payload = {"date": date, "reading": reading}
+        response = await self._request(
+            endpoint=EIQ_URL, data=payload, method=HttpMethod.POST
+        )
+        return json.dumps(response)
+
     async def _request(
         self,
-        uri: str,
+        uri: str | None = None,
+        endpoint: str = API_URL,
         data: dict[str, object] | None = None,
         method: HttpMethod = HttpMethod.GET,
     ) -> str:
         """Handle a request to the Tado API."""
         await self._refresh_auth()
 
-        url = URL.build(scheme="https", host=API_URL).joinpath(uri)
+        url = (
+            URL.build(scheme="https", host=endpoint).joinpath(uri)
+            if uri
+            else URL.build(scheme="https", host=endpoint)
+        )
 
         headers = {
             "Authorization": f"Bearer {self._access_token}",
