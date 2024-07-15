@@ -22,7 +22,7 @@ from tadoasync.exceptions import (
 from syrupy import SnapshotAssertion
 from tests import load_fixture
 
-from .const import TADO_API_URL, TADO_TOKEN_URL
+from .const import TADO_API_URL, TADO_EIQ_URL, TADO_TOKEN_URL
 
 
 async def test_create_session(
@@ -368,6 +368,30 @@ async def test_set_zone_overlay_success(
         fan_speed,
         swing,
     )
+
+
+async def test_add_meter_readings_success(
+    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+) -> None:
+    """Test adding meter readings."""
+    responses.post(
+        TADO_EIQ_URL,
+        body=load_fixture(folder="meter", filename="add_reading_success.json"),
+    )
+    assert await python_tado.set_meter_readings(reading=5) == snapshot
+
+
+async def test_add_meter_readings_duplicated(
+    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+) -> None:
+    """Test adding meter readings with duplicate."""
+    date = "2021-01-01"
+    reading = 5
+    responses.post(
+        TADO_EIQ_URL,
+        body=load_fixture(folder="meter", filename="add_reading_duplicate.json"),
+    )
+    assert await python_tado.set_meter_readings(date, reading) == snapshot
 
 
 async def test_request_client_response_error(python_tado: Tado) -> None:
