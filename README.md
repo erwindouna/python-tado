@@ -9,6 +9,7 @@
 [![Build Status][build-shield]][build]
 [![Code Coverage][codecov-shield]][codecov]
 [![Quality Gate Status][sonarcloud-shield]][sonarcloud]
+[![Documentation Status][readthedocs]]
 [![Open in Dev Containers][devcontainer-shield]][devcontainer]
 
 Asynchronous Python client to control Tado devices.
@@ -159,3 +160,4 @@ SOFTWARE.
 [semver]: http://semver.org/spec/v2.0.0.html
 [sonarcloud-shield]: https://sonarcloud.io/api/project_badges/measure?project=erwindouna_python-tado&metric=alert_status
 [sonarcloud]: https://sonarcloud.io/summary/new_code?id=erwindouna_python-tado
+[readthedocs]: https://readthedocs.org/projects/python-tado/badge/?version=latest)](https://python-tado.readthedocs.io/en/latest/?badge=latest
