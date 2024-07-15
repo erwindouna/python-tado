@@ -98,7 +98,7 @@ good-names = ["_", "ex", "fp", "i", "id", "j", "k", "on", "Run", "T"]
 max-attributes = 8
 
 [tool.pylint."MESSAGES CONTROL"]
-disable = ["duplicate-code", "format", "unsubscriptable-object", "no-member", "too-many-arguments", "protected-access", "invalid-name", "wrong-import-order", "too-many-statements", "too-many-public-methods", "too-many-instance-attributes"]
+disable = ["duplicate-code", "format", "unsubscriptable-object", "no-member", "too-many-arguments", "protected-access", "invalid-name", "wrong-import-order", "too-many-statements", "too-many-public-methods", "too-many-instance-attributes", "redefined-builtin"]
 
 [tool.pylint.SIMILARITIES]
 ignore-imports = true
