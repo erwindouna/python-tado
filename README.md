@@ -23,7 +23,7 @@ Not all endpoints and features are fully supported.
 ## Installation
 
 ```bash
-pip install python-tado
+pip install tadoasync
 ```
 
 ## Usage
