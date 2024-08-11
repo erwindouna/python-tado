@@ -609,24 +609,20 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             and data.sensor_data_points != {}
         ):
             temperature = float(data.sensor_data_points.inside_temperature.celsius)
-            self._current_temp = temperature
-            self._current_temp_timestamp = (
+            data.current_temp = temperature
+            data.current_temp_timestamp = (
                 data.sensor_data_points.inside_temperature.timestamp
             )
-            self._precision = (
+            data.precision = (
                 data.sensor_data_points.inside_temperature.precision.celsius
             )
 
             humidity = float(data.sensor_data_points.humidity.percentage)
-            self._current_humidity = humidity
-            self._current_humidity_timestamp = (
-                data.sensor_data_points.humidity.timestamp
-            )
+            data.current_humidity = humidity
+            data.current_humidity_timestamp = data.sensor_data_points.humidity.timestamp
 
-            self._is_away = data.tado_mode == CONST_AWAY
-            self._tado_mode = data.tado_mode
-            self._link = data.link.state
-            self._current_hvac_action = CONST_HVAC_OFF
+            data.is_away = data.tado_mode == CONST_AWAY
+            data.current_hvac_action = CONST_HVAC_OFF
 
         # Temperature setting will not exist when device is off
         if (
@@ -634,53 +630,53 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             and data.setting.temperature is not None
         ):
             setting = float(data.setting.temperature.celsius)
-            self._target_temp = setting
+            data.target_temp = setting
 
-        self._current_fan_speed = None
-        self._current_fan_level = None
+        data.current_fan_speed = None
+        data.current_fan_level = None
         # If there is no overlay, the mode will always be
         # "SMART_SCHEDULE"
-        self._current_hvac_mode = CONST_MODE_OFF
-        self._current_swing_mode = CONST_MODE_OFF
-        self._current_vertical_swing_mode = CONST_VERTICAL_SWING_OFF
-        self._current_horizontal_swing_mode = CONST_HORIZONTAL_SWING_OFF
+        data.current_hvac_mode = CONST_MODE_OFF
+        data.current_swing_mode = CONST_MODE_OFF
+        data.current_vertical_swing_mode = CONST_VERTICAL_SWING_OFF
+        data.current_horizontal_swing_mode = CONST_HORIZONTAL_SWING_OFF
 
         if data.setting.mode is not None:
             # V3 devices use mode
-            self._current_hvac_mode = data.setting.mode
+            data.current_hvac_mode = data.setting.mode
 
-        self._current_swing_mode = data.setting.swing
-        self._current_vertical_swing_mode = data.setting.vertical_swing
-        self._current_horizontal_swing_mode = data.setting.horizontal_swing
+        data.current_swing_mode = data.setting.swing
+        data.current_vertical_swing_mode = data.setting.vertical_swing
+        data.current_horizontal_swing_mode = data.setting.horizontal_swing
 
-        self._power = data.setting.power
-        if self._power == "ON":
-            self._current_hvac_action = CONST_HVAC_IDLE
+        data.power = data.setting.power
+        if data.power == "ON":
+            data.current_hvac_action = CONST_HVAC_IDLE
             if (
                 data.setting.mode is None
                 and data.setting.type
                 and data.setting.type in TADO_HVAC_ACTION_TO_MODES
             ):
                 # V2 devices do not have mode so we have to figure it out from type
-                self._current_hvac_mode = TADO_HVAC_ACTION_TO_MODES[data.setting.type]
+                data.current_hvac_mode = TADO_HVAC_ACTION_TO_MODES[data.setting.type]
 
         # Not all devices have fans
         if data.setting.fan_speed is not None:
-            self._current_fan_speed = (
+            data.current_fan_speed = (
                 data.setting.fan_speed
                 if hasattr(setting, "fan_speed")
                 else CONST_FAN_AUTO
-                if self._power == "ON"
+                if data.power == "ON"
                 else CONST_FAN_OFF
             )
         elif (
             data.setting.type is not None and data.setting.type == TYPE_AIR_CONDITIONING
         ):
-            self._current_fan_speed = (
-                CONST_FAN_AUTO if self._power == "ON" else CONST_FAN_OFF
+            data.current_fan_speed = (
+                CONST_FAN_AUTO if data.power == "ON" else CONST_FAN_OFF
             )
 
-        self._current_fan_level = (
+        data.current_fan_level = (
             data.setting.fan_level
             if hasattr(data.setting, "fan_level")
             else CONST_FAN_SPEED_AUTO
@@ -688,80 +684,74 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             else CONST_FAN_SPEED_OFF
         )
 
-        self._preparation = (
-            hasattr(data, "preparation") and data.preparation is not None
-        )
-        self._open_window = (
-            hasattr(data, "open_window") and data.open_window is not None
-        )
-        self._open_window_detected = (
+        data.open_window_detected = (
             hasattr(data, "open_window_detected")
             and data.open_window_detected is not None
         )
 
         # Assuming data.open_window is of type 'str | dict[str, str] | None'
         # Never seen it but it could happen to be dict? Validate with Tado Devs
-        if self._open_window:
-            self._open_window_attr = data.open_window
+        if data.open_window:
+            data.open_window_attr = data.open_window
 
         if data.activity_data_points.ac_power is not None:
-            self._ac_power = data.activity_data_points.ac_power.value
-            self._ac_power_timestamp = data.activity_data_points.ac_power.timestamp
-            if data.activity_data_points.ac_power.value == "ON" and self._power == "ON":
+            data.ac_power = data.activity_data_points.ac_power.value
+            data.ac_power_timestamp = data.activity_data_points.ac_power.timestamp
+            if data.activity_data_points.ac_power.value == "ON" and data.power == "ON":
                 # acPower means the unit has power so we need to map the mode
-                self._current_hvac_action = TADO_MODES_TO_HVAC_ACTION.get(
-                    self._current_hvac_mode, CONST_HVAC_COOL
+                data.current_hvac_action = TADO_MODES_TO_HVAC_ACTION.get(
+                    data.current_hvac_mode, CONST_HVAC_COOL
                 )
 
         if data.activity_data_points.heating_power is not None:
             # This needs to be validated if this is actually in!
-            self._heating_power = self._heating_power = (
+            data.heating_power = data.heating_power = (
                 data.activity_data_points.heating_power.value
                 if data.activity_data_points.heating_power
                 else None
             )
-            self._heating_power_timestamp = (
+            data.heating_power_timestamp = (
                 data.activity_data_points.heating_power.timestamp
             )
-            self._heating_power_percentage = float(
+            data.heating_power_percentage = float(
                 data.activity_data_points.heating_power.percentage
                 if hasattr(data.activity_data_points.heating_power, "percentage")
                 else 0
             )
 
             # Put the HVAC action to heating if ther's a power percentage and powen = ON
-            if self._heating_power_percentage > 0.0 and self._power == "ON":
-                self._current_hvac_action = CONST_HVAC_HEAT
+            if data.heating_power_percentage > 0.0 and data.power == "ON":
+                data.current_hvac_action = CONST_HVAC_HEAT
 
         # If there is no overlay, then we are running the smart schedule
         if data.overlay is not None:
             if data.overlay.termination:
-                self._overlay_termination_type = data.overlay.termination.type
-                self._overlay_termination_timestamp = (
+                data.overlay_termination_type = data.overlay.termination.type
+                data.overlay_termination_timestamp = (
                     data.overlay.termination.projected_expiry
                     if hasattr(data.overlay.termination, "projected_expiry")
                     else None
                 )
         else:
-            self._current_hvac_mode = CONST_MODE_SMART_SCHEDULE
+            data.current_hvac_mode = CONST_MODE_SMART_SCHEDULE
 
-        self._connection = (
+        data.connection = (
             getattr(data.connection_state, "value", None)
             if hasattr(data, "connection_state")
             else None
         )
-        self._available = self._link != CONST_LINK_OFFLINE
+        data.available = data.link != CONST_LINK_OFFLINE
 
         if (
             hasattr(data, "termination_condition")
             and data.termination_condition is not None
         ):
-            self._default_overlay_termination_type = (
+            data.default_overlay_termination_type = (
                 data.termination_condition.type
                 if data.termination_condition.type
                 else None
             )
-            self._default_overlay_termination_duration = getattr(
+            data.default_overlay_termination_duration = getattr(
                 data.termination_condition, "duration_in_seconds", None
             )
 
