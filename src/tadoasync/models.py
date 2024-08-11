@@ -423,35 +423,43 @@ class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attr
         default=None, metadata=field_options(alias="terminationCondition")
     )
 
+    # Temperature and Humidity
     current_temp: float | None = None
     current_temp_timestamp: str | None = None
-    precision: float | None = None
     current_humidity: float | None = None
     current_humidity_timestamp: str | None = None
-    is_away: bool | None = None
-    current_hvac_action: str | None = None
     target_temp: float | None = None
+    precision: float | None = None
+
+    # HVAC settings
+    current_hvac_action: str | None = None
+    current_hvac_mode: str | None = None
     current_fan_speed: str | None = None
     current_fan_level: str | None = None
-    current_hvac_mode: str | None = None
     current_swing_mode: str | None = None
     current_vertical_swing_mode: str | None = None
     current_horizontal_swing_mode: str | None = None
+
+    # Power and Connection
+    connection: str | None = None
+    available: bool = False
     power: str | None = None
-    preparation: str | None = None
-    open_window_attr: OpenWindow | None = None
-    open_window_detected: bool | None = None
     ac_power: str | None = None
-    ac_power_timestamp: str | None = None
     heating_power: str | None = None
+    ac_power_timestamp: str | None = None
     heating_power_timestamp: str | None = None
     heating_power_percentage: float | None = None
+
+    # Tado specific features
+    overlay_active: bool | None = None
     overlay_termination_type: str | None = None
     overlay_termination_timestamp: str | None = None
-    connection: str | None = None
-    available: bool | None = None
     default_overlay_termination_type: str | None = None
     default_overlay_termination_duration: int | None = None
+    preparation: bool | None = None
+    open_window_detected: bool | None = None
+    open_window_attr: OpenWindow | None = None
+    is_away: bool = False
 
 
 @dataclass
