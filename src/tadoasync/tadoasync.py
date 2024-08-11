@@ -548,6 +548,13 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                 data.termination_condition, "duration_in_seconds", None
             )
 
+    async def get_auto_geofencing_supported(self) -> bool | None:
+        """Return whether the Tado Home supports auto geofencing."""
+        if self._auto_geofencing_supported is None:
+            await self.get_home_state()
+
+        return self._auto_geofencing_supported
+
     async def close(self) -> None:
         """Close open client session."""
         if self._session and self._close_session:

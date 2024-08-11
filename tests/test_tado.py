@@ -338,6 +338,34 @@ async def test_get_device_info(
     assert await python_tado.get_device_info("1", "temperatureOffset") == snapshot
 
 
+async def test_geofencing_supported(
+    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+) -> None:
+    """Test geofencing supported."""
+    responses.get(
+        f"{TADO_API_URL}/homes/1/state",
+        status=200,
+        body=load_fixture("home_state.json"),
+    )
+    assert await python_tado.get_home_state() == snapshot
+
+    python_tado._auto_geofencing_supported = None
+    mock_home_state = AsyncMock(return_value=snapshot)
+    with patch.object(python_tado, "get_home_state", mock_home_state):
+        assert await python_tado.get_auto_geofencing_supported() is None
+        mock_home_state.assert_called_once()
+
+    python_tado._auto_geofencing_supported = True
+    with patch.object(python_tado, "get_home_state", AsyncMock()) as mock_home_state:
+        assert await python_tado.get_auto_geofencing_supported() is True
+        mock_home_state.assert_not_called()
+
+    python_tado._auto_geofencing_supported = False
+    with patch.object(python_tado, "get_home_state", AsyncMock()) as mock_home_state:
+        assert await python_tado.get_auto_geofencing_supported() is False
+        mock_home_state.assert_not_called()
+
+
 async def test_set_zone_overlay_success(
     python_tado: Tado, responses: aioresponses
 ) -> None:
