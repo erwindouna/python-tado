@@ -436,47 +436,6 @@ async def test_get_zone_state(
         body=load_fixture(fixture_file, folder="zone_state"),
     )
     assert await python_tado.get_zone_state(zone_id) == snapshot
-    properties_to_test = [
-        "preparation",
-        "open_window",
-        "open_window_detected",
-        "open_window_attr",
-        "current_temp",
-        "current_temp_timestamp",
-        "connection",
-        "tado_mode",
-        "overlay_active",
-        "overlay_termination_type",
-        "overlay_termination_time",
-        "current_humidity",
-        "current_humidity_timestamp",
-        "ac_power_timestamp",
-        "heating_power_timestamp",
-        "ac_power",
-        "heating_power",
-        "heating_power_percentage",
-        "is_away",
-        "power",
-        "current_hvac_action",
-        "current_fan_speed",
-        "current_fan_level",
-        "link",
-        "precision",
-        "current_hvac_mode",
-        "current_swing_mode",
-        "current_vertical_swing_mode",
-        "current_horizontal_swing_mode",
-        "target_temp",
-        "available",
-        "default_overlay_termination_type",
-        "default_overlay_termination_duration",
-    ]
-    for prop in properties_to_test:
-        actual_value = getattr(python_tado, prop)
-        expected_value = snapshot(name=prop)
-        assert (
-            actual_value == expected_value
-        ), f"Expected {prop} to be {expected_value}, got {actual_value} instead."
 
 
 async def test_get_me_timeout(responses: aioresponses) -> None:
