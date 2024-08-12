@@ -1,16 +1,21 @@
-.. tadoasync documentation master file, created by
-   sphinx-quickstart on Mon Jul 15 20:16:26 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Welcome to Tado Async's documentation!
+=======================================
 
-tadoasync documentation
-=======================
+**Tado Async** is a Python library that allows you to control Tado devices.
+Although it can be used as a standalone package, it is current scope is to be used within Home Assistant.
+Not all endpoints and features are fully supported.
 
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
+Check out the :doc:`usage` section for further information, including
+how to :ref:`installation` the project.
 
+.. note::
+
+   This project is under active development.
+
+Contents
+--------
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+
+   usage
+   api

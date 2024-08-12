@@ -1,1 +1,1 @@
-"""Init file for source folder."""
+"""Init file for docs source."""
