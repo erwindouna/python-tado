@@ -16,6 +16,8 @@ Contents
 --------
 
 .. toctree::
+    :maxdepth: 2
 
-   usage
-   api
+    usage
+    api
+    models
