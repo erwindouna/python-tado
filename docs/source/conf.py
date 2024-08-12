@@ -1,8 +1,8 @@
 """Config file for Sphinx and documentation."""
+import os
 import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path("../../src").resolve()))
+sys.path.insert(0, os.path.abspath("../../src"))  # noqa: PTH100
 # Configuration file for the Sphinx documentation builder.
 
 # -- Project information
