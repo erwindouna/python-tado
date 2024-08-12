@@ -35,7 +35,7 @@ from tadoasync import Tado
 
 
 async def main() -> None:
-    """Show example on how to use aiohttp.ClientSession."""
+    """Example on how to retrieve all devices."""
     async with Tado("username", "password") as tado:
         await tado.get_devices()
 
@@ -44,6 +44,8 @@ if __name__ == "__main__":
     asyncio.run(main())
 
 ```
+
+Keep in mind that if you use `async with`, the `aenter` and `aexit` methods are called automatically. It's recommended you use session control, if you don't use `async with`, you need to call `tado.close()` to close the session.
 
 ## Changelog & Releases
 
