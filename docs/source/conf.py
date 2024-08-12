@@ -2,7 +2,7 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath("../../src"))  # noqa: PTH100
+sys.path.insert(0, os.path.abspath("../../src/"))  # noqa: PTH100
 # Configuration file for the Sphinx documentation builder.
 
 # -- Project information
