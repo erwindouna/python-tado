@@ -29,6 +29,7 @@ yarl = ">=1.6.0"
 oauthlib = "^3.2.2"
 requests-oauthlib = "^1.3.1"
 aioresponses = "^0.7.6"
+sphinx-rtd-theme = "^2.0.0"
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/erwindouna/python-tado/issues"
