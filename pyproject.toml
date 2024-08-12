@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tadoasync"
-version = "0.1.11"
+version = "0.1.14"
 authors = ["Erwin Douna <e.douna@gmail.com>"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
