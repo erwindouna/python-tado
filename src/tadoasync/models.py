@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Optional
 
 from mashumaro import field_options
 from mashumaro.mixins.orjson import DataClassORJSONMixin
@@ -147,7 +147,7 @@ class DazzleMode(DataClassORJSONMixin):
     """DazzleMode model represents the dazzle mode settings of a zone."""
 
     supported: bool
-    enabled: bool
+    enabled: Optional[bool] = field(default=False)
 
 
 @dataclass
@@ -155,8 +155,8 @@ class OpenWindowDetection(DataClassORJSONMixin):
     """OpenWindowDetection model represents the open window detection settings."""
 
     supported: bool
-    enabled: bool
-    timeout_in_seconds: int = field(metadata=field_options(alias="timeoutInSeconds"))
+    enabled: Optional[bool] = field(default=False)
+    timeout_in_seconds: Optional[int] = field(metadata=field_options(alias="timeoutInSeconds"), default=0)
 
 
 @dataclass
