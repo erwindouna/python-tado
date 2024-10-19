@@ -61,7 +61,11 @@ CLIENT_SECRET = "wZaRN7rpjn3FoNyF5IFuxg9uMzYJcvOoQ8QWiIqS3hfk6gLhVlG57j5YNoZL2Rt
 AUTHORIZATION_BASE_URL = "https://auth.tado.com/oauth/authorize"
 TOKEN_URL = "https://auth.tado.com/oauth/token"  # noqa: S105
 API_URL = "my.tado.com/api/v2"
+TADO_HOST_URL = "my.tado.com"
+TADO_API_PATH = "/api/v2"
 EIQ_URL = "energy-insights.tado.com/api"
+EIQ_HOST_URL = "energy-insights.tado.com"
+EIQ_API_PATH = "/api"
 VERSION = metadata.version(__package__)
 
 
@@ -359,7 +363,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
         payload = {"date": date, "reading": reading}
         response = await self._request(
-            endpoint=EIQ_URL, data=payload, method=HttpMethod.POST
+            endpoint=EIQ_HOST_URL, data=payload, method=HttpMethod.POST
         )
         return json.dumps(response)
 
@@ -373,11 +377,12 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         """Handle a request to the Tado API."""
         await self._refresh_auth()
 
-        url = (
-            URL.build(scheme="https", host=endpoint).joinpath(uri)
-            if uri
-            else URL.build(scheme="https", host=endpoint)
-        )
+        url = URL.build(scheme="https", host=TADO_HOST_URL, path=TADO_API_PATH)
+        if endpoint == EIQ_HOST_URL:
+            url = URL.build(scheme="https", host=EIQ_HOST_URL, path=EIQ_API_PATH)
+
+        if uri:
+            url = url.joinpath(uri)
 
         headers = {
             "Authorization": f"Bearer {self._access_token}",
