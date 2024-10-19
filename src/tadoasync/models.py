@@ -147,7 +147,7 @@ class DazzleMode(DataClassORJSONMixin):
     """DazzleMode model represents the dazzle mode settings of a zone."""
 
     supported: bool
-    enabled: Optional[bool] = field(default=False)
+    enabled: bool = field(default=False)
 
 
 @dataclass
