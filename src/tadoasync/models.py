@@ -155,7 +155,7 @@ class OpenWindowDetection(DataClassORJSONMixin):
     """OpenWindowDetection model represents the open window detection settings."""
 
     supported: bool
-    enabled: Optional[bool] = field(default=False)
+    enabled: bool = field(default=False)
     timeout_in_seconds: Optional[int] = field(metadata=field_options(alias="timeoutInSeconds"), default=0)
 
 
