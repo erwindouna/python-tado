@@ -156,7 +156,7 @@ class OpenWindowDetection(DataClassORJSONMixin):
 
     supported: bool
     enabled: bool = field(default=False)
-    timeout_in_seconds: Optional[int] = field(metadata=field_options(alias="timeoutInSeconds"), default=0)
+    timeout_in_seconds: int = field(metadata=field_options(alias="timeoutInSeconds"), default=0)
 
 
 @dataclass
