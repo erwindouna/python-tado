@@ -409,6 +409,29 @@ async def test_add_meter_readings_success(
     assert await python_tado.set_meter_readings(reading=5) == snapshot
 
 
+async def test_set_child_lock(python_tado: Tado, responses: aioresponses) -> None:
+    """Test setting child lock."""
+    device_id = "VA4186719488"
+    child_lock = True
+    responses.put(
+        f"{TADO_API_URL}/devices/{device_id}/childLock",
+        status=204,
+        payload={"childLockEnabled": child_lock},
+    )
+    await python_tado.set_child_lock(serial_no=device_id, child_lock=child_lock)
+
+    invalid_child_lock = None
+    responses.put(
+        f"{TADO_API_URL}/devices/{device_id}/childLock",
+        status=204,
+        payload={"childLockEnabled": child_lock},
+    )
+    with pytest.raises(TadoBadRequestError):
+        await python_tado.set_child_lock(
+            serial_no=device_id, child_lock=invalid_child_lock
+        )
+
+
 async def test_add_meter_readings_duplicated(
     python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
 ) -> None:
