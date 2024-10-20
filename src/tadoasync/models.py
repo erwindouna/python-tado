@@ -147,7 +147,7 @@ class DazzleMode(DataClassORJSONMixin):
     """DazzleMode model represents the dazzle mode settings of a zone."""
 
     supported: bool
-    enabled: bool
+    enabled: bool = field(default=False)
 
 
 @dataclass
@@ -155,8 +155,8 @@ class OpenWindowDetection(DataClassORJSONMixin):
     """OpenWindowDetection model represents the open window detection settings."""
 
     supported: bool
-    enabled: bool
-    timeout_in_seconds: int = field(metadata=field_options(alias="timeoutInSeconds"))
+    enabled: bool = field(default=False)
+    timeout_in_seconds: int = field(metadata=field_options(alias="timeoutInSeconds"), default=0)
 
 
 @dataclass
