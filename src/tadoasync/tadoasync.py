@@ -11,7 +11,7 @@ from importlib import metadata
 from typing import Self
 
 import orjson
-from aiohttp import ClientResponse, ClientResponseError
+from aiohttp import ClientResponseError
 from aiohttp.client import ClientSession
 from yarl import URL
 
@@ -132,8 +132,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             raise TadoConnectionError(
                 "Timeout occurred while connecting to Tado."
             ) from err
-        except ClientResponseError:
-            await self.check_request_status(request)
+        except ClientResponseError as err:
+            await self.check_request_status(err, login=True)
 
         content_type = request.headers.get("content-type")
         if content_type and "application/json" not in content_type:
@@ -152,32 +152,37 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         get_me = await self.get_me()
         self._home_id = get_me.homes[0].id
 
-    async def check_request_status(self, request: ClientResponse) -> None:
+    async def check_request_status(
+        self, response_error: ClientResponseError, *, login: bool = False
+    ) -> None:
         """Check the status of the request and raise the proper exception if needed."""
         status_error_mapping = {
-            400: TadoBadRequestError(
-                "Bad request to Tado. Response body: " + await request.text()
-            ),
             500: TadoError(
                 "Error "
-                + str(request.status)
+                + str(response_error.status)
                 + " connecting to Tado. Response body: "
-                + await request.text()
+                + response_error.message
             ),
             401: TadoAuthenticationError(
                 "Authentication error connecting to Tado. Response body: "
-                + await request.text()
+                + response_error.message
             ),
             403: TadoForbiddenError(
                 "Forbidden error connecting to Tado. Response body: "
-                + await request.text()
+                + response_error.message
             ),
         }
 
-        raise status_error_mapping.get(request.status) or TadoError(
-            f"Error {request.status} connecting to Tado. "
-            f"Response body: {await request.text()}"
+        status_error_mapping[400] = TadoBadRequestError(
+            "Bad request to Tado. Response body: " + response_error.message
         )
+        if login:
+            status_error_mapping[400] = TadoAuthenticationError(
+                "Authentication error connecting to Tado. Response body: "
+                + response_error.message
+            )
+
+        raise status_error_mapping[response_error.status]
 
     async def _refresh_auth(self) -> None:
         """Refresh the authentication token."""
@@ -204,8 +209,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             raise TadoConnectionError(
                 "Timeout occurred while connecting to Tado."
             ) from err
-        except ClientResponseError:
-            await self.check_request_status(request)
+        except ClientResponseError as err:
+            await self.check_request_status(err)
 
         response = await request.json()
         self._access_token = response["access_token"]
@@ -405,8 +410,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             raise TadoConnectionError(
                 "Timeout occurred while connecting to Tado."
             ) from err
-        except ClientResponseError:
-            await self.check_request_status(request)
+        except ClientResponseError as err:
+            await self.check_request_status(err)
 
         return await request.text()
 

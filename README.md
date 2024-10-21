@@ -158,7 +158,7 @@ SOFTWARE.
 [poetry]: https://python-poetry.org
 [pre-commit]: https://pre-commit.com/
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-production%20ready-brightgreen.svg
-[pypi]: https://pypi.org/project/python-tado-async/
+[pypi]: https://pypi.org/project/tadoasync/
 [python-versions-shield]: https://img.shields.io/pypi/pyversions/tado
 [releases-shield]: https://img.shields.io/github/release/erwindouna/python-tado.svg
 [releases]: https://github.com/erwindouna/python-tado/releases
