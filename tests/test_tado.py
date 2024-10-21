@@ -14,6 +14,7 @@ from tadoasync import (
     Tado,
 )
 from tadoasync.exceptions import (
+    TadoAuthenticationError,
     TadoBadRequestError,
     TadoConnectionError,
     TadoError,
@@ -121,7 +122,7 @@ async def test_login_client_response_error(python_tado: Tado) -> None:
         return mock_response
 
     with patch("aiohttp.ClientSession.post", new=mock_post), pytest.raises(
-        TadoBadRequestError
+        TadoAuthenticationError
     ):
         await python_tado.login()
 
@@ -168,10 +169,10 @@ async def test_refresh_auth_client_response_error(python_tado: Tado) -> None:
     mock_request_info = MagicMock(spec=RequestInfo)
     mock_response = MagicMock(spec=ClientResponse)
     mock_response.raise_for_status.side_effect = ClientResponseError(
-        mock_request_info, (mock_response,), status=400
+        mock_request_info, (mock_response,), status=400, message="Error message"
     )
     mock_response.status = 400
-    mock_response.text = AsyncMock(return_value="Error message")
+    mock_response.message = "Error message"
 
     async def mock_post(*args: Any, **kwargs: Any) -> ClientResponse:  # noqa: ARG001 # pylint: disable=unused-argument
         return mock_response
@@ -453,7 +454,7 @@ async def test_request_client_response_error(python_tado: Tado) -> None:
         mock_request_info, (mock_response,), status=400
     )
     mock_response.status = 400
-    mock_response.text = AsyncMock(return_value="Error message")
+    mock_response.message = "Error message"
 
     async def mock_get(*args: Any, **kwargs: Any) -> ClientResponse:  # noqa: ARG001 # pylint: disable=unused-argument
         return mock_response
