@@ -64,7 +64,7 @@ async def test_login_success(responses: aioresponses) -> None:
         assert tado._access_token == "test_access_token"
         assert tado._token_expiry is not None
         assert tado._token_expiry > time.time()
-        assert tado._refesh_token == "test_refresh_token"
+        assert tado._refresh_token == "test_refresh_token"
 
 
 async def test_login_success_no_session(responses: aioresponses) -> None:
@@ -80,7 +80,7 @@ async def test_login_success_no_session(responses: aioresponses) -> None:
         assert tado._access_token == "test_access_token"
         assert tado._token_expiry is not None
         assert tado._token_expiry > time.time()
-        assert tado._refesh_token == "test_refresh_token"
+        assert tado._refresh_token == "test_refresh_token"
 
 
 async def test_login_timeout(python_tado: Tado, responses: aioresponses) -> None:
@@ -143,11 +143,11 @@ async def test_refresh_auth_success(responses: aioresponses) -> None:
         tado = Tado(username="username", password="password", session=session)
         tado._access_token = "old_test_access_token"
         tado._token_expiry = time.time() - 10  # make sure the token is expired
-        tado._refesh_token = "old_test_refresh_token"
+        tado._refresh_token = "old_test_refresh_token"
         await tado._refresh_auth()
         assert tado._access_token == "test_access_token"
         assert tado._token_expiry > time.time()
-        assert tado._refesh_token == "test_refresh_token"
+        assert tado._refresh_token == "test_refresh_token"
 
 
 async def test_refresh_auth_timeout(python_tado: Tado, responses: aioresponses) -> None:
@@ -159,7 +159,7 @@ async def test_refresh_auth_timeout(python_tado: Tado, responses: aioresponses) 
     async with aiohttp.ClientSession():
         python_tado._access_token = "old_test_access_token"
         python_tado._token_expiry = time.time() - 10  # make sure the token is expired
-        python_tado._refesh_token = "old_test_refresh_token"
+        python_tado._refresh_token = "old_test_refresh_token"
         with pytest.raises(TadoConnectionError):
             await python_tado._refresh_auth()
 
@@ -180,7 +180,7 @@ async def test_refresh_auth_client_response_error(python_tado: Tado) -> None:
     with patch("aiohttp.ClientSession.post", new=mock_post):
         python_tado._access_token = "old_test_access_token"
         python_tado._token_expiry = time.time() - 10  # make sure the token is expired
-        python_tado._refesh_token = "old_test_refresh_token"
+        python_tado._refresh_token = "old_test_refresh_token"
         with pytest.raises(TadoBadRequestError):
             await python_tado._refresh_auth()
 
@@ -323,6 +323,24 @@ async def test_set_presence_success(python_tado: Tado, responses: aioresponses) 
         f"{TADO_API_URL}/homes/{python_tado._home_id}/presenceLock",
         status=204,
         payload={"homePresence": presence},
+    )
+    await python_tado.set_presence(presence)
+
+
+# Add this test to cover the DELETE request when presence is AUTO
+async def test_set_presence_auto_delete(
+    python_tado: Tado, responses: aioresponses
+) -> None:
+    """Test DELETE request when setting presence to AUTO."""
+    presence = "AUTO"
+    responses.put(
+        f"{TADO_API_URL}/homes/{python_tado._home_id}/presenceLock",
+        status=204,
+        payload={"homePresence": presence},
+    )
+    responses.delete(
+        f"{TADO_API_URL}/homes/{python_tado._home_id}/presenceLock",
+        status=204,
     )
     await python_tado.set_presence(presence)
 
