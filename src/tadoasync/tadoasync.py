@@ -312,9 +312,9 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         power: str = "ON",
         mode: str | None = None,
         fan_speed: str | None = None,
-        fan_level: str | None = None,  # TODO: needs to be implemented
-        vertical_swing: str | None = None,  # TODO: needs to be implemented
-        horizontal_swing: str | None = None,  # TODO: needs to be implemented
+        fan_level: str | None = None,
+        vertical_swing: str | None = None,
+        horizontal_swing: str | None = None,
         swing: str | None = None,
     ) -> None:
         """Set the zone overlay."""
@@ -332,9 +332,20 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                     if fan_speed is not None and set_temp is not None
                     else {}
                 ),
+                **({"fanLevel": fan_level} if fan_level is not None else {}),
                 **(
                     {"swing": swing}
                     if swing is not None and set_temp is not None
+                    else {}
+                ),
+                **(
+                    {"verticalSwing": vertical_swing}
+                    if vertical_swing is not None
+                    else {}
+                ),
+                **(
+                    {"horizontalSwing": horizontal_swing}
+                    if horizontal_swing is not None
                     else {}
                 ),
                 **({"mode": mode} if mode is not None else {}),
