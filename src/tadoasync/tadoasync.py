@@ -103,7 +103,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
         self._access_token: str | None = None
         self._token_expiry: float | None = None
-        self._refesh_token: str | None = None
+        self._refresh_token: str | None = None
         self._access_headers: dict[str, str] | None = None
         self._home_id: int | None = None
         self._me: GetMe | None = None
@@ -147,7 +147,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         response = await request.json()
         self._access_token = response["access_token"]
         self._token_expiry = time.time() + float(response["expires_in"])
-        self._refesh_token = response["refresh_token"]
+        self._refresh_token = response["refresh_token"]
 
         get_me = await self.get_me()
         self._home_id = get_me.homes[0].id
@@ -194,7 +194,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             "client_secret": CLIENT_SECRET,
             "grant_type": "refresh_token",
             "scope": "home.user",
-            "refresh_token": self._refesh_token,
+            "refresh_token": self._refresh_token,
         }
 
         if self._session is None:
@@ -215,7 +215,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         response = await request.json()
         self._access_token = response["access_token"]
         self._token_expiry = time.time() + float(response["expires_in"])
-        self._refesh_token = response["refresh_token"]
+        self._refresh_token = response["refresh_token"]
 
     async def get_me(self) -> GetMe:
         """Get the user information."""
@@ -290,11 +290,17 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
     async def set_presence(self, presence: str) -> None:
         """Set the presence."""
-        await self._request(
-            f"homes/{self._home_id}/presenceLock",
-            data={"homePresence": presence},
-            method=HttpMethod.PUT,
-        )
+        if presence.upper() == "AUTO":
+            await self._request(
+                f"homes/{self._home_id}/presenceLock",
+                method=HttpMethod.DELETE,
+            )
+        else:
+            await self._request(
+                f"homes/{self._home_id}/presenceLock",
+                data={"homePresence": presence},
+                method=HttpMethod.PUT,
+            )
 
     async def set_zone_overlay(
         self,
@@ -306,6 +312,9 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         power: str = "ON",
         mode: str | None = None,
         fan_speed: str | None = None,
+        fan_level: str | None = None,
+        vertical_swing: str | None = None,
+        horizontal_swing: str | None = None,
         swing: str | None = None,
     ) -> None:
         """Set the zone overlay."""
@@ -323,9 +332,20 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                     if fan_speed is not None and set_temp is not None
                     else {}
                 ),
+                **({"fanLevel": fan_level} if fan_level is not None else {}),
                 **(
                     {"swing": swing}
                     if swing is not None and set_temp is not None
+                    else {}
+                ),
+                **(
+                    {"verticalSwing": vertical_swing}
+                    if vertical_swing is not None
+                    else {}
+                ),
+                **(
+                    {"horizontalSwing": horizontal_swing}
+                    if horizontal_swing is not None
                     else {}
                 ),
                 **({"mode": mode} if mode is not None else {}),
