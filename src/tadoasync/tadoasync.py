@@ -256,6 +256,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         """Get the zone state."""
         response = await self._request(f"homes/{self._home_id}/zones/{zone_id}/state")
         zone_state = ZoneState.from_json(response)
+
         await self.update_zone_data(zone_state)
         return zone_state
 
@@ -536,6 +537,9 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                 data.current_hvac_action = TADO_MODES_TO_HVAC_ACTION.get(
                     data.current_hvac_mode, CONST_HVAC_COOL
                 )
+
+        # The overlay is active if the current mode is not smart schedule
+        data.overlay_active = data.current_hvac_mode != CONST_MODE_SMART_SCHEDULE
 
         if data.activity_data_points.heating_power is not None:
             # This needs to be validated if this is actually in!
