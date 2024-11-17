@@ -15,6 +15,7 @@
 # ---
 # name: test_get_capabilities
   dict({
+    'can_set_temperature': None,
     'temperatures': dict({
       'celsius': dict({
         'max': 25.0,
@@ -28,6 +29,24 @@
       }),
     }),
     'type': 'HEATING',
+  })
+# ---
+# name: test_get_capabilities_water_heater
+  dict({
+    'can_set_temperature': True,
+    'temperatures': dict({
+      'celsius': dict({
+        'max': 31.0,
+        'min': 16.0,
+        'step': 1.0,
+      }),
+      'fahrenheit': dict({
+        'max': 88.0,
+        'min': 61.0,
+        'step': 1.0,
+      }),
+    }),
+    'type': 'HOT_WATER',
   })
 # ---
 # name: test_get_device_info

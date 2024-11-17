@@ -289,6 +289,9 @@ class Capabilities(DataClassORJSONMixin):
 
     type: str
     temperatures: Temperatures
+    can_set_temperature: bool | None = field(
+        metadata=field_options(alias="canSetTemperature"), default=None
+    )
 
 
 @dataclass
