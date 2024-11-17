@@ -1,0 +1,150 @@
+[
+  {
+    "id": 2,
+    "name": "Zone1",
+    "type": "HEATING",
+    "dateCreated": "2023-04-12T12:58:12.737Z",
+    "deviceTypes": ["VA02"],
+    "devices": [
+      {
+        "deviceType": "VA02",
+        "serialNo": "Serial1",
+        "shortSerialNo": "ShortSerial1",
+        "currentFwVersion": "95.1",
+        "connectionState": {
+          "value": true,
+          "timestamp": "2024-02-27T20:30:13.976Z"
+        },
+        "characteristics": {
+          "capabilities": ["INSIDE_TEMPERATURE_MEASUREMENT", "IDENTIFY"]
+        },
+        "mountingState": {
+          "value": "CALIBRATED",
+          "timestamp": "2024-02-04T10:17:00.266Z"
+        },
+        "mountingStateWithError": "CALIBRATED",
+        "batteryState": "NORMAL",
+        "orientation": "HORIZONTAL",
+        "childLockEnabled": true,
+        "duties": ["ZONE_UI", "ZONE_DRIVER", "ZONE_LEADER"]
+      }
+    ],
+    "reportAvailable": false,
+    "showScheduleSetup": false,
+    "supportsDazzle": true,
+    "dazzleEnabled": true,
+    "dazzleMode": { "supported": true, "enabled": true },
+    "openWindowDetection": null
+  },
+  {
+    "id": 1,
+    "name": "Zone2",
+    "type": "HEATING",
+    "dateCreated": "2023-01-29T16:02:14.530Z",
+    "deviceTypes": ["VA02"],
+    "devices": [
+      {
+        "deviceType": "VA02",
+        "serialNo": "Serial2",
+        "shortSerialNo": "ShortSerial2",
+        "currentFwVersion": "95.1",
+        "connectionState": {
+          "value": true,
+          "timestamp": "2024-02-27T20:32:05.188Z"
+        },
+        "characteristics": {
+          "capabilities": ["INSIDE_TEMPERATURE_MEASUREMENT", "IDENTIFY"]
+        },
+        "mountingState": {
+          "value": "CALIBRATED",
+          "timestamp": "2023-10-09T15:39:08.131Z"
+        },
+        "mountingStateWithError": "CALIBRATED",
+        "batteryState": "NORMAL",
+        "orientation": "HORIZONTAL",
+        "childLockEnabled": true,
+        "duties": ["ZONE_UI", "ZONE_DRIVER", "ZONE_LEADER"]
+      }
+    ],
+    "reportAvailable": false,
+    "showScheduleSetup": true,
+    "supportsDazzle": true,
+    "dazzleEnabled": true,
+    "dazzleMode": { "supported": true, "enabled": true },
+    "openWindowDetection": null
+  },
+  {
+    "id": 3,
+    "name": "Zone3",
+    "type": "HEATING",
+    "dateCreated": "2023-04-14T07:52:56.352Z",
+    "deviceTypes": ["VA02"],
+    "devices": [
+      {
+        "deviceType": "VA02",
+        "serialNo": "Serial3",
+        "shortSerialNo": "ShortSerial3",
+        "currentFwVersion": "95.1",
+        "connectionState": {
+          "value": true,
+          "timestamp": "2024-02-27T20:31:11.417Z"
+        },
+        "characteristics": {
+          "capabilities": ["INSIDE_TEMPERATURE_MEASUREMENT", "IDENTIFY"]
+        },
+        "mountingState": {
+          "value": "CALIBRATED",
+          "timestamp": "2024-02-26T13:33:10.647Z"
+        },
+        "mountingStateWithError": "CALIBRATED",
+        "batteryState": "NORMAL",
+        "orientation": "HORIZONTAL",
+        "childLockEnabled": true,
+        "duties": ["ZONE_UI", "ZONE_DRIVER", "ZONE_LEADER"]
+      }
+    ],
+    "reportAvailable": false,
+    "showScheduleSetup": true,
+    "supportsDazzle": true,
+    "dazzleEnabled": true,
+    "dazzleMode": { "supported": true, "enabled": true },
+    "openWindowDetection": null
+  },
+  {
+    "id": 4,
+    "name": "Zone4",
+    "type": "HEATING",
+    "dateCreated": "2023-04-14T07:58:45.196Z",
+    "deviceTypes": ["VA02"],
+    "devices": [
+      {
+        "deviceType": "VA02",
+        "serialNo": "Serial4",
+        "shortSerialNo": "ShortSerial4",
+        "currentFwVersion": "95.1",
+        "connectionState": {
+          "value": true,
+          "timestamp": "2024-02-27T20:33:21.903Z"
+        },
+        "characteristics": {
+          "capabilities": ["INSIDE_TEMPERATURE_MEASUREMENT", "IDENTIFY"]
+        },
+        "mountingState": {
+          "value": "CALIBRATED",
+          "timestamp": "2024-02-19T17:23:30.537Z"
+        },
+        "mountingStateWithError": "CALIBRATED",
+        "batteryState": "NORMAL",
+        "orientation": "HORIZONTAL",
+        "childLockEnabled": true,
+        "duties": ["ZONE_UI", "ZONE_DRIVER", "ZONE_LEADER"]
+      }
+    ],
+    "reportAvailable": false,
+    "showScheduleSetup": true,
+    "supportsDazzle": true,
+    "dazzleEnabled": true,
+    "dazzleMode": { "supported": true, "enabled": true },
+    "openWindowDetection": null
+  }
+]

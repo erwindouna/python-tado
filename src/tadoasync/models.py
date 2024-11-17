@@ -171,13 +171,24 @@ class Zone(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attribute
     date_created: str = field(metadata=field_options(alias="dateCreated"))
     device_types: list[str] = field(metadata=field_options(alias="deviceTypes"))
     devices: list[Device]
-    report_available: bool = field(metadata=field_options(alias="reportAvailable"))
-    show_schedule_detup: bool = field(metadata=field_options(alias="showScheduleSetup"))
-    supports_dazzle: bool = field(metadata=field_options(alias="supportsDazzle"))
-    dazzle_enabled: bool = field(metadata=field_options(alias="dazzleEnabled"))
-    dazzle_mode: DazzleMode = field(metadata=field_options(alias="dazzleMode"))
-    open_window_detection: OpenWindowDetection = field(
-        metadata=field_options(alias="openWindowDetection")
+    dazzle_mode: DazzleMode | None = field(
+        metadata=field_options(alias="dazzleMode"),
+        default=None,
+    )
+    open_window_detection: OpenWindowDetection | None = field(
+        metadata=field_options(alias="openWindowDetection"), default=None
+    )
+    report_available: bool = field(
+        metadata=field_options(alias="reportAvailable"), default=False
+    )
+    show_schedule_setup: bool = field(
+        metadata=field_options(alias="showScheduleSetup"), default=False
+    )
+    supports_dazzle: bool = field(
+        metadata=field_options(alias="supportsDazzle"), default=False
+    )
+    dazzle_enabled: bool = field(
+        metadata=field_options(alias="dazzleEnabled"), default=False
     )
 
 

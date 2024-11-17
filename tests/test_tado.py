@@ -233,6 +233,18 @@ async def test_get_zones(
     assert await python_tado.get_zones() == snapshot
 
 
+async def test_get_zones_no_owd(
+    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+) -> None:
+    """Test get zones."""
+    responses.get(
+        f"{TADO_API_URL}/homes/1/zones",
+        status=200,
+        body=load_fixture("zones_no_owd.json"),
+    )
+    assert await python_tado.get_zones() == snapshot
+
+
 async def test_get_zone_states_heating_power(
     python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
 ) -> None:
