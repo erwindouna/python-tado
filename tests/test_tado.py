@@ -328,6 +328,18 @@ async def test_get_capabilities_water_heater(
     assert await python_tado.get_capabilities(1) == snapshot
 
 
+async def test_get_capabilities_ac(
+    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+) -> None:
+    """Test get capabilities."""
+    responses.get(
+        f"{TADO_API_URL}/homes/1/zones/1/capabilities",
+        status=200,
+        body=load_fixture("capabilities_ac.json"),
+    )
+    assert await python_tado.get_capabilities(1) == snapshot
+
+
 async def test_reset_zone_overlay_success(
     python_tado: Tado, responses: aioresponses
 ) -> None:

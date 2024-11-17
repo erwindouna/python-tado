@@ -15,7 +15,12 @@
 # ---
 # name: test_get_capabilities
   dict({
+    'auto': None,
     'can_set_temperature': None,
+    'cool': None,
+    'dry': None,
+    'fan': None,
+    'heat': None,
     'temperatures': dict({
       'celsius': dict({
         'max': 25.0,
@@ -31,9 +36,75 @@
     'type': 'HEATING',
   })
 # ---
+# name: test_get_capabilities_ac
+  dict({
+    'auto': dict({
+      'fan_speeds': list([
+        'AUTO',
+        'HIGH',
+        'MIDDLE',
+        'LOW',
+      ]),
+      'swing_modes': list([
+        'OFF',
+        'ON',
+      ]),
+    }),
+    'can_set_temperature': None,
+    'cool': dict({
+      'fan_speeds': list([
+        'AUTO',
+        'HIGH',
+        'MIDDLE',
+        'LOW',
+      ]),
+      'swing_modes': list([
+        'OFF',
+        'ON',
+      ]),
+    }),
+    'dry': dict({
+      'swing_modes': list([
+        'OFF',
+        'ON',
+      ]),
+    }),
+    'fan': dict({
+      'fan_speeds': list([
+        'AUTO',
+        'HIGH',
+        'MIDDLE',
+        'LOW',
+      ]),
+      'swing_modes': list([
+        'OFF',
+        'ON',
+      ]),
+    }),
+    'heat': dict({
+      'fan_speeds': list([
+        'AUTO',
+        'HIGH',
+        'MIDDLE',
+        'LOW',
+      ]),
+      'swing_modes': list([
+        'OFF',
+        'ON',
+      ]),
+    }),
+    'temperatures': None,
+    'type': 'AIR_CONDITIONING',
+  })
+# ---
 # name: test_get_capabilities_water_heater
   dict({
+    'auto': None,
     'can_set_temperature': True,
+    'cool': None,
+    'dry': None,
+    'fan': None,
+    'heat': None,
     'temperatures': dict({
       'celsius': dict({
         'max': 31.0,

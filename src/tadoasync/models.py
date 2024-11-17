@@ -293,6 +293,52 @@ class Capabilities(DataClassORJSONMixin):
         metadata=field_options(alias="canSetTemperature"), default=None
     )
 
+    # Air conditioning specifics
+    auto: AutoAC | None = field(metadata=field_options(alias="AUTO"), default=None)
+    cool: CoolAC | None = field(metadata=field_options(alias="COOL"), default=None)
+    dry: DryAC | None = field(metadata=field_options(alias="DRY"), default=None)
+    fan: FanAC | None = field(metadata=field_options(alias="FAN"), default=None)
+    heat: HeatAC | None = field(metadata=field_options(alias="HEAT"), default=None)
+
+
+@dataclass
+class AutoAC(DataClassORJSONMixin):
+    """AutoAC model represents the auto AC capabilities of a zone."""
+
+    fan_speeds: list[str] = field(metadata=field_options(alias="fanSpeeds"))
+    swing_modes: list[str] = field(metadata=field_options(alias="swings"))
+
+
+@dataclass
+class CoolAC(DataClassORJSONMixin):
+    """CoolAC model represents the cool AC capabilities of a zone."""
+
+    fan_speeds: list[str] = field(metadata=field_options(alias="fanSpeeds"))
+    swing_modes: list[str] = field(metadata=field_options(alias="swings"))
+
+
+@dataclass
+class DryAC(DataClassORJSONMixin):
+    """DryAC model represents the dry AC capabilities of a zone."""
+
+    swing_modes: list[str] = field(metadata=field_options(alias="swings"))
+
+
+@dataclass
+class FanAC(DataClassORJSONMixin):
+    """FanAC model represents the fan AC capabilities of a zone."""
+
+    fan_speeds: list[str] = field(metadata=field_options(alias="fanSpeeds"))
+    swing_modes: list[str] = field(metadata=field_options(alias="swings"))
+
+
+@dataclass
+class HeatAC(DataClassORJSONMixin):
+    """HeatAC model represents the heat AC capabilities of a zone."""
+
+    fan_speeds: list[str] = field(metadata=field_options(alias="fanSpeeds"))
+    swing_modes: list[str] = field(metadata=field_options(alias="swings"))
+
 
 @dataclass
 class TemperatureOffset(DataClassORJSONMixin):
