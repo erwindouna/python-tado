@@ -288,7 +288,7 @@ class Capabilities(DataClassORJSONMixin):
     """Capabilities model represents the capabilities of a zone."""
 
     type: str
-    temperatures: Temperatures
+    temperatures: Temperatures | None = None
     can_set_temperature: bool | None = field(
         metadata=field_options(alias="canSetTemperature"), default=None
     )
