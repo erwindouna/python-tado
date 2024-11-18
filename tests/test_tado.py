@@ -381,16 +381,28 @@ async def test_set_presence_auto_delete(
     await python_tado.set_presence(presence)
 
 
-async def test_get_device_info(
+async def test_get_device_info_attribute(
     python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
 ) -> None:
     """Test get device info."""
     responses.get(
         f"{TADO_API_URL}/devices/1/temperatureOffset",
         status=200,
-        body=load_fixture("device_info.json"),
+        body=load_fixture("device_info_attribute.json"),
     )
     assert await python_tado.get_device_info("1", "temperatureOffset") == snapshot
+
+
+async def test_get_device_info(
+    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+) -> None:
+    """Test get device info."""
+    responses.get(
+        f"{TADO_API_URL}/devices/1/",
+        status=200,
+        body=load_fixture("device_info.json"),
+    )
+    assert await python_tado.get_device_info("1") == snapshot
 
 
 async def test_geofencing_supported(

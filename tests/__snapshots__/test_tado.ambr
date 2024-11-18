@@ -122,6 +122,29 @@
 # ---
 # name: test_get_device_info
   dict({
+    'battery_state': None,
+    'characteristics': dict({
+      'capabilities': list([
+        'RADIO_ENCRYPTION_KEY_ACCESS',
+      ]),
+    }),
+    'child_lock_enabled': None,
+    'connection_state': dict({
+      'timestamp': '2024-11-18T21:41:49.404Z',
+      'value': True,
+    }),
+    'current_fw_version': '92.1',
+    'device_type': 'IB01',
+    'in_pairing_mode': False,
+    'mounting_state': None,
+    'mounting_state_with_error': None,
+    'orientation': None,
+    'serial_no': 'SerialNo1',
+    'short_serial_no': 'ShortSerialNo1',
+  })
+# ---
+# name: test_get_device_info_attribute
+  dict({
     'celsius': 0.0,
     'fahrenheit': 0.0,
   })

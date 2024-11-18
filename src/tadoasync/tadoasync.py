@@ -363,11 +363,15 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         )
 
     async def get_device_info(
-        self, serial_no: str, attribute: str
-    ) -> TemperatureOffset:
+        self, serial_no: str, attribute: str | None = None
+    ) -> TemperatureOffset | Device:
         """Get the device info."""
-        response = await self._request(f"devices/{serial_no}/{attribute}")
-        return TemperatureOffset.from_json(response)
+        if attribute == "temperatureOffset":
+            response = await self._request(f"devices/{serial_no}/{attribute}")
+            return TemperatureOffset.from_json(response)
+
+        response = await self._request(f"devices/{serial_no}/")
+        return Device.from_json(response)
 
     async def set_child_lock(self, serial_no: str, child_lock: bool | None) -> None:
         """Set the child lock."""
