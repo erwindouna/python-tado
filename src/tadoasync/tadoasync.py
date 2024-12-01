@@ -523,6 +523,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             else CONST_FAN_SPEED_OFF
         )
 
+        data.preparation = hasattr(data, "preparation") and data.preparation is not None
+
         data.open_window_detected = (
             hasattr(data, "open_window_detected")
             and data.open_window_detected is not None

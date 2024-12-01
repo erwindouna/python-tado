@@ -435,7 +435,7 @@
     'overlay_type': 'MANUAL',
     'power': 'ON',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 50.4,
@@ -543,7 +543,7 @@
     'overlay_type': 'MANUAL',
     'power': 'ON',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 62.5,
@@ -651,7 +651,7 @@
     'overlay_type': 'MANUAL',
     'power': 'ON',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 60.9,
@@ -759,7 +759,7 @@
     'overlay_type': 'MANUAL',
     'power': 'ON',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 62.0,
@@ -862,7 +862,7 @@
     'overlay_type': 'MANUAL',
     'power': 'ON',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 62.0,
@@ -970,7 +970,7 @@
     'overlay_type': 'MANUAL',
     'power': 'ON',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 60.9,
@@ -1078,7 +1078,7 @@
     'overlay_type': 'MANUAL',
     'power': 'OFF',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 48.2,
@@ -1181,7 +1181,7 @@
     'overlay_type': 'MANUAL',
     'power': 'OFF',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 62.0,
@@ -1289,7 +1289,7 @@
     'overlay_type': 'MANUAL',
     'power': 'ON',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 61.6,
@@ -1378,7 +1378,7 @@
     'overlay_type': None,
     'power': 'ON',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 60.0,
@@ -1486,7 +1486,7 @@
     'overlay_type': 'MANUAL',
     'power': 'OFF',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 49.2,
@@ -1588,7 +1588,7 @@
     'overlay_type': None,
     'power': 'ON',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 42.3,
@@ -1696,7 +1696,7 @@
     'overlay_type': None,
     'power': 'ON',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 45.2,
@@ -1828,7 +1828,7 @@
     'overlay_type': 'MANUAL',
     'power': 'ON',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 45.2,
@@ -1970,7 +1970,7 @@
     'overlay_type': 'MANUAL',
     'power': 'ON',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 45.2,
@@ -2111,7 +2111,7 @@
     'overlay_type': 'MANUAL',
     'power': 'ON',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 45.2,
@@ -2256,7 +2256,7 @@
     'overlay_type': 'MANUAL',
     'power': 'ON',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 45.2,
@@ -2386,7 +2386,7 @@
     'overlay_type': 'MANUAL',
     'power': 'OFF',
     'precision': 0.1,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
       'humidity': dict({
         'percentage': 45.2,
@@ -2479,7 +2479,7 @@
     'overlay_type': None,
     'power': 'ON',
     'precision': None,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
     }),
     'setting': dict({
@@ -2586,7 +2586,7 @@
     'overlay_type': 'MANUAL',
     'power': 'ON',
     'precision': None,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
     }),
     'setting': dict({
@@ -2688,7 +2688,7 @@
     'overlay_type': 'MANUAL',
     'power': 'OFF',
     'precision': None,
-    'preparation': None,
+    'preparation': False,
     'sensor_data_points': dict({
     }),
     'setting': dict({
