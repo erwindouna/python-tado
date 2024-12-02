@@ -260,7 +260,6 @@ async def test_get_zone_states_heating_power(
 @pytest.mark.parametrize(
     ("fixture_file"),
     [
-        # Go through the different modes
         ("zone_states_ac_power.dry.json"),
         ("zone_states_ac_power.fan.json"),
     ],

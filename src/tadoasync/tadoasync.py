@@ -250,6 +250,10 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             zone_id: ZoneState.from_dict(zone_state_dict)
             for zone_id, zone_state_dict in obj["zoneStates"].items()
         }
+
+        for zone_state in zone_states.values():
+            await self.update_zone_data(zone_state)
+
         return [ZoneStates(zone_states=zone_states)]
 
     async def get_zone_state(self, zone_id: int) -> ZoneState:
@@ -473,8 +477,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
         data.current_fan_speed = None
         data.current_fan_level = None
-        # If there is no overlay, the mode will always be
-        # "SMART_SCHEDULE"
+        # If there is no overlay, the mode will always be "SMART_SCHEDULE"
         data.current_hvac_mode = CONST_MODE_OFF
         data.current_swing_mode = CONST_MODE_OFF
         data.current_vertical_swing_mode = CONST_VERTICAL_SWING_OFF

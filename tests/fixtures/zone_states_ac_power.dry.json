@@ -33,7 +33,7 @@
         },
         "setting": {
           "type": "AIR_CONDITIONING",
-          "mode": "FAN",
+          "mode": "DRY",
           "power": "ON"
         },
         "type": "MANUAL"
@@ -53,7 +53,7 @@
       "nextScheduleChange": null,
       "setting": {
         "type": "AIR_CONDITIONING",
-        "mode": "FAN",
+        "mode": "DRY",
         "power": "ON"
       }
     }
