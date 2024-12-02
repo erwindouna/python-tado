@@ -1,1 +1,16 @@
-{ "celsius": 0.0, "fahrenheit": 0.0 }
+{
+    "deviceType": "IB01",
+    "serialNo": "SerialNo1",
+    "shortSerialNo": "ShortSerialNo1",
+    "currentFwVersion": "92.1",
+    "connectionState": {
+        "value": true,
+        "timestamp": "2024-11-18T21:41:49.404Z"
+    },
+    "characteristics": {
+        "capabilities": [
+            "RADIO_ENCRYPTION_KEY_ACCESS"
+        ]
+    },
+    "inPairingMode": false
+}

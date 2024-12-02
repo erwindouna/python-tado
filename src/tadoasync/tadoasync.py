@@ -250,12 +250,17 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             zone_id: ZoneState.from_dict(zone_state_dict)
             for zone_id, zone_state_dict in obj["zoneStates"].items()
         }
+
+        for zone_state in zone_states.values():
+            await self.update_zone_data(zone_state)
+
         return [ZoneStates(zone_states=zone_states)]
 
     async def get_zone_state(self, zone_id: int) -> ZoneState:
         """Get the zone state."""
         response = await self._request(f"homes/{self._home_id}/zones/{zone_id}/state")
         zone_state = ZoneState.from_json(response)
+
         await self.update_zone_data(zone_state)
         return zone_state
 
@@ -362,11 +367,15 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         )
 
     async def get_device_info(
-        self, serial_no: str, attribute: str
-    ) -> TemperatureOffset:
+        self, serial_no: str, attribute: str | None = None
+    ) -> TemperatureOffset | Device:
         """Get the device info."""
-        response = await self._request(f"devices/{serial_no}/{attribute}")
-        return TemperatureOffset.from_json(response)
+        if attribute == "temperatureOffset":
+            response = await self._request(f"devices/{serial_no}/{attribute}")
+            return TemperatureOffset.from_json(response)
+
+        response = await self._request(f"devices/{serial_no}/")
+        return Device.from_json(response)
 
     async def set_child_lock(self, serial_no: str, child_lock: bool | None) -> None:
         """Set the child lock."""
@@ -468,8 +477,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
         data.current_fan_speed = None
         data.current_fan_level = None
-        # If there is no overlay, the mode will always be
-        # "SMART_SCHEDULE"
+        # If there is no overlay, the mode will always be "SMART_SCHEDULE"
         data.current_hvac_mode = CONST_MODE_OFF
         data.current_swing_mode = CONST_MODE_OFF
         data.current_vertical_swing_mode = CONST_VERTICAL_SWING_OFF
@@ -518,6 +526,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             else CONST_FAN_SPEED_OFF
         )
 
+        data.preparation = hasattr(data, "preparation") and data.preparation is not None
+
         data.open_window_detected = (
             hasattr(data, "open_window_detected")
             and data.open_window_detected is not None
@@ -536,6 +546,9 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                 data.current_hvac_action = TADO_MODES_TO_HVAC_ACTION.get(
                     data.current_hvac_mode, CONST_HVAC_COOL
                 )
+
+        # The overlay is active if the current mode is not smart schedule
+        data.overlay_active = data.current_hvac_mode != CONST_MODE_SMART_SCHEDULE
 
         if data.activity_data_points.heating_power is not None:
             # This needs to be validated if this is actually in!

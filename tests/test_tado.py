@@ -233,6 +233,18 @@ async def test_get_zones(
     assert await python_tado.get_zones() == snapshot
 
 
+async def test_get_zones_no_owd(
+    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+) -> None:
+    """Test get zones."""
+    responses.get(
+        f"{TADO_API_URL}/homes/1/zones",
+        status=200,
+        body=load_fixture("zones_no_owd.json"),
+    )
+    assert await python_tado.get_zones() == snapshot
+
+
 async def test_get_zone_states_heating_power(
     python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
 ) -> None:
@@ -248,7 +260,6 @@ async def test_get_zone_states_heating_power(
 @pytest.mark.parametrize(
     ("fixture_file"),
     [
-        # Go through the different modes
         ("zone_states_ac_power.dry.json"),
         ("zone_states_ac_power.fan.json"),
     ],
@@ -304,6 +315,30 @@ async def test_get_capabilities(
     assert await python_tado.get_capabilities(1) == snapshot
 
 
+async def test_get_capabilities_water_heater(
+    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+) -> None:
+    """Test get capabilities."""
+    responses.get(
+        f"{TADO_API_URL}/homes/1/zones/1/capabilities",
+        status=200,
+        body=load_fixture("capabilities_water_heater.json"),
+    )
+    assert await python_tado.get_capabilities(1) == snapshot
+
+
+async def test_get_capabilities_ac(
+    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+) -> None:
+    """Test get capabilities."""
+    responses.get(
+        f"{TADO_API_URL}/homes/1/zones/1/capabilities",
+        status=200,
+        body=load_fixture("capabilities_ac.json"),
+    )
+    assert await python_tado.get_capabilities(1) == snapshot
+
+
 async def test_reset_zone_overlay_success(
     python_tado: Tado, responses: aioresponses
 ) -> None:
@@ -345,16 +380,28 @@ async def test_set_presence_auto_delete(
     await python_tado.set_presence(presence)
 
 
-async def test_get_device_info(
+async def test_get_device_info_attribute(
     python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
 ) -> None:
     """Test get device info."""
     responses.get(
         f"{TADO_API_URL}/devices/1/temperatureOffset",
         status=200,
-        body=load_fixture("device_info.json"),
+        body=load_fixture("device_info_attribute.json"),
     )
     assert await python_tado.get_device_info("1", "temperatureOffset") == snapshot
+
+
+async def test_get_device_info(
+    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+) -> None:
+    """Test get device info."""
+    responses.get(
+        f"{TADO_API_URL}/devices/1/",
+        status=200,
+        body=load_fixture("device_info.json"),
+    )
+    assert await python_tado.get_device_info("1") == snapshot
 
 
 async def test_geofencing_supported(

@@ -171,13 +171,24 @@ class Zone(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attribute
     date_created: str = field(metadata=field_options(alias="dateCreated"))
     device_types: list[str] = field(metadata=field_options(alias="deviceTypes"))
     devices: list[Device]
-    report_available: bool = field(metadata=field_options(alias="reportAvailable"))
-    show_schedule_detup: bool = field(metadata=field_options(alias="showScheduleSetup"))
-    supports_dazzle: bool = field(metadata=field_options(alias="supportsDazzle"))
-    dazzle_enabled: bool = field(metadata=field_options(alias="dazzleEnabled"))
-    dazzle_mode: DazzleMode = field(metadata=field_options(alias="dazzleMode"))
-    open_window_detection: OpenWindowDetection = field(
-        metadata=field_options(alias="openWindowDetection")
+    dazzle_mode: DazzleMode | None = field(
+        metadata=field_options(alias="dazzleMode"),
+        default=None,
+    )
+    open_window_detection: OpenWindowDetection | None = field(
+        metadata=field_options(alias="openWindowDetection"), default=None
+    )
+    report_available: bool = field(
+        metadata=field_options(alias="reportAvailable"), default=False
+    )
+    show_schedule_setup: bool = field(
+        metadata=field_options(alias="showScheduleSetup"), default=False
+    )
+    supports_dazzle: bool = field(
+        metadata=field_options(alias="supportsDazzle"), default=False
+    )
+    dazzle_enabled: bool = field(
+        metadata=field_options(alias="dazzleEnabled"), default=False
     )
 
 
@@ -277,7 +288,77 @@ class Capabilities(DataClassORJSONMixin):
     """Capabilities model represents the capabilities of a zone."""
 
     type: str
-    temperatures: Temperatures
+    temperatures: Temperatures | None = None
+    can_set_temperature: bool | None = field(
+        metadata=field_options(alias="canSetTemperature"), default=None
+    )
+
+    # Air conditioning specifics
+    auto: AutoAC | None = field(metadata=field_options(alias="AUTO"), default=None)
+    cool: CoolAC | None = field(metadata=field_options(alias="COOL"), default=None)
+    dry: DryAC | None = field(metadata=field_options(alias="DRY"), default=None)
+    fan: FanAC | None = field(metadata=field_options(alias="FAN"), default=None)
+    heat: HeatAC | None = field(metadata=field_options(alias="HEAT"), default=None)
+
+
+@dataclass
+class AutoAC(DataClassORJSONMixin):
+    """AutoAC model represents the auto AC capabilities of a zone."""
+
+    fan_speeds: list[str] | None = field(
+        default=None, metadata=field_options(alias="fanSpeeds")
+    )
+    swing_modes: list[str] | None = field(
+        default=None, metadata=field_options(alias="swings")
+    )
+    light: str | None = None
+
+
+@dataclass
+class CoolAC(DataClassORJSONMixin):
+    """CoolAC model represents the cool AC capabilities of a zone."""
+
+    fan_speeds: list[str] | None = field(
+        default=None, metadata=field_options(alias="fanSpeeds")
+    )
+    swing_modes: list[str] | None = field(
+        default=None, metadata=field_options(alias="swings")
+    )
+    temperatures: Temperatures | None = None
+
+
+@dataclass
+class DryAC(DataClassORJSONMixin):
+    """DryAC model represents the dry AC capabilities of a zone."""
+
+    swing_modes: list[str] | None = field(
+        default=None, metadata=field_options(alias="swings")
+    )
+
+
+@dataclass
+class FanAC(DataClassORJSONMixin):
+    """FanAC model represents the fan AC capabilities of a zone."""
+
+    fan_speeds: list[str] | None = field(
+        default=None, metadata=field_options(alias="fanSpeeds")
+    )
+    swing_modes: list[str] | None = field(
+        default=None, metadata=field_options(alias="swings")
+    )
+
+
+@dataclass
+class HeatAC(DataClassORJSONMixin):
+    """HeatAC model represents the heat AC capabilities of a zone."""
+
+    fan_speeds: list[str] | None = field(
+        default=None, metadata=field_options(alias="fanSpeeds")
+    )
+    swing_modes: list[str] | None = field(
+        default=None, metadata=field_options(alias="swings")
+    )
+    temperatures: Temperatures | None = None
 
 
 @dataclass
