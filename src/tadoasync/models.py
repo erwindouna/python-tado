@@ -305,16 +305,26 @@ class Capabilities(DataClassORJSONMixin):
 class AutoAC(DataClassORJSONMixin):
     """AutoAC model represents the auto AC capabilities of a zone."""
 
-    fan_speeds: list[str] = field(metadata=field_options(alias="fanSpeeds"))
-    swing_modes: list[str] = field(metadata=field_options(alias="swings"))
+    fan_speeds: list[str] | None = field(
+        default=None, metadata=field_options(alias="fanSpeeds")
+    )
+    swing_modes: list[str] | None = field(
+        default=None, metadata=field_options(alias="swings")
+    )
+    light: str | None = None
 
 
 @dataclass
 class CoolAC(DataClassORJSONMixin):
     """CoolAC model represents the cool AC capabilities of a zone."""
 
-    fan_speeds: list[str] = field(metadata=field_options(alias="fanSpeeds"))
-    swing_modes: list[str] = field(metadata=field_options(alias="swings"))
+    fan_speeds: list[str] | None = field(
+        default=None, metadata=field_options(alias="fanSpeeds")
+    )
+    swing_modes: list[str] | None = field(
+        default=None, metadata=field_options(alias="swings")
+    )
+    temperatures: Temperatures | None = None
 
 
 @dataclass
@@ -330,16 +340,25 @@ class DryAC(DataClassORJSONMixin):
 class FanAC(DataClassORJSONMixin):
     """FanAC model represents the fan AC capabilities of a zone."""
 
-    fan_speeds: list[str] = field(metadata=field_options(alias="fanSpeeds"))
-    swing_modes: list[str] = field(metadata=field_options(alias="swings"))
+    fan_speeds: list[str] | None = field(
+        default=None, metadata=field_options(alias="fanSpeeds")
+    )
+    swing_modes: list[str] | None = field(
+        default=None, metadata=field_options(alias="swings")
+    )
 
 
 @dataclass
 class HeatAC(DataClassORJSONMixin):
     """HeatAC model represents the heat AC capabilities of a zone."""
 
-    fan_speeds: list[str] = field(metadata=field_options(alias="fanSpeeds"))
-    swing_modes: list[str] = field(metadata=field_options(alias="swings"))
+    fan_speeds: list[str] | None = field(
+        default=None, metadata=field_options(alias="fanSpeeds")
+    )
+    swing_modes: list[str] | None = field(
+        default=None, metadata=field_options(alias="swings")
+    )
+    temperatures: Temperatures | None = None
 
 
 @dataclass

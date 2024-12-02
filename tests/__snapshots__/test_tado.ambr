@@ -45,6 +45,7 @@
         'MIDDLE',
         'LOW',
       ]),
+      'light': None,
       'swing_modes': list([
         'OFF',
         'ON',
@@ -62,6 +63,18 @@
         'OFF',
         'ON',
       ]),
+      'temperatures': dict({
+        'celsius': dict({
+          'max': 30.0,
+          'min': 18.0,
+          'step': 1.0,
+        }),
+        'fahrenheit': dict({
+          'max': 86.0,
+          'min': 64.0,
+          'step': 1.0,
+        }),
+      }),
     }),
     'dry': dict({
       'swing_modes': list([
@@ -92,6 +105,18 @@
         'OFF',
         'ON',
       ]),
+      'temperatures': dict({
+        'celsius': dict({
+          'max': 30.0,
+          'min': 16.0,
+          'step': 1.0,
+        }),
+        'fahrenheit': dict({
+          'max': 86.0,
+          'min': 61.0,
+          'step': 1.0,
+        }),
+      }),
     }),
     'temperatures': None,
     'type': 'AIR_CONDITIONING',
