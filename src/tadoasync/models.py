@@ -321,7 +321,9 @@ class CoolAC(DataClassORJSONMixin):
 class DryAC(DataClassORJSONMixin):
     """DryAC model represents the dry AC capabilities of a zone."""
 
-    swing_modes: list[str] = field(metadata=field_options(alias="swings"))
+    swing_modes: list[str] | None = field(
+        default=None, metadata=field_options(alias="swings")
+    )
 
 
 @dataclass
