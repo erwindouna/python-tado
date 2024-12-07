@@ -353,6 +353,13 @@ class Swings(Enum):
     ON = "ON"
 
 
+class Light(Enum):
+    """Light model represents the light settings of a zone."""
+
+    ON = "ON"
+    OFF = "OFF"
+
+
 @dataclass
 class AutoAC(DataClassORJSONMixin):
     """AutoAC model represents the auto AC capabilities of a zone."""
@@ -372,7 +379,7 @@ class AutoAC(DataClassORJSONMixin):
     horizontal_swing: list[HorizontalSwing] | None = field(
         default=None, metadata=field_options(alias="horizontalSwing")
     )
-    light: str | None = None
+    light: list[Light] | None = None
     temperatures: Temperatures | None = None
 
 
@@ -395,7 +402,7 @@ class CoolAC(DataClassORJSONMixin):
     horizontal_swing: list[HorizontalSwing] | None = field(
         default=None, metadata=field_options(alias="horizontalSwing")
     )
-    light: str | None = None
+    light: list[Light] | None = None
     temperatures: Temperatures | None = None
 
 
@@ -418,7 +425,7 @@ class DryAC(DataClassORJSONMixin):
     horizontal_swing: list[HorizontalSwing] | None = field(
         default=None, metadata=field_options(alias="horizontalSwing")
     )
-    light: str | None = None
+    light: list[Light] | None = None
     temperatures: Temperatures | None = None
 
 
@@ -441,7 +448,7 @@ class FanAC(DataClassORJSONMixin):
     horizontal_swing: list[HorizontalSwing] | None = field(
         default=None, metadata=field_options(alias="horizontalSwing")
     )
-    light: str | None = None
+    light: list[Light] | None = None
     temperatures: Temperatures | None = None
 
 
@@ -464,7 +471,7 @@ class HeatAC(DataClassORJSONMixin):
     horizontal_swing: list[HorizontalSwing] | None = field(
         default=None, metadata=field_options(alias="horizontalSwing")
     )
-    light: str | None = None
+    light: list[Light] | None = None
     temperatures: Temperatures | None = None
 
 

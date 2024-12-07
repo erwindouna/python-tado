@@ -167,8 +167,8 @@
         <HorizontalSwing.MID_LEFT: 'MID_LEFT'>,
       ]),
       'light': list([
-        'OFF',
-        'ON',
+        <Light.OFF: 'OFF'>,
+        <Light.ON: 'ON'>,
       ]),
       'swing_modes': None,
       'temperatures': dict({
@@ -214,8 +214,8 @@
         <HorizontalSwing.MID_LEFT: 'MID_LEFT'>,
       ]),
       'light': list([
-        'OFF',
-        'ON',
+        <Light.OFF: 'OFF'>,
+        <Light.ON: 'ON'>,
       ]),
       'swing_modes': None,
       'temperatures': dict({
@@ -260,8 +260,8 @@
         <HorizontalSwing.MID_LEFT: 'MID_LEFT'>,
       ]),
       'light': list([
-        'OFF',
-        'ON',
+        <Light.OFF: 'OFF'>,
+        <Light.ON: 'ON'>,
       ]),
       'swing_modes': None,
       'temperatures': dict({
@@ -306,8 +306,8 @@
         <HorizontalSwing.MID_LEFT: 'MID_LEFT'>,
       ]),
       'light': list([
-        'OFF',
-        'ON',
+        <Light.OFF: 'OFF'>,
+        <Light.ON: 'ON'>,
       ]),
       'swing_modes': None,
       'temperatures': dict({
@@ -352,8 +352,8 @@
         <HorizontalSwing.MID_LEFT: 'MID_LEFT'>,
       ]),
       'light': list([
-        'OFF',
-        'ON',
+        <Light.OFF: 'OFF'>,
+        <Light.ON: 'ON'>,
       ]),
       'swing_modes': None,
       'temperatures': dict({
