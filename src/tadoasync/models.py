@@ -337,22 +337,6 @@ class FanLevel(Enum):
     SILENT = "SILENT"
 
 
-class FanSpeeds(Enum):
-    """FanSpeeds model represents the fan speeds of a zone."""
-
-    AUTO = "AUTO"
-    HIGH = "HIGH"
-    MIDDLE = "MIDDLE"
-    LOW = "LOW"
-
-
-class Swings(Enum):
-    """Swings model represents the swing modes of a zone."""
-
-    OFF = "OFF"
-    ON = "ON"
-
-
 class Light(Enum):
     """Light model represents the light settings of a zone."""
 
@@ -364,12 +348,6 @@ class Light(Enum):
 class AutoAC(DataClassORJSONMixin):
     """AutoAC model represents the auto AC capabilities of a zone."""
 
-    fan_speeds: list[FanSpeeds] | None = field(
-        default=None, metadata=field_options(alias="fanSpeeds")
-    )
-    swing_modes: list[Swings] | None = field(
-        default=None, metadata=field_options(alias="swings")
-    )
     fan_level: list[FanLevel] | None = field(
         default=None, metadata=field_options(alias="fanLevel")
     )
@@ -387,12 +365,6 @@ class AutoAC(DataClassORJSONMixin):
 class CoolAC(DataClassORJSONMixin):
     """CoolAC model represents the cool AC capabilities of a zone."""
 
-    fan_speeds: list[FanSpeeds] | None = field(
-        default=None, metadata=field_options(alias="fanSpeeds")
-    )
-    swing_modes: list[Swings] | None = field(
-        default=None, metadata=field_options(alias="swings")
-    )
     fan_level: list[FanLevel] | None = field(
         default=None, metadata=field_options(alias="fanLevel")
     )
@@ -410,12 +382,6 @@ class CoolAC(DataClassORJSONMixin):
 class DryAC(DataClassORJSONMixin):
     """DryAC model represents the dry AC capabilities of a zone."""
 
-    fan_speeds: list[FanSpeeds] | None = field(
-        default=None, metadata=field_options(alias="fanSpeeds")
-    )
-    swing_modes: list[Swings] | None = field(
-        default=None, metadata=field_options(alias="swings")
-    )
     fan_level: list[FanLevel] | None = field(
         default=None, metadata=field_options(alias="fanLevel")
     )
@@ -433,12 +399,6 @@ class DryAC(DataClassORJSONMixin):
 class FanAC(DataClassORJSONMixin):
     """FanAC model represents the fan AC capabilities of a zone."""
 
-    fan_speeds: list[FanSpeeds] | None = field(
-        default=None, metadata=field_options(alias="fanSpeeds")
-    )
-    swing_modes: list[Swings] | None = field(
-        default=None, metadata=field_options(alias="swings")
-    )
     fan_level: list[FanLevel] | None = field(
         default=None, metadata=field_options(alias="fanLevel")
     )
@@ -456,12 +416,6 @@ class FanAC(DataClassORJSONMixin):
 class HeatAC(DataClassORJSONMixin):
     """HeatAC model represents the heat AC capabilities of a zone."""
 
-    fan_speeds: list[FanSpeeds] | None = field(
-        default=None, metadata=field_options(alias="fanSpeeds")
-    )
-    swing_modes: list[Swings] | None = field(
-        default=None, metadata=field_options(alias="swings")
-    )
     fan_level: list[FanLevel] | None = field(
         default=None, metadata=field_options(alias="fanLevel")
     )
