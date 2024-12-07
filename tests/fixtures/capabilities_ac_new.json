@@ -1,0 +1,93 @@
+{
+  "type": "AIR_CONDITIONING",
+  "AUTO": {
+    "fanLevel": [ "AUTO", "LEVEL1", "LEVEL2", "LEVEL3", "LEVEL4", "LEVEL5", "SILENT" ],
+    "verticalSwing": ["OFF", "MID_UP", "MID_DOWN", "ON", "DOWN", "UP", "MID"],
+    "horizontalSwing": ["OFF", "ON", "RIGHT", "LEFT", "MID_RIGHT", "MID_LEFT"],
+    "light": ["OFF", "ON"],
+    "temperatures": {
+      "celsius": {
+        "min": 16,
+        "max": 30,
+        "step": 1.0
+      },
+      "fahrenheit": {
+        "min": 61,
+        "max": 86,
+        "step": 1.0
+      }
+    }
+  },
+  "COOL": {
+  "fanLevel": [ "AUTO", "LEVEL1", "LEVEL2", "LEVEL3", "LEVEL4", "LEVEL5", "SILENT" ],
+    "verticalSwing": ["OFF", "MID_UP", "MID_DOWN", "ON", "DOWN", "UP", "MID"],
+    "horizontalSwing": ["OFF", "ON", "RIGHT", "LEFT", "MID_RIGHT", "MID_LEFT"],
+    "light": ["OFF", "ON"],
+    "temperatures": {
+      "celsius": {
+        "min": 16,
+        "max": 30,
+        "step": 1.0
+      },
+      "fahrenheit": {
+        "min": 61,
+        "max": 86,
+        "step": 1.0
+      }
+    }
+  },
+  "DRY": {
+    "fanLevel": [ "AUTO", "LEVEL1", "LEVEL2", "LEVEL3", "LEVEL4", "LEVEL5", "SILENT" ],
+    "verticalSwing": ["OFF", "MID_UP", "MID_DOWN", "ON", "DOWN", "UP", "MID"],
+    "horizontalSwing": ["OFF", "ON", "RIGHT", "LEFT", "MID_RIGHT", "MID_LEFT"],
+    "light": ["OFF", "ON"],
+    "temperatures": {
+      "celsius": {
+        "min": 16,
+        "max": 30,
+        "step": 1.0
+      },
+      "fahrenheit": {
+        "min": 61,
+        "max": 86,
+        "step": 1.0
+      }
+    }
+  },
+  "FAN": {
+   "fanLevel": [ "AUTO", "LEVEL1", "LEVEL2", "LEVEL3", "LEVEL4", "LEVEL5", "SILENT" ],
+    "verticalSwing": ["OFF", "MID_UP", "MID_DOWN", "ON", "DOWN", "UP", "MID"],
+    "horizontalSwing": ["OFF", "ON", "RIGHT", "LEFT", "MID_RIGHT", "MID_LEFT"],
+    "light": ["OFF", "ON"],
+    "temperatures": {
+      "celsius": {
+        "min": 16,
+        "max": 30,
+        "step": 1.0
+      },
+      "fahrenheit": {
+        "min": 61,
+        "max": 86,
+        "step": 1.0
+      }
+    }
+  },
+  "HEAT": {
+    "fanLevel": [ "AUTO", "LEVEL1", "LEVEL2", "LEVEL3", "LEVEL4", "LEVEL5", "SILENT" ],
+    "verticalSwing": ["OFF", "MID_UP", "MID_DOWN", "ON", "DOWN", "UP", "MID"],
+    "horizontalSwing": ["OFF", "ON", "RIGHT", "LEFT", "MID_RIGHT", "MID_LEFT"],
+    "light": ["OFF", "ON"],
+    "temperatures": {
+      "celsius": {
+        "min": 16,
+        "max": 30,
+        "step": 1.0
+      },
+      "fahrenheit": {
+        "min": 61,
+        "max": 86,
+        "step": 1.0
+      }
+    }
+  }
+}

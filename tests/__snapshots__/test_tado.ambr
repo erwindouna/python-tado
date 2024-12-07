@@ -39,30 +39,17 @@
 # name: test_get_capabilities_ac
   dict({
     'auto': dict({
-      'fan_speeds': list([
-        'AUTO',
-        'HIGH',
-        'MIDDLE',
-        'LOW',
-      ]),
+      'fan_level': None,
+      'horizontal_swing': None,
       'light': None,
-      'swing_modes': list([
-        'OFF',
-        'ON',
-      ]),
+      'temperatures': None,
+      'vertical_swing': None,
     }),
     'can_set_temperature': None,
     'cool': dict({
-      'fan_speeds': list([
-        'AUTO',
-        'HIGH',
-        'MIDDLE',
-        'LOW',
-      ]),
-      'swing_modes': list([
-        'OFF',
-        'ON',
-      ]),
+      'fan_level': None,
+      'horizontal_swing': None,
+      'light': None,
       'temperatures': dict({
         'celsius': dict({
           'max': 30.0,
@@ -75,35 +62,67 @@
           'step': 1.0,
         }),
       }),
+      'vertical_swing': None,
     }),
     'dry': dict({
-      'swing_modes': list([
-        'OFF',
-        'ON',
-      ]),
+      'fan_level': None,
+      'horizontal_swing': None,
+      'light': None,
+      'temperatures': None,
+      'vertical_swing': None,
     }),
     'fan': dict({
-      'fan_speeds': list([
-        'AUTO',
-        'HIGH',
-        'MIDDLE',
-        'LOW',
-      ]),
-      'swing_modes': list([
-        'OFF',
-        'ON',
-      ]),
+      'fan_level': None,
+      'horizontal_swing': None,
+      'light': None,
+      'temperatures': None,
+      'vertical_swing': None,
     }),
     'heat': dict({
-      'fan_speeds': list([
-        'AUTO',
-        'HIGH',
-        'MIDDLE',
-        'LOW',
+      'fan_level': None,
+      'horizontal_swing': None,
+      'light': None,
+      'temperatures': dict({
+        'celsius': dict({
+          'max': 30.0,
+          'min': 16.0,
+          'step': 1.0,
+        }),
+        'fahrenheit': dict({
+          'max': 86.0,
+          'min': 61.0,
+          'step': 1.0,
+        }),
+      }),
+      'vertical_swing': None,
+    }),
+    'temperatures': None,
+    'type': 'AIR_CONDITIONING',
+  })
+# ---
+# name: test_get_capabilities_ac_new
+  dict({
+    'auto': dict({
+      'fan_level': list([
+        <FanLevel.AUTO: 'AUTO'>,
+        <FanLevel.LEVEL1: 'LEVEL1'>,
+        <FanLevel.LEVEL2: 'LEVEL2'>,
+        <FanLevel.LEVEL3: 'LEVEL3'>,
+        <FanLevel.LEVEL4: 'LEVEL4'>,
+        <FanLevel.LEVEL5: 'LEVEL5'>,
+        <FanLevel.SILENT: 'SILENT'>,
       ]),
-      'swing_modes': list([
-        'OFF',
-        'ON',
+      'horizontal_swing': list([
+        <HorizontalSwing.OFF: 'OFF'>,
+        <HorizontalSwing.ON: 'ON'>,
+        <HorizontalSwing.RIGHT: 'RIGHT'>,
+        <HorizontalSwing.LEFT: 'LEFT'>,
+        <HorizontalSwing.MID_RIGHT: 'MID_RIGHT'>,
+        <HorizontalSwing.MID_LEFT: 'MID_LEFT'>,
+      ]),
+      'light': list([
+        <Light.OFF: 'OFF'>,
+        <Light.ON: 'ON'>,
       ]),
       'temperatures': dict({
         'celsius': dict({
@@ -117,6 +136,192 @@
           'step': 1.0,
         }),
       }),
+      'vertical_swing': list([
+        <VerticalSwing.OFF: 'OFF'>,
+        <VerticalSwing.MID_UP: 'MID_UP'>,
+        <VerticalSwing.MID_DOWN: 'MID_DOWN'>,
+        <VerticalSwing.ON: 'ON'>,
+        <VerticalSwing.DOWN: 'DOWN'>,
+        <VerticalSwing.UP: 'UP'>,
+        <VerticalSwing.MID: 'MID'>,
+      ]),
+    }),
+    'can_set_temperature': None,
+    'cool': dict({
+      'fan_level': list([
+        <FanLevel.AUTO: 'AUTO'>,
+        <FanLevel.LEVEL1: 'LEVEL1'>,
+        <FanLevel.LEVEL2: 'LEVEL2'>,
+        <FanLevel.LEVEL3: 'LEVEL3'>,
+        <FanLevel.LEVEL4: 'LEVEL4'>,
+        <FanLevel.LEVEL5: 'LEVEL5'>,
+        <FanLevel.SILENT: 'SILENT'>,
+      ]),
+      'horizontal_swing': list([
+        <HorizontalSwing.OFF: 'OFF'>,
+        <HorizontalSwing.ON: 'ON'>,
+        <HorizontalSwing.RIGHT: 'RIGHT'>,
+        <HorizontalSwing.LEFT: 'LEFT'>,
+        <HorizontalSwing.MID_RIGHT: 'MID_RIGHT'>,
+        <HorizontalSwing.MID_LEFT: 'MID_LEFT'>,
+      ]),
+      'light': list([
+        <Light.OFF: 'OFF'>,
+        <Light.ON: 'ON'>,
+      ]),
+      'temperatures': dict({
+        'celsius': dict({
+          'max': 30.0,
+          'min': 16.0,
+          'step': 1.0,
+        }),
+        'fahrenheit': dict({
+          'max': 86.0,
+          'min': 61.0,
+          'step': 1.0,
+        }),
+      }),
+      'vertical_swing': list([
+        <VerticalSwing.OFF: 'OFF'>,
+        <VerticalSwing.MID_UP: 'MID_UP'>,
+        <VerticalSwing.MID_DOWN: 'MID_DOWN'>,
+        <VerticalSwing.ON: 'ON'>,
+        <VerticalSwing.DOWN: 'DOWN'>,
+        <VerticalSwing.UP: 'UP'>,
+        <VerticalSwing.MID: 'MID'>,
+      ]),
+    }),
+    'dry': dict({
+      'fan_level': list([
+        <FanLevel.AUTO: 'AUTO'>,
+        <FanLevel.LEVEL1: 'LEVEL1'>,
+        <FanLevel.LEVEL2: 'LEVEL2'>,
+        <FanLevel.LEVEL3: 'LEVEL3'>,
+        <FanLevel.LEVEL4: 'LEVEL4'>,
+        <FanLevel.LEVEL5: 'LEVEL5'>,
+        <FanLevel.SILENT: 'SILENT'>,
+      ]),
+      'horizontal_swing': list([
+        <HorizontalSwing.OFF: 'OFF'>,
+        <HorizontalSwing.ON: 'ON'>,
+        <HorizontalSwing.RIGHT: 'RIGHT'>,
+        <HorizontalSwing.LEFT: 'LEFT'>,
+        <HorizontalSwing.MID_RIGHT: 'MID_RIGHT'>,
+        <HorizontalSwing.MID_LEFT: 'MID_LEFT'>,
+      ]),
+      'light': list([
+        <Light.OFF: 'OFF'>,
+        <Light.ON: 'ON'>,
+      ]),
+      'temperatures': dict({
+        'celsius': dict({
+          'max': 30.0,
+          'min': 16.0,
+          'step': 1.0,
+        }),
+        'fahrenheit': dict({
+          'max': 86.0,
+          'min': 61.0,
+          'step': 1.0,
+        }),
+      }),
+      'vertical_swing': list([
+        <VerticalSwing.OFF: 'OFF'>,
+        <VerticalSwing.MID_UP: 'MID_UP'>,
+        <VerticalSwing.MID_DOWN: 'MID_DOWN'>,
+        <VerticalSwing.ON: 'ON'>,
+        <VerticalSwing.DOWN: 'DOWN'>,
+        <VerticalSwing.UP: 'UP'>,
+        <VerticalSwing.MID: 'MID'>,
+      ]),
+    }),
+    'fan': dict({
+      'fan_level': list([
+        <FanLevel.AUTO: 'AUTO'>,
+        <FanLevel.LEVEL1: 'LEVEL1'>,
+        <FanLevel.LEVEL2: 'LEVEL2'>,
+        <FanLevel.LEVEL3: 'LEVEL3'>,
+        <FanLevel.LEVEL4: 'LEVEL4'>,
+        <FanLevel.LEVEL5: 'LEVEL5'>,
+        <FanLevel.SILENT: 'SILENT'>,
+      ]),
+      'horizontal_swing': list([
+        <HorizontalSwing.OFF: 'OFF'>,
+        <HorizontalSwing.ON: 'ON'>,
+        <HorizontalSwing.RIGHT: 'RIGHT'>,
+        <HorizontalSwing.LEFT: 'LEFT'>,
+        <HorizontalSwing.MID_RIGHT: 'MID_RIGHT'>,
+        <HorizontalSwing.MID_LEFT: 'MID_LEFT'>,
+      ]),
+      'light': list([
+        <Light.OFF: 'OFF'>,
+        <Light.ON: 'ON'>,
+      ]),
+      'temperatures': dict({
+        'celsius': dict({
+          'max': 30.0,
+          'min': 16.0,
+          'step': 1.0,
+        }),
+        'fahrenheit': dict({
+          'max': 86.0,
+          'min': 61.0,
+          'step': 1.0,
+        }),
+      }),
+      'vertical_swing': list([
+        <VerticalSwing.OFF: 'OFF'>,
+        <VerticalSwing.MID_UP: 'MID_UP'>,
+        <VerticalSwing.MID_DOWN: 'MID_DOWN'>,
+        <VerticalSwing.ON: 'ON'>,
+        <VerticalSwing.DOWN: 'DOWN'>,
+        <VerticalSwing.UP: 'UP'>,
+        <VerticalSwing.MID: 'MID'>,
+      ]),
+    }),
+    'heat': dict({
+      'fan_level': list([
+        <FanLevel.AUTO: 'AUTO'>,
+        <FanLevel.LEVEL1: 'LEVEL1'>,
+        <FanLevel.LEVEL2: 'LEVEL2'>,
+        <FanLevel.LEVEL3: 'LEVEL3'>,
+        <FanLevel.LEVEL4: 'LEVEL4'>,
+        <FanLevel.LEVEL5: 'LEVEL5'>,
+        <FanLevel.SILENT: 'SILENT'>,
+      ]),
+      'horizontal_swing': list([
+        <HorizontalSwing.OFF: 'OFF'>,
+        <HorizontalSwing.ON: 'ON'>,
+        <HorizontalSwing.RIGHT: 'RIGHT'>,
+        <HorizontalSwing.LEFT: 'LEFT'>,
+        <HorizontalSwing.MID_RIGHT: 'MID_RIGHT'>,
+        <HorizontalSwing.MID_LEFT: 'MID_LEFT'>,
+      ]),
+      'light': list([
+        <Light.OFF: 'OFF'>,
+        <Light.ON: 'ON'>,
+      ]),
+      'temperatures': dict({
+        'celsius': dict({
+          'max': 30.0,
+          'min': 16.0,
+          'step': 1.0,
+        }),
+        'fahrenheit': dict({
+          'max': 86.0,
+          'min': 61.0,
+          'step': 1.0,
+        }),
+      }),
+      'vertical_swing': list([
+        <VerticalSwing.OFF: 'OFF'>,
+        <VerticalSwing.MID_UP: 'MID_UP'>,
+        <VerticalSwing.MID_DOWN: 'MID_DOWN'>,
+        <VerticalSwing.ON: 'ON'>,
+        <VerticalSwing.DOWN: 'DOWN'>,
+        <VerticalSwing.UP: 'UP'>,
+        <VerticalSwing.MID: 'MID'>,
+      ]),
     }),
     'temperatures': None,
     'type': 'AIR_CONDITIONING',
@@ -1397,7 +1602,7 @@
     'open_window_attr': None,
     'open_window_detected': False,
     'overlay': None,
-    'overlay_active': True,
+    'overlay_active': False,
     'overlay_termination_timestamp': None,
     'overlay_termination_type': None,
     'overlay_type': None,
@@ -1607,7 +1812,7 @@
     'open_window_attr': None,
     'open_window_detected': False,
     'overlay': None,
-    'overlay_active': True,
+    'overlay_active': False,
     'overlay_termination_timestamp': None,
     'overlay_termination_type': None,
     'overlay_type': None,
@@ -1715,7 +1920,7 @@
     'open_window_attr': None,
     'open_window_detected': False,
     'overlay': None,
-    'overlay_active': True,
+    'overlay_active': False,
     'overlay_termination_timestamp': None,
     'overlay_termination_type': None,
     'overlay_type': None,
@@ -2498,7 +2703,7 @@
     'open_window_attr': None,
     'open_window_detected': False,
     'overlay': None,
-    'overlay_active': True,
+    'overlay_active': False,
     'overlay_termination_timestamp': None,
     'overlay_termination_type': None,
     'overlay_type': None,

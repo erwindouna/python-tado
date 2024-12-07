@@ -581,6 +581,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                 )
         else:
             data.current_hvac_mode = CONST_MODE_SMART_SCHEDULE
+            data.overlay_active = False  # Default to false if no overlay
 
         data.connection = (
             getattr(data.connection_state, "value", None)
