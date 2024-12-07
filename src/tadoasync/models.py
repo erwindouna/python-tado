@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from enum import Enum
 from typing import Any
 
 from mashumaro import field_options
@@ -301,29 +302,100 @@ class Capabilities(DataClassORJSONMixin):
     heat: HeatAC | None = field(metadata=field_options(alias="HEAT"), default=None)
 
 
+class VerticalSwing(Enum):
+    """VerticalSwing model represents the vertical swing modes of a zone."""
+
+    OFF = "OFF"
+    MID_UP = "MID_UP"
+    MID_DOWN = "MID_DOWN"
+    ON = "ON"
+    DOWN = "DOWN"
+    UP = "UP"
+    MID = "MID"
+
+
+class HorizontalSwing(Enum):
+    """HorizontalSwing model represents the horizontal swing modes of a zone."""
+
+    OFF = "OFF"
+    ON = "ON"
+    RIGHT = "RIGHT"
+    LEFT = "LEFT"
+    MID_RIGHT = "MID_RIGHT"
+    MID_LEFT = "MID_LEFT"
+
+
+class FanLevel(Enum):
+    """FanLevel model represents the fan levels of a zone."""
+
+    AUTO = "AUTO"
+    LEVEL1 = "LEVEL1"
+    LEVEL2 = "LEVEL2"
+    LEVEL3 = "LEVEL3"
+    LEVEL4 = "LEVEL4"
+    LEVEL5 = "LEVEL5"
+    SILENT = "SILENT"
+
+
+class FanSpeeds(Enum):
+    """FanSpeeds model represents the fan speeds of a zone."""
+
+    AUTO = "AUTO"
+    HIGH = "HIGH"
+    MIDDLE = "MIDDLE"
+    LOW = "LOW"
+
+
+class Swings(Enum):
+    """Swings model represents the swing modes of a zone."""
+
+    OFF = "OFF"
+    ON = "ON"
+
+
 @dataclass
 class AutoAC(DataClassORJSONMixin):
     """AutoAC model represents the auto AC capabilities of a zone."""
 
-    fan_speeds: list[str] | None = field(
+    fan_speeds: list[FanSpeeds] | None = field(
         default=None, metadata=field_options(alias="fanSpeeds")
     )
-    swing_modes: list[str] | None = field(
+    swing_modes: list[Swings] | None = field(
         default=None, metadata=field_options(alias="swings")
     )
+    fan_level: list[FanLevel] | None = field(
+        default=None, metadata=field_options(alias="fanLevel")
+    )
+    vertical_swing: list[VerticalSwing] | None = field(
+        default=None, metadata=field_options(alias="verticalSwing")
+    )
+    horizontal_swing: list[HorizontalSwing] | None = field(
+        default=None, metadata=field_options(alias="horizontalSwing")
+    )
     light: str | None = None
+    temperatures: Temperatures | None = None
 
 
 @dataclass
 class CoolAC(DataClassORJSONMixin):
     """CoolAC model represents the cool AC capabilities of a zone."""
 
-    fan_speeds: list[str] | None = field(
+    fan_speeds: list[FanSpeeds] | None = field(
         default=None, metadata=field_options(alias="fanSpeeds")
     )
-    swing_modes: list[str] | None = field(
+    swing_modes: list[Swings] | None = field(
         default=None, metadata=field_options(alias="swings")
     )
+    fan_level: list[FanLevel] | None = field(
+        default=None, metadata=field_options(alias="fanLevel")
+    )
+    vertical_swing: list[VerticalSwing] | None = field(
+        default=None, metadata=field_options(alias="verticalSwing")
+    )
+    horizontal_swing: list[HorizontalSwing] | None = field(
+        default=None, metadata=field_options(alias="horizontalSwing")
+    )
+    light: str | None = None
     temperatures: Temperatures | None = None
 
 
@@ -331,33 +403,68 @@ class CoolAC(DataClassORJSONMixin):
 class DryAC(DataClassORJSONMixin):
     """DryAC model represents the dry AC capabilities of a zone."""
 
-    swing_modes: list[str] | None = field(
+    fan_speeds: list[FanSpeeds] | None = field(
+        default=None, metadata=field_options(alias="fanSpeeds")
+    )
+    swing_modes: list[Swings] | None = field(
         default=None, metadata=field_options(alias="swings")
     )
+    fan_level: list[FanLevel] | None = field(
+        default=None, metadata=field_options(alias="fanLevel")
+    )
+    vertical_swing: list[VerticalSwing] | None = field(
+        default=None, metadata=field_options(alias="verticalSwing")
+    )
+    horizontal_swing: list[HorizontalSwing] | None = field(
+        default=None, metadata=field_options(alias="horizontalSwing")
+    )
+    light: str | None = None
+    temperatures: Temperatures | None = None
 
 
 @dataclass
 class FanAC(DataClassORJSONMixin):
     """FanAC model represents the fan AC capabilities of a zone."""
 
-    fan_speeds: list[str] | None = field(
+    fan_speeds: list[FanSpeeds] | None = field(
         default=None, metadata=field_options(alias="fanSpeeds")
     )
-    swing_modes: list[str] | None = field(
+    swing_modes: list[Swings] | None = field(
         default=None, metadata=field_options(alias="swings")
     )
+    fan_level: list[FanLevel] | None = field(
+        default=None, metadata=field_options(alias="fanLevel")
+    )
+    vertical_swing: list[VerticalSwing] | None = field(
+        default=None, metadata=field_options(alias="verticalSwing")
+    )
+    horizontal_swing: list[HorizontalSwing] | None = field(
+        default=None, metadata=field_options(alias="horizontalSwing")
+    )
+    light: str | None = None
+    temperatures: Temperatures | None = None
 
 
 @dataclass
 class HeatAC(DataClassORJSONMixin):
     """HeatAC model represents the heat AC capabilities of a zone."""
 
-    fan_speeds: list[str] | None = field(
+    fan_speeds: list[FanSpeeds] | None = field(
         default=None, metadata=field_options(alias="fanSpeeds")
     )
-    swing_modes: list[str] | None = field(
+    swing_modes: list[Swings] | None = field(
         default=None, metadata=field_options(alias="swings")
     )
+    fan_level: list[FanLevel] | None = field(
+        default=None, metadata=field_options(alias="fanLevel")
+    )
+    vertical_swing: list[VerticalSwing] | None = field(
+        default=None, metadata=field_options(alias="verticalSwing")
+    )
+    horizontal_swing: list[HorizontalSwing] | None = field(
+        default=None, metadata=field_options(alias="horizontalSwing")
+    )
+    light: str | None = None
     temperatures: Temperatures | None = None
 
 
