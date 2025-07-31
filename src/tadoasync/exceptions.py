@@ -23,3 +23,7 @@ class TadoBadRequestError(TadoError):
 
 class TadoForbiddenError(TadoError):
     """Tado forbidden exception."""
+
+
+class TadoReadingError(TadoError):
+    """Tado reading exception."""

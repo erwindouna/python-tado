@@ -3,6 +3,7 @@
 import asyncio
 import os
 import time
+from datetime import datetime, timezone
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -18,6 +19,7 @@ from tadoasync.exceptions import (
     TadoBadRequestError,
     TadoConnectionError,
     TadoError,
+    TadoReadingError,
 )
 
 from syrupy import SnapshotAssertion
@@ -477,14 +479,14 @@ async def test_set_zone_overlay_success(
 
 
 async def test_add_meter_readings_success(
-    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+    python_tado: Tado, responses: aioresponses
 ) -> None:
     """Test adding meter readings."""
     responses.post(
         TADO_EIQ_URL,
         body=load_fixture(folder="meter", filename="add_reading_success.json"),
     )
-    assert await python_tado.set_meter_readings(reading=5) == snapshot
+    await python_tado.set_meter_readings(5)
 
 
 async def test_set_child_lock(python_tado: Tado, responses: aioresponses) -> None:
@@ -500,16 +502,21 @@ async def test_set_child_lock(python_tado: Tado, responses: aioresponses) -> Non
 
 
 async def test_add_meter_readings_duplicated(
-    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+    python_tado: Tado, responses: aioresponses
 ) -> None:
     """Test adding meter readings with duplicate."""
-    date = "2021-01-01"
+    date = datetime(2023, 10, 1, 12, 0, 0, tzinfo=timezone.utc)
     reading = 5
     responses.post(
         TADO_EIQ_URL,
         body=load_fixture(folder="meter", filename="add_reading_duplicate.json"),
     )
-    assert await python_tado.set_meter_readings(date, reading) == snapshot
+    with pytest.raises(
+        TadoReadingError,
+        match="Error setting meter reading: "
+        "reading already exists for date \\[2024-01-01\\]",
+    ):
+        await python_tado.set_meter_readings(reading, date)
 
 
 async def test_request_client_response_error(python_tado: Tado) -> None:
