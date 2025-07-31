@@ -2710,8 +2710,7 @@
     'power': 'ON',
     'precision': None,
     'preparation': False,
-    'sensor_data_points': dict({
-    }),
+    'sensor_data_points': None,
     'setting': dict({
       'fan_level': None,
       'fan_speed': None,
@@ -2817,8 +2816,7 @@
     'power': 'ON',
     'precision': None,
     'preparation': False,
-    'sensor_data_points': dict({
-    }),
+    'sensor_data_points': None,
     'setting': dict({
       'fan_level': None,
       'fan_speed': None,
@@ -2919,8 +2917,7 @@
     'power': 'OFF',
     'precision': None,
     'preparation': False,
-    'sensor_data_points': dict({
-    }),
+    'sensor_data_points': None,
     'setting': dict({
       'fan_level': None,
       'fan_speed': None,

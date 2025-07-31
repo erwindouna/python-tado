@@ -577,7 +577,6 @@ class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attr
         return d
 
 
-
 @dataclass
 class OpenWindow(DataClassORJSONMixin):
     """OpenWindow model represents the open window settings of a zone."""

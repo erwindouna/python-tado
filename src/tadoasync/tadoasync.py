@@ -48,7 +48,6 @@ from tadoasync.models import (
     GetMe,
     HomeState,
     MobileDevice,
-    SensorDataPoints,
     TemperatureOffset,
     Weather,
     Zone,
