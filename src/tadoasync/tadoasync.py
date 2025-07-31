@@ -376,11 +376,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         response = await self._request(f"devices/{serial_no}/")
         return Device.from_json(response)
 
-    async def set_child_lock(self, serial_no: str, child_lock: bool | None) -> None:
+    async def set_child_lock(self, serial_no: str, *, child_lock: bool) -> None:
         """Set the child lock."""
-        if not isinstance(child_lock, bool):
-            raise TadoBadRequestError("child_lock must be a boolean")
-
         await self._request(
             f"devices/{serial_no}/childLock",
             data={"childLockEnabled": child_lock},
