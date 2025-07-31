@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import asyncio
-import json
 import time
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -41,6 +40,7 @@ from tadoasync.exceptions import (
     TadoConnectionError,
     TadoError,
     TadoForbiddenError,
+    TadoReadingError,
 )
 from tadoasync.models import (
     Capabilities,
@@ -389,17 +389,19 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         )
 
     async def set_meter_readings(
-        self, date: str | None = None, reading: int = 0
-    ) -> str:
+        self, reading: int, date: datetime | None = None
+    ) -> None:
         """Set the meter readings."""
         if date is None:
-            date = datetime.now(timezone.utc).isoformat()
+            date = datetime.now(timezone.utc)
 
-        payload = {"date": date, "reading": reading}
+        payload = {"date": date.strftime("%Y-%m-%d"), "reading": reading}
         response = await self._request(
             endpoint=EIQ_HOST_URL, data=payload, method=HttpMethod.POST
         )
-        return json.dumps(response)
+        data = orjson.loads(response)
+        if "message" in data:
+            raise TadoReadingError(f"Error setting meter reading: {data['message']}")
 
     async def _request(
         self,

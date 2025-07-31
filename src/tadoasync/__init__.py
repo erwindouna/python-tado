@@ -5,6 +5,7 @@ from .exceptions import (
     TadoBadRequestError,
     TadoConnectionError,
     TadoError,
+    TadoReadingError,
     TadoServerError,
 )
 from .tadoasync import Tado
@@ -16,4 +17,5 @@ __all__ = [
     "TadoAuthenticationError",
     "TadoServerError",
     "TadoBadRequestError",
+    "TadoReadingError",
 ]
