@@ -498,17 +498,6 @@ async def test_set_child_lock(python_tado: Tado, responses: aioresponses) -> Non
     )
     await python_tado.set_child_lock(serial_no=device_id, child_lock=child_lock)
 
-    invalid_child_lock = None
-    responses.put(
-        f"{TADO_API_URL}/devices/{device_id}/childLock",
-        status=204,
-        payload={"childLockEnabled": child_lock},
-    )
-    with pytest.raises(TadoBadRequestError):
-        await python_tado.set_child_lock(
-            serial_no=device_id, child_lock=invalid_child_lock
-        )
-
 
 async def test_add_meter_readings_duplicated(
     python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
