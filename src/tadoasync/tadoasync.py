@@ -53,7 +53,6 @@ from tadoasync.models import (
     Weather,
     Zone,
     ZoneState,
-    ZoneStates,
 )
 
 CLIENT_ID = "tado-web-app"
@@ -242,7 +241,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         obj = orjson.loads(response)
         return [Zone.from_dict(zone) for zone in obj]
 
-    async def get_zone_states(self) -> list[ZoneStates]:
+    async def get_zone_states(self) -> dict[str, ZoneState]:
         """Get the zone states."""
         response = await self._request(f"homes/{self._home_id}/zoneStates")
         obj = orjson.loads(response)
@@ -254,7 +253,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         for zone_state in zone_states.values():
             await self.update_zone_data(zone_state)
 
-        return [ZoneStates(zone_states=zone_states)]
+        return zone_states
 
     async def get_zone_state(self, zone_id: int) -> ZoneState:
         """Get the zone state."""
