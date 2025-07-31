@@ -446,11 +446,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
     async def update_zone_data(self, data: ZoneState) -> None:  # pylint: disable=too-many-branches
         """Update the zone data."""
-        if (isinstance(data.sensor_data_points, SensorDataPoints)) and (
-            hasattr(data, "sensor_data_points")
-            and data.sensor_data_points
-            and data.sensor_data_points != {}
-        ):
+        if data.sensor_data_points is not None:
             temperature = float(data.sensor_data_points.inside_temperature.celsius)
             data.current_temp = temperature
             data.current_temp_timestamp = (

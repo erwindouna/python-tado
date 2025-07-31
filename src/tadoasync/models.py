@@ -514,8 +514,8 @@ class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attr
         metadata=field_options(alias="nextTimeBlock")
     )
 
-    sensor_data_points: SensorDataPoints | dict[Any, Any] = field(
-        default_factory=dict, metadata=field_options(alias="sensorDataPoints")
+    sensor_data_points: SensorDataPoints | None = field(
+        metadata=field_options(alias="sensorDataPoints")
     )
     overlay: Overlay | None = None
     geolocation_override_disable_time: str | None = field(
@@ -568,6 +568,14 @@ class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attr
     open_window_detected: bool | None = None
     open_window_attr: OpenWindow | None = None
     is_away: bool = False
+
+    @classmethod
+    def __pre_deserialize__(cls, d: dict[str, Any]) -> dict[str, Any]:
+        """Pre deserialize hook."""
+        if not d["sensorDataPoints"]:
+            d["sensorDataPoints"] = None
+        return d
+
 
 
 @dataclass
