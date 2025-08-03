@@ -10,7 +10,7 @@ from tadoasync import Tado
 from syrupy import SnapshotAssertion
 from tests import load_fixture
 
-from .const import TADO_API_URL, TADO_TOKEN_URL
+from .const import TADO_API_URL, TADO_DEVICE_AUTH_URL, TADO_TOKEN_URL
 from .syrupy import TadoSnapshotExtension
 
 
@@ -24,8 +24,6 @@ def snapshot_assertion(snapshot: SnapshotAssertion) -> SnapshotAssertion:
 async def client() -> AsyncGenerator[Tado, None]:
     """Return a Tado client."""
     async with aiohttp.ClientSession() as session, Tado(
-        username="username",
-        password="password",
         session=session,
         request_timeout=10,
     ) as tado:
@@ -35,6 +33,18 @@ async def client() -> AsyncGenerator[Tado, None]:
 @pytest.fixture(autouse=True)
 def _tado_oauth(responses: aioresponses) -> None:
     """Mock the Tado token URL."""
+    responses.post(
+        TADO_DEVICE_AUTH_URL,
+        status=200,
+        payload={
+            "device_code": "XXX_code_XXX",
+            "expires_in": 300,
+            "interval": 5,
+            "user_code": "7BQ5ZQ",
+            "verification_uri": "https://login.tado.com/oauth2/device",
+            "verification_uri_complete": "https://login.tado.com/oauth2/device?user_code=7BQ5ZQ",
+        },
+    )
     responses.post(
         TADO_TOKEN_URL,
         status=200,

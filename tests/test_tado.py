@@ -38,7 +38,7 @@ async def test_create_session(
         body=load_fixture("me.json"),
     )
     async with aiohttp.ClientSession():
-        tado = Tado(username="username", password="password")
+        tado = Tado()
         await tado.get_me()
         assert tado._session is not None
         assert not tado._session.closed
@@ -48,7 +48,7 @@ async def test_create_session(
 
 async def test_close_session() -> None:
     """Test not closing the session when the session does not exist."""
-    tado = Tado(username="username", password="password")
+    tado = Tado()
     tado._close_session = True
     await tado.close()
 
@@ -61,7 +61,7 @@ async def test_login_success(responses: aioresponses) -> None:
         body=load_fixture("me.json"),
     )
     async with aiohttp.ClientSession() as session:
-        tado = Tado(username="username", password="password", session=session)
+        tado = Tado(session=session)
         await tado.login()
         assert tado._access_token == "test_access_token"
         assert tado._token_expiry is not None
@@ -77,7 +77,7 @@ async def test_login_success_no_session(responses: aioresponses) -> None:
         body=load_fixture("me.json"),
     )
     async with aiohttp.ClientSession():
-        tado = Tado(username="username", password="password")
+        tado = Tado()
         await tado.login()
         assert tado._access_token == "test_access_token"
         assert tado._token_expiry is not None
@@ -142,7 +142,7 @@ async def test_refresh_auth_success(responses: aioresponses) -> None:
         headers={"content-type": "application/json"},
     )
     async with aiohttp.ClientSession() as session:
-        tado = Tado(username="username", password="password", session=session)
+        tado = Tado(session=session)
         tado._access_token = "old_test_access_token"
         tado._token_expiry = time.time() - 10  # make sure the token is expired
         tado._refresh_token = "old_test_refresh_token"
@@ -603,7 +603,7 @@ async def test_get_me_timeout(responses: aioresponses) -> None:
     )
 
     async with aiohttp.ClientSession() as session, Tado(
-        username="username", password="password", request_timeout=0, session=session
+        request_timeout=0, session=session
     ) as tado:
         with pytest.raises(TadoConnectionError):
             assert await tado.get_devices()

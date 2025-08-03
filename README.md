@@ -64,6 +64,25 @@ based on the following:
 - `MINOR`: Backwards-compatible new features and enhancements.
 - `PATCH`: Backwards-compatible bugfixes and package updates.
 
+## Usage
+
+As of the 15th of March 2025, Tado has updated their OAuth2 authentication flow. It will now use the device flow, instead of a username/password flow. This means that the user will have to authenticate the device using a browser, and then enter the code that is displayed on the browser into the terminal.
+
+PyTado handles this as following:
+
+1. The `_login_device_flow()` will be invoked at the initialization of a PyTado object. This will start the device flow and will return a URL and a code that the user will have to enter in the browser. The URL can be obtained via the method `device_verification_url()`. Or, when in debug mode, the URL will be printed. Alternatively, you can use the `device_activation_status()` method to check if the device has been activated. It returns three statuses: `NOT_STARTED`, `PENDING`, and `COMPLETED`. Wait to invoke the `device_activation()` method until the status is `PENDING`.
+
+2. Once the URL is obtained, the user will have to enter the code that is displayed on the browser into the terminal. By default, the URL has the `user_code` attached, for the ease of going trough the flow. At this point, run the method `device_activation()`. It will poll every five seconds to see if the flow has been completed. If the flow has been completed, the method will return a token that will be used for all further requests. It will timeout after five minutes.
+
+3. Once the token has been obtained, the user can use the PyTado object to interact with the Tado API. The token will be stored in the `Tado` object, and will be used for all further requests. The token will be refreshed automatically when it expires.
+The `device_verification_url()` will be reset to `None` and the `device_activation_status()` will return `COMPLETED`.
+
+### Screenshots of the device flow
+
+![Tado device flow: invoking](/screenshots/tado-device-flow-0.png)
+![Tado device flow: browser](/screenshots/tado-device-flow-1.png)
+![Tado device flow: complete](/screenshots/tado-device-flow-2.png)
+
 ## Contributing
 
 This is an active open-source project. We are always open to people who want to
