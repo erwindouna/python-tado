@@ -123,6 +123,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             self._device_activation_status = await self.login_device_flow()
         else:
             self._device_ready()
+            get_me = await self.get_me()
+            self._home_id = get_me.homes[0].id
 
     @property
     def device_activation_status(self) -> DeviceActivationStatus:
@@ -133,6 +135,11 @@ class Tado:  # pylint: disable=too-many-instance-attributes
     def device_verification_url(self) -> str | None:
         """Return the device verification URL."""
         return self._device_verification_url
+
+    @property
+    def refresh_token(self) -> str | None:
+        """Return the refresh token."""
+        return self._refresh_token
 
     async def login_device_flow(self) -> DeviceActivationStatus:
         """Login using device flow."""
@@ -340,17 +347,15 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         data = {
             "client_id": CLIENT_ID,
             "grant_type": "refresh_token",
-            "scope": "home.user",
             "refresh_token": self._refresh_token,
         }
 
-        if self._session is None:
-            self._session = ClientSession()
-            self._close_session = True
+        _LOGGER.debug("Refreshing Tado token")
 
         try:
             async with asyncio.timeout(self._request_timeout):
-                request = await self._session.post(url=TOKEN_URL, data=data)
+                session = self._ensure_session()
+                request = await session.post(url=TOKEN_URL, data=data)
                 request.raise_for_status()
         except asyncio.TimeoutError as err:
             raise TadoConnectionError(
@@ -363,6 +368,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self._access_token = response["access_token"]
         self._token_expiry = time.time() + float(response["expires_in"])
         self._refresh_token = response["refresh_token"]
+
+        _LOGGER.debug("Tado token refreshed")
 
     async def get_me(self) -> GetMe:
         """Get the user information."""

@@ -188,6 +188,27 @@ async def test_login_client_response_error() -> None:
             await tado.async_init()
 
 
+async def test_login_client_response_still_pending() -> None:
+    """Test login client response error."""
+    mock_request_info = MagicMock(spec=RequestInfo)
+    mock_response = MagicMock(spec=ClientResponse)
+    mock_response.raise_for_status.side_effect = ClientResponseError(
+        mock_request_info, (mock_response,), status=400
+    )
+    mock_response.status = 400
+    mock_response.text = AsyncMock(return_value="authorization_pending")
+
+    async def mock_post(*args: Any, **kwargs: Any) -> ClientResponse:  # noqa: ARG001 # pylint: disable=unused-argument
+        return mock_response
+
+    async with aiohttp.ClientSession() as session:
+        tado = Tado(session=session)
+        with patch("aiohttp.ClientSession.post", new=mock_post), pytest.raises(
+            TadoAuthenticationError
+        ):
+            await tado.async_init()
+
+
 async def test_refresh_auth_success(responses: aioresponses) -> None:
     """Test successful refresh of auth token."""
     responses.post(
