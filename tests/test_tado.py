@@ -624,3 +624,13 @@ async def test_async_init_with_refresh_token() -> None:
     assert tado.device_activation_status == DeviceActivationStatus.NOT_STARTED
     await tado.async_init()
     assert tado.device_activation_status == DeviceActivationStatus.COMPLETED
+
+
+async def test_login_device_flow_already_in_progress() -> None:
+    """Ensure calling login_device_flow again raises TadoError."""
+    tado = Tado()
+    tado._device_activation_status = DeviceActivationStatus.PENDING
+    with pytest.raises(
+        TadoError, match="Device activation already in progress or completed"
+    ):
+        await tado.login_device_flow()
