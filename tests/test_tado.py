@@ -602,8 +602,9 @@ async def test_get_me_timeout(responses: aioresponses) -> None:
         callback=response_handler,
     )
 
-    async with aiohttp.ClientSession() as session, Tado(
-        request_timeout=0, session=session
-    ) as tado:
+    async with aiohttp.ClientSession() as session:
+        tado = Tado(session=session, request_timeout=0)
+        await tado.login()
         with pytest.raises(TadoConnectionError):
-            assert await tado.get_devices()
+            await tado.get_devices()
+        await tado.close()

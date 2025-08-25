@@ -27,6 +27,7 @@ async def client() -> AsyncGenerator[Tado, None]:
         session=session,
         request_timeout=10,
     ) as tado:
+        await tado.login()
         yield tado
 
 
