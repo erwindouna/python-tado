@@ -27,7 +27,7 @@ async def client() -> AsyncGenerator[Tado, None]:
         session=session,
         request_timeout=10,
     ) as tado:
-        await tado.login()
+        await tado.device_activation()
         yield tado
 
 
@@ -40,7 +40,7 @@ def _tado_oauth(responses: aioresponses) -> None:
         payload={
             "device_code": "XXX_code_XXX",
             "expires_in": 300,
-            "interval": 5,
+            "interval": 0,
             "user_code": "7BQ5ZQ",
             "verification_uri": "https://login.tado.com/oauth2/device",
             "verification_uri_complete": "https://login.tado.com/oauth2/device?user_code=7BQ5ZQ",

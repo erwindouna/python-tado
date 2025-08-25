@@ -3,7 +3,7 @@
 import asyncio
 import os
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -21,7 +21,7 @@ from tadoasync.exceptions import (
     TadoError,
     TadoReadingError,
 )
-from tadoasync.tadoasync import DeviceActivationStatus
+from tadoasync.tadoasync import DEVICE_AUTH_URL, DeviceActivationStatus
 
 from syrupy import SnapshotAssertion
 from tests import load_fixture
@@ -63,7 +63,8 @@ async def test_login_success(responses: aioresponses) -> None:
     )
     async with aiohttp.ClientSession() as session:
         tado = Tado(session=session)
-        await tado.login()
+        await tado.async_init()
+        await tado.device_activation()
         assert tado._access_token == "test_access_token"
         assert tado._token_expiry is not None
         assert tado._token_expiry > time.time()
@@ -79,39 +80,94 @@ async def test_login_success_no_session(responses: aioresponses) -> None:
     )
     async with aiohttp.ClientSession():
         tado = Tado()
-        await tado.login()
+        await tado.async_init()
+        await tado.device_activation()
         assert tado._access_token == "test_access_token"
         assert tado._token_expiry is not None
         assert tado._token_expiry > time.time()
         assert tado._refresh_token == "test_refresh_token"
 
 
-async def test_login_timeout(python_tado: Tado, responses: aioresponses) -> None:
-    """Test login timeout."""
+async def test_activation_timeout(responses: aioresponses) -> None:
+    """Test activation timeout."""
     responses.post(
-        TADO_TOKEN_URL,
-        exception=asyncio.TimeoutError(),
+        DEVICE_AUTH_URL,
+        status=200,
+        payload={
+            "device_code": "XXX_code_XXX",
+            "expires_in": 1,
+            "interval": 0,
+            "user_code": "7BQ5ZQ",
+            "verification_uri": "https://login.tado.com/oauth2/device",
+            "verification_uri_complete": "https://login.tado.com/oauth2/device?user_code=7BQ5ZQ",
+        },
     )
-    with pytest.raises(TadoConnectionError):
-        await python_tado.login()
-
-
-async def test_login_invalid_content_type(
-    python_tado: Tado, responses: aioresponses
-) -> None:
-    """Test login invalid content type."""
     responses.post(
         TADO_TOKEN_URL,
+        status=400,
+        payload={"error": "authorization_pending"},
+    )
+
+    async with aiohttp.ClientSession() as session:
+        tado = Tado(session=session)
+        await tado.async_init()
+        tado._expires_at = datetime.now(timezone.utc) - timedelta(seconds=1)
+        with pytest.raises(TadoError, match="User took too long"):
+            await tado.device_activation()
+
+
+async def test_login_device_flow_timeout(responses: aioresponses) -> None:
+    """Test timeout during device auth flow."""
+    responses._matches.clear()
+    responses.post(
+        DEVICE_AUTH_URL,
+        exception=asyncio.TimeoutError(),
+        repeat=True,
+    )
+
+    async with aiohttp.ClientSession() as session:
+        tado = Tado(session=session)
+        with pytest.raises(TadoConnectionError):
+            await tado.async_init()
+
+
+async def test_login_invalid_content_type(responses: aioresponses) -> None:
+    """Test login invalid content type."""
+    responses._matches.clear()
+    responses.post(
+        DEVICE_AUTH_URL,
         status=200,
         headers={"content-type": "text/plain"},
         body="Unexpected response",
     )
 
-    with pytest.raises(TadoError):
-        await python_tado.login()
+    async with aiohttp.ClientSession() as session:
+        tado = Tado(session=session)
+        with pytest.raises(TadoError):
+            await tado.async_init()
 
 
-async def test_login_client_response_error(python_tado: Tado) -> None:
+async def test_login_invalid_status() -> None:
+    """Test login with non-200 status triggers."""
+    mock_response = MagicMock(spec=ClientResponse)
+    mock_response.status = 400
+    mock_response.headers = {"content-type": "application/json"}
+    mock_response.raise_for_status = MagicMock(return_value=None)
+    mock_response.json = AsyncMock(return_value={"error": "bad_request"})
+    mock_response.text = AsyncMock(return_value="Unexpected response")
+
+    async def mock_post(*args: Any, **kwargs: Any) -> ClientResponse:  # noqa: ARG001 # pylint: disable=unused-argument
+        return mock_response
+
+    async with aiohttp.ClientSession() as session:
+        tado = Tado(session=session)
+        with patch("aiohttp.ClientSession.post", new=mock_post), pytest.raises(
+            TadoError
+        ):
+            await tado.async_init()
+
+
+async def test_login_client_response_error() -> None:
     """Test login client response error."""
     mock_request_info = MagicMock(spec=RequestInfo)
     mock_response = MagicMock(spec=ClientResponse)
@@ -124,10 +180,12 @@ async def test_login_client_response_error(python_tado: Tado) -> None:
     async def mock_post(*args: Any, **kwargs: Any) -> ClientResponse:  # noqa: ARG001 # pylint: disable=unused-argument
         return mock_response
 
-    with patch("aiohttp.ClientSession.post", new=mock_post), pytest.raises(
-        TadoAuthenticationError
-    ):
-        await python_tado.login()
+    async with aiohttp.ClientSession() as session:
+        tado = Tado(session=session)
+        with patch("aiohttp.ClientSession.post", new=mock_post), pytest.raises(
+            TadoAuthenticationError
+        ):
+            await tado.async_init()
 
 
 async def test_refresh_auth_success(responses: aioresponses) -> None:
@@ -188,6 +246,29 @@ async def test_refresh_auth_client_response_error(python_tado: Tado) -> None:
             await python_tado._refresh_auth()
 
 
+async def test_device_flow_sets_verification_url(responses: aioresponses) -> None:
+    """Test device flow sets verification URL."""
+    responses.post(
+        DEVICE_AUTH_URL,
+        status=200,
+        payload={
+            "device_code": "XXX",
+            "expires_in": 600,
+            "interval": 0,
+            "user_code": "7BQ5ZQ",
+            "verification_uri": "https://login.tado.com/oauth2/device",
+        },
+    )
+
+    async with aiohttp.ClientSession() as session:
+        tado = Tado(session=session)
+        await tado.login_device_flow()
+        assert (
+            tado.device_verification_url
+            == "https://login.tado.com/oauth2/device?user_code=7BQ5ZQ"
+        )
+
+
 async def test_get_me(
     python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
 ) -> None:
@@ -210,10 +291,6 @@ async def test_get_devices(
         body=load_fixture("devices.json"),
     )
     assert await python_tado.get_devices() == snapshot
-    assert (
-        python_tado.device_verification_url
-        == "https://login.tado.com/oauth2/device?user_code=7BQ5ZQ"
-    )
 
 
 async def test_get_mobile_devices(

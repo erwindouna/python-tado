@@ -144,13 +144,10 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             "scope": "offline_access",
         }
 
-        if self._session is None:
-            self._session = ClientSession()
-            self._close_session = True
-
         try:
             async with asyncio.timeout(self._request_timeout):
-                request = await self._session.post(url=DEVICE_AUTH_URL, data=data)
+                session = self._ensure_session()
+                request = await session.post(url=DEVICE_AUTH_URL, data=data)
                 request.raise_for_status()
         except asyncio.TimeoutError as err:
             raise TadoConnectionError(
@@ -158,6 +155,15 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             ) from err
         except ClientResponseError as err:
             await self.check_request_status(err, login=True)
+
+        content_type = request.headers.get("content-type")
+        if content_type and "application/json" not in content_type:
+            text = await request.text()
+            raise TadoError(
+                "Unexpected response from Tado. Content-Type: "
+                f"{request.headers.get('content-type')}, "
+                f"Response body: {text}"
+            )
 
         if request.status != 200:
             raise TadoError(f"Failed to start device activation flow: {request.status}")
@@ -198,13 +204,10 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             "grant_type": "urn:ietf:params:oauth:grant-type:device_code",
         }
 
-        if self._session is None:
-            self._session = ClientSession()
-            self._close_session = True
-
         try:
             async with asyncio.timeout(self._request_timeout):
-                request = await self._session.post(url=TOKEN_URL, data=data)
+                session = self._ensure_session()
+                request = await session.post(url=TOKEN_URL, data=data)
                 if request.status == 400:
                     response = await request.json()
                     if response.get("error") == "authorization_pending":
@@ -215,6 +218,15 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             raise TadoConnectionError(
                 "Timeout occurred while connecting to Tado."
             ) from err
+
+        content_type = request.headers.get("content-type")
+        if content_type and "application/json" not in content_type:
+            text = await request.text()
+            raise TadoError(
+                "Unexpected response from Tado. Content-Type: "
+                f"{request.headers.get('content-type')}, "
+                f"Response body: {text}"
+            )
 
         if request.status == 200:
             response = await request.json()
@@ -565,7 +577,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
         try:
             async with asyncio.timeout(self._request_timeout):
-                request = await self._session.request(  # type: ignore[union-attr]
+                session = self._ensure_session()
+                request = await session.request(
                     method=method.value, url=str(url), headers=headers, json=data
                 )
                 request.raise_for_status()
@@ -744,6 +757,13 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         """Close open client session."""
         if self._session and self._close_session:
             await self._session.close()
+
+    def _ensure_session(self) -> ClientSession:
+        """Return an active aiohttp ClientSession, creating one if needed."""
+        if self._session is None or self._session.closed:
+            self._session = ClientSession()
+            self._close_session = True
+        return self._session
 
     async def __aenter__(self) -> Self:
         """Async enter."""

@@ -26,7 +26,7 @@ mashumaro = ">=3.10"
 orjson = ">=3.9.8"
 python = "^3.12"
 yarl = ">=1.6.0"
-aioresponses = "^0.7.6"
+aioresponses = "^0.7.7"
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/erwindouna/python-tado/issues"
