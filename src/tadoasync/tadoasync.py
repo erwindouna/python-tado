@@ -85,11 +85,13 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
     def __init__(
         self,
+        refresh_token: str | None = None,
         debug: bool | None = None,
         session: ClientSession | None = None,
         request_timeout: int = 10,
     ) -> None:
         """Initialize the Tado object."""
+        self._refresh_token = refresh_token
         self._debug: bool = debug or False
         self._session = session
         self._request_timeout = request_timeout
@@ -102,7 +104,6 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
         self._access_token: str | None = None
         self._token_expiry: float | None = None
-        self._refresh_token: str | None = None
         self._access_headers: dict[str, str] | None = None
         self._home_id: int | None = None
         self._me: GetMe | None = None

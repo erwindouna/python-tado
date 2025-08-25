@@ -21,6 +21,7 @@ from tadoasync.exceptions import (
     TadoError,
     TadoReadingError,
 )
+from tadoasync.tadoasync import DeviceActivationStatus
 
 from syrupy import SnapshotAssertion
 from tests import load_fixture
@@ -209,6 +210,10 @@ async def test_get_devices(
         body=load_fixture("devices.json"),
     )
     assert await python_tado.get_devices() == snapshot
+    assert (
+        python_tado.device_verification_url
+        == "https://login.tado.com/oauth2/device?user_code=7BQ5ZQ"
+    )
 
 
 async def test_get_mobile_devices(
@@ -608,3 +613,14 @@ async def test_get_me_timeout(responses: aioresponses) -> None:
         with pytest.raises(TadoConnectionError):
             await tado.get_devices()
         await tado.close()
+
+
+async def test_async_init_with_refresh_token() -> None:
+    """Cover where refresh token exists and _device_ready is invoked."""
+    tado = Tado()
+    tado._refresh_token = "existing"
+
+    # Ensure device_activation_status starts NOT_STARTED
+    assert tado.device_activation_status == DeviceActivationStatus.NOT_STARTED
+    await tado.async_init()
+    assert tado.device_activation_status == DeviceActivationStatus.COMPLETED
