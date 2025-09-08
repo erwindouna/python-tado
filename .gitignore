@@ -94,9 +94,6 @@ ENV/
 # ruff
 .ruff_cache
 
-# Visual Studio Code
-.vscode
-
 # IntelliJ Idea family of suites
 .idea
 *.iml

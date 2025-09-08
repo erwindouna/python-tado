@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 import asyncio
+import enum
+import logging
 import time
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from importlib import metadata
 from typing import Self
+from urllib.parse import urlencode
 
 import orjson
 from aiohttp import ClientResponseError
@@ -54,10 +57,9 @@ from tadoasync.models import (
     ZoneState,
 )
 
-CLIENT_ID = "tado-web-app"
-CLIENT_SECRET = "wZaRN7rpjn3FoNyF5IFuxg9uMzYJcvOoQ8QWiIqS3hfk6gLhVlG57j5YNoZL2Rtc"  # noqa: S105
-AUTHORIZATION_BASE_URL = "https://auth.tado.com/oauth/authorize"
-TOKEN_URL = "https://auth.tado.com/oauth/token"  # noqa: S105
+CLIENT_ID = "1bb50063-6b0c-4d11-bd99-387f4a91cc46"
+TOKEN_URL = "https://login.tado.com/oauth2/token"  # noqa: S105
+DEVICE_AUTH_URL = "https://login.tado.com/oauth2/device_authorize"
 API_URL = "my.tado.com/api/v2"
 TADO_HOST_URL = "my.tado.com"
 TADO_API_PATH = "/api/v2"
@@ -66,6 +68,16 @@ EIQ_HOST_URL = "energy-insights.tado.com"
 EIQ_API_PATH = "/api"
 VERSION = metadata.version(__package__)
 
+_LOGGER = logging.getLogger(__name__)
+
+
+class DeviceActivationStatus(enum.StrEnum):
+    """Device Activation Status Enum."""
+
+    NOT_STARTED = "NOT_STARTED"
+    PENDING = "PENDING"
+    COMPLETED = "COMPLETED"
+
 
 @dataclass
 class Tado:  # pylint: disable=too-many-instance-attributes
@@ -73,22 +85,13 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
     def __init__(
         self,
-        username: str,
-        password: str,
+        refresh_token: str | None = None,
         debug: bool | None = None,
         session: ClientSession | None = None,
         request_timeout: int = 10,
     ) -> None:
-        """Initialize the Tado object.
-
-        :param username: Tado account username.
-        :param password: Tado account password.
-        :param debug: Enable debug logging.
-        :param session: HTTP client session.
-        :param request_timeout: Timeout for HTTP requests.
-        """
-        self._username: str = username
-        self._password: str = password
+        """Initialize the Tado object."""
+        self._refresh_token = refresh_token
         self._debug: bool = debug or False
         self._session = session
         self._request_timeout = request_timeout
@@ -101,21 +104,175 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
         self._access_token: str | None = None
         self._token_expiry: float | None = None
-        self._refresh_token: str | None = None
         self._access_headers: dict[str, str] | None = None
         self._home_id: int | None = None
         self._me: GetMe | None = None
         self._auto_geofencing_supported: bool | None = None
 
+        self._user_code: str | None = None
+        self._device_verification_url: str | None = None
+        self._device_flow_data: dict[str, str] = {}
+        self._device_activation_status = DeviceActivationStatus.NOT_STARTED
+        self._expires_at: datetime | None = None
+
+        _LOGGER.setLevel(logging.DEBUG if debug else logging.INFO)
+
+    async def async_init(self) -> None:
+        """Asynchronous initialization for the Tado object."""
+        if self._refresh_token is None:
+            self._device_activation_status = await self.login_device_flow()
+        else:
+            self._device_ready()
+            get_me = await self.get_me()
+            self._home_id = get_me.homes[0].id
+
+    @property
+    def device_activation_status(self) -> DeviceActivationStatus:
+        """Return the device activation status."""
+        return self._device_activation_status
+
+    @property
+    def device_verification_url(self) -> str | None:
+        """Return the device verification URL."""
+        return self._device_verification_url
+
+    @property
+    def refresh_token(self) -> str | None:
+        """Return the refresh token."""
+        return self._refresh_token
+
+    async def login_device_flow(self) -> DeviceActivationStatus:
+        """Login using device flow."""
+        if self._device_activation_status != DeviceActivationStatus.NOT_STARTED:
+            raise TadoError("Device activation already in progress or completed")
+
+        data = {
+            "client_id": CLIENT_ID,
+            "scope": "offline_access",
+        }
+
+        try:
+            async with asyncio.timeout(self._request_timeout):
+                session = self._ensure_session()
+                request = await session.post(url=DEVICE_AUTH_URL, data=data)
+                request.raise_for_status()
+        except asyncio.TimeoutError as err:
+            raise TadoConnectionError(
+                "Timeout occurred while connecting to Tado."
+            ) from err
+        except ClientResponseError as err:
+            await self.check_request_status(err, login=True)
+
+        content_type = request.headers.get("content-type")
+        if content_type and "application/json" not in content_type:
+            text = await request.text()
+            raise TadoError(
+                "Unexpected response from Tado. Content-Type: "
+                f"{request.headers.get('content-type')}, "
+                f"Response body: {text}"
+            )
+
+        if request.status != 200:
+            raise TadoError(f"Failed to start device activation flow: {request.status}")
+
+        self._device_flow_data = await request.json()
+
+        user_code = urlencode({"user_code": self._device_flow_data["user_code"]})
+        visit_url = f"{self._device_flow_data['verification_uri']}?{user_code}"
+        self._user_code = self._device_flow_data["user_code"]
+        self._device_verification_url = visit_url
+
+        _LOGGER.info("Please visit the following URL: %s", visit_url)
+
+        expires_in_seconds = float(self._device_flow_data["expires_in"])
+        self._expires_at = datetime.now(timezone.utc) + timedelta(
+            seconds=expires_in_seconds
+        )
+
+        _LOGGER.info(
+            "Waiting for user to authorize the device. Expires at %s",
+            self._expires_at.strftime("%Y-%m-%d %H:%M:%S"),
+        )
+
+        return DeviceActivationStatus.PENDING
+
+    async def _check_device_activation(self) -> bool:
+        if self._expires_at is not None and datetime.timestamp(
+            datetime.now(timezone.utc)
+        ) > datetime.timestamp(self._expires_at):
+            raise TadoError("User took too long to enter key")
+
+        # Await the desired interval, before polling the API again
+        await asyncio.sleep(float(self._device_flow_data["interval"]))
+
+        data = {
+            "client_id": CLIENT_ID,
+            "device_code": self._device_flow_data["device_code"],
+            "grant_type": "urn:ietf:params:oauth:grant-type:device_code",
+        }
+
+        try:
+            async with asyncio.timeout(self._request_timeout):
+                session = self._ensure_session()
+                request = await session.post(url=TOKEN_URL, data=data)
+                if request.status == 400:
+                    response = await request.json()
+                    if response.get("error") == "authorization_pending":
+                        _LOGGER.info("Authorization pending. Continuing polling...")
+                        return False
+                request.raise_for_status()
+        except asyncio.TimeoutError as err:
+            raise TadoConnectionError(
+                "Timeout occurred while connecting to Tado."
+            ) from err
+
+        content_type = request.headers.get("content-type")
+        if content_type and "application/json" not in content_type:
+            text = await request.text()
+            raise TadoError(
+                "Unexpected response from Tado. Content-Type: "
+                f"{request.headers.get('content-type')}, "
+                f"Response body: {text}"
+            )
+
+        if request.status == 200:
+            response = await request.json()
+            self._access_token = response["access_token"]
+            self._token_expiry = time.time() + float(response["expires_in"])
+            self._refresh_token = response["refresh_token"]
+
+            get_me = await self.get_me()
+            self._home_id = get_me.homes[0].id
+
+            return True
+
+        raise TadoError(f"Login failed. Reason: {request.reason}")
+
+    async def device_activation(self) -> None:
+        """Start the device activation process and get the refresh token."""
+        if self._device_activation_status == DeviceActivationStatus.NOT_STARTED:
+            raise TadoError(
+                "Device activation has not yet started or has already completed"
+            )
+
+        while True:
+            if await self._check_device_activation():
+                break
+
+        self._device_ready()
+
+    def _device_ready(self) -> None:
+        """Clear up after device activation."""
+        self._user_code = None
+        self._device_verification_url = None
+        self._device_activation_status = DeviceActivationStatus.COMPLETED
+
     async def login(self) -> None:
         """Perform login to Tado."""
         data = {
             "client_id": CLIENT_ID,
-            "client_secret": CLIENT_SECRET,
             "grant_type": "password",
             "scope": "home.user",
-            "username": self._username,
-            "password": self._password,
         }
 
         if self._session is None:
@@ -189,19 +346,16 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
         data = {
             "client_id": CLIENT_ID,
-            "client_secret": CLIENT_SECRET,
             "grant_type": "refresh_token",
-            "scope": "home.user",
             "refresh_token": self._refresh_token,
         }
 
-        if self._session is None:
-            self._session = ClientSession()
-            self._close_session = True
+        _LOGGER.debug("Refreshing Tado token")
 
         try:
             async with asyncio.timeout(self._request_timeout):
-                request = await self._session.post(url=TOKEN_URL, data=data)
+                session = self._ensure_session()
+                request = await session.post(url=TOKEN_URL, data=data)
                 request.raise_for_status()
         except asyncio.TimeoutError as err:
             raise TadoConnectionError(
@@ -214,6 +368,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self._access_token = response["access_token"]
         self._token_expiry = time.time() + float(response["expires_in"])
         self._refresh_token = response["refresh_token"]
+
+        _LOGGER.debug("Tado token refreshed")
 
     async def get_me(self) -> GetMe:
         """Get the user information."""
@@ -428,7 +584,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
         try:
             async with asyncio.timeout(self._request_timeout):
-                request = await self._session.request(  # type: ignore[union-attr]
+                session = self._ensure_session()
+                request = await session.request(
                     method=method.value, url=str(url), headers=headers, json=data
                 )
                 request.raise_for_status()
@@ -608,9 +765,16 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         if self._session and self._close_session:
             await self._session.close()
 
+    def _ensure_session(self) -> ClientSession:
+        """Return an active aiohttp ClientSession, creating one if needed."""
+        if self._session is None or self._session.closed:
+            self._session = ClientSession()
+            self._close_session = True
+        return self._session
+
     async def __aenter__(self) -> Self:
         """Async enter."""
-        await self.login()
+        await self.async_init()
         return self
 
     async def __aexit__(self, *_exc_info: object) -> None:
