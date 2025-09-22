@@ -48,6 +48,12 @@
     'can_set_temperature': None,
     'cool': dict({
       'fan_level': None,
+      'fan_speeds': list([
+        'AUTO',
+        'HIGH',
+        'MIDDLE',
+        'LOW',
+      ]),
       'horizontal_swing': None,
       'light': None,
       'temperatures': dict({
@@ -66,6 +72,7 @@
     }),
     'dry': dict({
       'fan_level': None,
+      'fan_speeds': None,
       'horizontal_swing': None,
       'light': None,
       'temperatures': None,
@@ -73,6 +80,12 @@
     }),
     'fan': dict({
       'fan_level': None,
+      'fan_speeds': list([
+        'AUTO',
+        'HIGH',
+        'MIDDLE',
+        'LOW',
+      ]),
       'horizontal_swing': None,
       'light': None,
       'temperatures': None,
@@ -80,6 +93,12 @@
     }),
     'heat': dict({
       'fan_level': None,
+      'fan_speeds': list([
+        'AUTO',
+        'HIGH',
+        'MIDDLE',
+        'LOW',
+      ]),
       'horizontal_swing': None,
       'light': None,
       'temperatures': dict({
@@ -158,6 +177,7 @@
         'LEVEL5',
         'SILENT',
       ]),
+      'fan_speeds': None,
       'horizontal_swing': list([
         'OFF',
         'ON',
@@ -202,6 +222,7 @@
         'LEVEL5',
         'SILENT',
       ]),
+      'fan_speeds': None,
       'horizontal_swing': list([
         'OFF',
         'ON',
@@ -246,6 +267,7 @@
         'LEVEL5',
         'SILENT',
       ]),
+      'fan_speeds': None,
       'horizontal_swing': list([
         'OFF',
         'ON',
@@ -290,6 +312,7 @@
         'LEVEL5',
         'SILENT',
       ]),
+      'fan_speeds': None,
       'horizontal_swing': list([
         'OFF',
         'ON',
