@@ -112,7 +112,7 @@ repos:
         name: 🧪 Running tests and test coverage with pytest
         language: system
         types: [python]
-        entry: poetry run pytest
+        entry: poetry run pytest --cov=tadoasync --cov-report=term-missing --cov-report=xml --cov-fail-under=95
         pass_filenames: false
       - id: trailing-whitespace
         name: ✄  Trim Trailing Whitespace

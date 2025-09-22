@@ -34,6 +34,12 @@
   dict({
     'auto': dict({
       'fan_level': None,
+      'fan_speeds': list([
+        'AUTO',
+        'HIGH',
+        'MIDDLE',
+        'LOW',
+      ]),
       'horizontal_swing': None,
       'light': None,
       'temperatures': None,
@@ -106,6 +112,7 @@
         'LEVEL5',
         'SILENT',
       ]),
+      'fan_speeds': None,
       'horizontal_swing': list([
         'OFF',
         'ON',

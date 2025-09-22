@@ -308,6 +308,9 @@ class AutoAC(DataClassORJSONMixin):
     fan_level: list[str] | None = field(
         default=None, metadata=field_options(alias="fanLevel")
     )
+    fan_speeds: list[str] | None = field(
+        default=None, metadata=field_options(alias="fanSpeeds")
+    )
     vertical_swing: list[str] | None = field(
         default=None, metadata=field_options(alias="verticalSwing")
     )
