@@ -19,6 +19,7 @@ Asynchronous Python client to control Tado devices.
 This package allows you to control Tado devices from within Python.
 Although it can be used as a standalone package, it is current scope is to be used within Home Assistant.
 Not all endpoints and features are fully supported.
+This is the continuation project of PyTado.
 
 ## Documentation
 A full documentation can be found at [Read the Docs][readthedocs].
