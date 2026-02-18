@@ -21,10 +21,7 @@ jobs:
         uses: astral-sh/setup-uv@v7
       - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
         id: python
-        uses: actions/setup-python@v5.0.0
-        with:
-          python-version: ${{ env.DEFAULT_PYTHON }}
-          cache: "uv"
+        run: uv python install ${{ env.DEFAULT_PYTHON }}
       - name: 🏗 Install Python dependencies
         run: uv sync
       - name: 🚀 Run ruff linter
@@ -42,10 +39,7 @@ jobs:
         uses: astral-sh/setup-uv@v7
       - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
         id: python
-        uses: actions/setup-python@v5.0.0
-        with:
-          python-version: ${{ env.DEFAULT_PYTHON }}
-          cache: "uv"
+        run: uv python install ${{ env.DEFAULT_PYTHON }}
       - name: 🏗 Install Python dependencies
         run: uv sync
       - name: 🚀 Check Python AST
@@ -87,10 +81,7 @@ jobs:
         uses: astral-sh/setup-uv@v7
       - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
         id: python
-        uses: actions/setup-python@v5.0.0
-        with:
-          python-version: ${{ env.DEFAULT_PYTHON }}
-          cache: "uv"
+        run: uv python install ${{ env.DEFAULT_PYTHON }}
       - name: 🏗 Install Python dependencies
         run: uv sync
       - name: 🚀 Run pylint
@@ -106,10 +97,7 @@ jobs:
         uses: astral-sh/setup-uv@v7
       - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
         id: python
-        uses: actions/setup-python@v5.0.0
-        with:
-          python-version: ${{ env.DEFAULT_PYTHON }}
-          cache: "uv"
+        run: uv python install ${{ env.DEFAULT_PYTHON }}
       - name: 🏗 Install Python dependencies
         run: uv sync
       - name: 🚀 Run yamllint
@@ -125,10 +113,7 @@ jobs:
         uses: astral-sh/setup-uv@v7
       - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
         id: python
-        uses: actions/setup-python@v5.0.0
-        with:
-          python-version: ${{ env.DEFAULT_PYTHON }}
-          cache: "uv"
+        run: uv python install ${{ env.DEFAULT_PYTHON }}
       - name: 🏗 Install Python dependencies
         run: uv sync
       - name: 🏗 Set up Node.js
