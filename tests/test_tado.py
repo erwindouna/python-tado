@@ -3,7 +3,7 @@
 import asyncio
 import os
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -111,7 +111,7 @@ async def test_activation_timeout(responses: aioresponses) -> None:
     async with aiohttp.ClientSession() as session:
         tado = Tado(session=session)
         await tado.async_init()
-        tado._expires_at = datetime.now(timezone.utc) - timedelta(seconds=1)
+        tado._expires_at = datetime.now(UTC) - timedelta(seconds=1)
         with pytest.raises(TadoError, match="User took too long"):
             await tado.device_activation()
 
@@ -608,7 +608,7 @@ async def test_add_meter_readings_duplicated(
     python_tado: Tado, responses: aioresponses
 ) -> None:
     """Test adding meter readings with duplicate."""
-    date = datetime(2023, 10, 1, 12, 0, 0, tzinfo=timezone.utc)
+    date = datetime(2023, 10, 1, 12, 0, 0, tzinfo=UTC)
     reading = 5
     responses.post(
         TADO_EIQ_URL,
