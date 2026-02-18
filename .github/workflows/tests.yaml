@@ -20,10 +20,10 @@ jobs:
     steps:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v4.1.1
-      - name: 🏗 Set up uv
+      - name: 🏗 Install uv and set the Python version ${{ env.DEFAULT_PYTHON }}
         uses: astral-sh/setup-uv@v7
-      - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
-        run: uv python install ${{ env.DEFAULT_PYTHON }}
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON }}
       - name: 🏗 Install dependencies
         run: uv sync
       - name: 🚀 Run pytest
@@ -45,10 +45,10 @@ jobs:
           fetch-depth: 0
       - name: ⬇️ Download coverage data
         uses: actions/download-artifact@v4.1.4
-      - name: 🏗 Set up uv
+      - name: 🏗 Install uv and set the Python version ${{ env.DEFAULT_PYTHON }}
         uses: astral-sh/setup-uv@v7
-      - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
-        run: uv python install ${{ env.DEFAULT_PYTHON }}
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON }}
       - name: 🏗 Install dependencies
         run: uv sync
       - name: 🚀 Process coverage results
