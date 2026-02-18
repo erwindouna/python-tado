@@ -1,54 +1,77 @@
-[tool.poetry]
+[project]
 name = "tadoasync"
 version = "0.2.2"
-authors = ["Erwin Douna <e.douna@gmail.com>"]
-classifiers = [
-  "Development Status :: 5 - Production/Stable",
-  "Framework :: AsyncIO",
-  "Intended Audience :: Developers",
-  "Natural Language :: English",
-  "Programming Language :: Python :: 3.12",
-  "Topic :: Software Development :: Libraries :: Python Modules",
-]
 description = "Asynchronous Python client for controlling Tado devices."
-documentation = "https://github.com/erwindouna/python-tado"
-homepage = "https://github.com/erwindouna/python-tado"
-keywords = ["tado", "homeassistant", "api", "async", "client"]
-license = "MIT"
-maintainers = ["Erwin Douna <e.douna@gmail.com>"]
-packages = [{ include = "tadoasync", from = "src" }]
+authors = [{ name = "Erwin Douna", email = "e.douna@gmail.com" }]
+requires-python = ">=3.12,<4"
 readme = "README.md"
-repository = "https://github.com/erwindouna/python-tado"
+license = "MIT"
+maintainers = [{ name = "Erwin Douna", email = "e.douna@gmail.com" }]
+keywords = [
+    "tado",
+    "homeassistant",
+    "api",
+    "async",
+    "client",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Framework :: AsyncIO",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+    "aiohttp>=3.0.0",
+    "mashumaro>=3.10",
+    "orjson>=3.9.8",
+    "yarl>=1.6.0",
+    "aioresponses>=0.7.7,<0.8",
+]
 
-[tool.poetry.dependencies]
-aiohttp = ">=3.0.0"
-mashumaro = ">=3.10"
-orjson = ">=3.9.8"
-python = "^3.12"
-yarl = ">=1.6.0"
-aioresponses = "^0.7.7"
-
-[tool.poetry.urls]
+[project.urls]
+Homepage = "https://github.com/erwindouna/python-tado"
+Repository = "https://github.com/erwindouna/python-tado"
+Documentation = "https://github.com/erwindouna/python-tado"
 "Bug Tracker" = "https://github.com/erwindouna/python-tado/issues"
 Changelog = "https://github.com/erwindouna/python-tado/releases"
 
-[tool.poetry.group.dev.dependencies]
-aresponses = "3.0.0"
-codespell = "2.2.6"
-covdefaults = "2.3.0"
-coverage = { version = "7.4.3", extras = ["toml"] }
-mypy = "1.9.0"
-pre-commit = "3.6.0"
-pre-commit-hooks = "4.5.0"
-pylint = "3.0.3"
-pytest = "8.1.1"
-pytest-asyncio = "^0.23.5.post1"
-pytest-cov = "4.1.0"
-ruff = "0.1.13"
-safety = "3.0.1"
-yamllint = "1.33.0"
-syrupy = "4.6.1"
-deptry = "^0.19.1"
+[dependency-groups]
+dev = [
+    "aresponses==3.0.0",
+    "codespell==2.2.6",
+    "covdefaults==2.3.0",
+    "coverage[toml]==7.4.3",
+    "mypy==1.9.0",
+    "pre-commit==3.6.0",
+    "pre-commit-hooks==4.5.0",
+    "pylint==3.0.3",
+    "pytest==8.1.1",
+    "pytest-asyncio>=0.23.5.post1,<0.24",
+    "pytest-cov==4.1.0",
+    "ruff==0.1.13",
+    "safety==3.0.1",
+    "yamllint==1.33.0",
+    "syrupy==4.6.1",
+    "deptry>=0.19.1,<0.20",
+]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/tadoasync"]
+
+[tool.hatch.build.targets.wheel]
+include = ["src/tadoasync"]
+
+[tool.hatch.build.targets.wheel.sources]
+"src/tadoasync" = "tadoasync"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.coverage.report]
 show_missing = true
@@ -150,7 +173,3 @@ runtime-evaluated-base-classes = [
 
 [tool.ruff.mccabe]
 max-complexity = 25
-
-[build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core>=1.0.0"]
