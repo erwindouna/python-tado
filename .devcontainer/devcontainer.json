@@ -58,13 +58,12 @@
     "ghcr.io/devcontainers/features/python:1": {
       "installTools": false
     },
-    "ghcr.io/devcontainers-extra/features/pre-commit:2": {},
     "ghcr.io/devcontainers/features/common-utils:2": {
       "installOhMyZsh": true
     }
   },
   "image": "mcr.microsoft.com/vscode/devcontainers/python:3.12",
   "name": "Asynchronous Python client Tado",
-  "updateContentCommand": ". ${NVM_DIR}/nvm.sh && nvm install && nvm use && npm install && poetry install && poetry run pre-commit install",
-  "postStartCommand": ". ${NVM_DIR}/nvm.sh && nvm install && nvm use && npm install && poetry install && poetry run pre-commit install"
+  "updateContentCommand": ". ${NVM_DIR}/nvm.sh && nvm install && nvm use && npm install && poetry install && uv run prek install",
+  "postStartCommand": ". ${NVM_DIR}/nvm.sh && nvm install && nvm use && npm install && poetry install && uv run prek install"
 }
