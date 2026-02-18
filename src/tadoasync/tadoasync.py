@@ -388,7 +388,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         return self._me
 
     async def get_home(self) -> Home:
-        """Get the homes."""
+        """Get the home."""
         response = await self._request(f"homes/{self._home_id}")
         obj = orjson.loads(response)
         return Home.from_dict(obj)
