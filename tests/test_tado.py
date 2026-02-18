@@ -14,6 +14,7 @@ from aioresponses import CallbackResult, aioresponses
 from tadoasync import (
     Tado,
 )
+from tadoasync.const import TadoLine
 from tadoasync.exceptions import (
     TadoAuthenticationError,
     TadoBadRequestError,
@@ -69,6 +70,7 @@ async def test_login_success(responses: aioresponses) -> None:
         assert tado._token_expiry is not None
         assert tado._token_expiry > time.time()
         assert tado._refresh_token == "test_refresh_token"
+        assert tado._tado_line == TadoLine.PRE_LINE_X
 
 
 async def test_login_success_no_session(responses: aioresponses) -> None:
@@ -86,6 +88,7 @@ async def test_login_success_no_session(responses: aioresponses) -> None:
         assert tado._token_expiry is not None
         assert tado._token_expiry > time.time()
         assert tado._refresh_token == "test_refresh_token"
+        assert tado._tado_line == TadoLine.PRE_LINE_X
 
 
 async def test_activation_timeout(responses: aioresponses) -> None:
@@ -394,6 +397,35 @@ async def test_get_weather(
         body=load_fixture("weather.json"),
     )
     assert await python_tado.get_weather() == snapshot
+
+
+async def test_get_home_pre_line_x(
+    python_tado: Tado,
+    responses: aioresponses,
+    snapshot: SnapshotAssertion,
+) -> None:
+    """Test get home for PRE_LINE_X homes."""
+    responses.get(
+        f"{TADO_API_URL}/homes/1",
+        status=200,
+        body=load_fixture("home_v3.json"),
+    )
+    assert await python_tado.get_home() == snapshot
+
+
+async def test_get_home_line_x(
+    python_tado: Tado,
+    responses: aioresponses,
+    snapshot: SnapshotAssertion,
+) -> None:
+    """Test get home for LINE_X homes."""
+    python_tado._home_id = 2
+    responses.get(
+        f"{TADO_API_URL}/homes/2",
+        status=200,
+        body=load_fixture("home_x.json"),
+    )
+    assert await python_tado.get_home() == snapshot
 
 
 async def test_get_home_state(

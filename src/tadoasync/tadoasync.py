@@ -34,6 +34,7 @@ from tadoasync.const import (
     CONST_VERTICAL_SWING_OFF,
     TADO_HVAC_ACTION_TO_MODES,
     TADO_MODES_TO_HVAC_ACTION,
+    TadoLine,
     TYPE_AIR_CONDITIONING,
     HttpMethod,
 )
@@ -54,7 +55,7 @@ from tadoasync.models import (
     TemperatureOffset,
     Weather,
     Zone,
-    ZoneState,
+    ZoneState, Home,
 )
 
 CLIENT_ID = "1bb50063-6b0c-4d11-bd99-387f4a91cc46"
@@ -63,6 +64,7 @@ DEVICE_AUTH_URL = "https://login.tado.com/oauth2/device_authorize"
 API_URL = "my.tado.com/api/v2"
 TADO_HOST_URL = "my.tado.com"
 TADO_API_PATH = "/api/v2"
+TADO_X_HOST_URL = "hops.tado.com"
 EIQ_URL = "energy-insights.tado.com/api"
 EIQ_HOST_URL = "energy-insights.tado.com"
 EIQ_API_PATH = "/api"
@@ -108,6 +110,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self._home_id: int | None = None
         self._me: GetMe | None = None
         self._auto_geofencing_supported: bool | None = None
+        self._tado_line: TadoLine | None = None
 
         self._user_code: str | None = None
         self._device_verification_url: str | None = None
@@ -242,6 +245,10 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             get_me = await self.get_me()
             self._home_id = get_me.homes[0].id
 
+            # request home details to determine tado generation (v3 or X)
+            home = await self.get_home()
+            self._tado_line = home.generation
+
             return True
 
         raise TadoError(f"Login failed. Reason: {request.reason}")
@@ -304,6 +311,10 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
         get_me = await self.get_me()
         self._home_id = get_me.homes[0].id
+
+        # request home details to determine tado generation (v3 or X)
+        home = await self.get_home()
+        self._tado_line = home.generation
 
     async def check_request_status(
         self, response_error: ClientResponseError, *, login: bool = False
@@ -375,6 +386,12 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             response = await self._request("me")
             self._me = GetMe.from_json(response)
         return self._me
+
+    async def get_home(self) -> Home:
+        """Get the homes."""
+        response = await self._request(f"homes/{self._home_id}")
+        obj = orjson.loads(response)
+        return Home.from_dict(obj)
 
     async def get_devices(self) -> list[Device]:
         """Get the devices."""

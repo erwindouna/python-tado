@@ -1,6 +1,6 @@
 """Constants for the asynchronous Python API for Tado."""
 
-from enum import Enum
+from enum import Enum, StrEnum
 
 # Types
 TYPE_AIR_CONDITIONING = "AIR_CONDITIONING"
@@ -90,6 +90,13 @@ DEFAULT_TADO_PRECISION = 0.1
 
 HOME_DOMAIN = "homes"
 DEVICE_DOMAIN = "devices"
+
+
+class TadoLine(StrEnum):
+    """Supported Tado product lines."""
+
+    PRE_LINE_X = "PRE_LINE_X"
+    LINE_X = "LINE_X"
 
 
 class HttpMethod(Enum):

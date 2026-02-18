@@ -60,6 +60,16 @@ def _tado_oauth(responses: aioresponses) -> None:
         status=200,
         body=load_fixture("me.json"),
     )
+    responses.get(
+      f"{TADO_API_URL}/homes/1",
+      status=200,
+      body=load_fixture("home_v3.json"),
+    )
+    responses.get(
+      f"{TADO_API_URL}/homes/2",
+      status=200,
+      body=load_fixture("home_x.json"),
+    )
 
 
 @pytest.fixture(name="responses")

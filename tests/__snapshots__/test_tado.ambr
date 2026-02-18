@@ -528,6 +528,107 @@
     }),
   ])
 # ---
+# name: test_get_home_line_x
+  dict({
+    'away_radius_in_meters': 200.0,
+    'christmas_mode_enabled': True,
+    'consent_grant_skippable': True,
+    'contact_details': dict({
+      'email': 'test@example.com',
+      'name': 'Test User',
+      'phone': ' +498941209569',
+    }),
+    'date_created': '2025-01-01T12:00:00Z',
+    'date_time_zone': 'Europe/Berlin',
+    'enabled_features': list([
+      'AA_REVERSE_TRIAL_7D',
+      'ADAPTIVE_HEATING',
+      'AI_ASSIST_MESSAGING_ENABLED',
+      'AI_ASSIST_OVERVIEW',
+      'AI_PREHEATING_V2',
+      'CUSTOM_THREAD_NETWORK_FLOW',
+      'HOLIDAY_MODE',
+      'ONE_WEBVIEW',
+      'PREHEATING_GEOFENCING_LINE_X',
+      'TABBAR_IN_WEBVIEW',
+    ]),
+    'generation': <TadoLine.LINE_X: 'LINE_X'>,
+    'geolocation': dict({
+      'latitude': 48.168453,
+      'longitude': 11.534673,
+    }),
+    'incident_detection': dict({
+      'enabled': True,
+      'supported': True,
+    }),
+    'installation_completed': True,
+    'is_air_comfort_eligible': False,
+    'is_energy_iq_eligible': True,
+    'is_heat_pump_installed': False,
+    'is_heat_source_installed': False,
+    'language': 'en-US',
+    'partner': 'AA_LIFETIME_WEBSHOP',
+    'prevent_from_subscribing': True,
+    'show_auto_assist_reminders': True,
+    'simple_smart_schedule_enabled': True,
+    'skills': list([
+      'AUTO_ASSIST',
+      'PRE_2025_FREE_FEATURES',
+    ]),
+    'temperature_unit': 'CELSIUS',
+    'zones_count': 0,
+  })
+# ---
+# name: test_get_home_pre_line_x
+  dict({
+    'away_radius_in_meters': 250.0,
+    'christmas_mode_enabled': True,
+    'consent_grant_skippable': True,
+    'contact_details': dict({
+      'email': 'test@example.com',
+      'name': 'Test User',
+      'phone': ' +498941209569',
+    }),
+    'date_created': '2017-01-01T12:00:00Z',
+    'date_time_zone': 'Europe/Berlin',
+    'enabled_features': list([
+      'ADAPTIVE_HEATING',
+      'AI_ASSIST_MESSAGING_ENABLED',
+      'AI_ASSIST_OVERVIEW',
+      'AI_PREHEATING_V2',
+      'ASSIST_BANNER_TEST_HIDE_DISMISSAL',
+      'CUSTOM_THREAD_NETWORK_FLOW',
+      'HOLIDAY_MODE',
+      'ONE_WEBVIEW',
+      'TABBAR_IN_WEBVIEW',
+    ]),
+    'generation': <TadoLine.PRE_LINE_X: 'PRE_LINE_X'>,
+    'geolocation': dict({
+      'latitude': 48.168453,
+      'longitude': 11.534673,
+    }),
+    'incident_detection': dict({
+      'enabled': True,
+      'supported': True,
+    }),
+    'installation_completed': True,
+    'is_air_comfort_eligible': True,
+    'is_energy_iq_eligible': True,
+    'is_heat_pump_installed': False,
+    'is_heat_source_installed': False,
+    'language': 'de-DE',
+    'partner': None,
+    'prevent_from_subscribing': None,
+    'show_auto_assist_reminders': True,
+    'simple_smart_schedule_enabled': True,
+    'skills': list([
+      'AUTO_ASSIST',
+      'PRE_2025_FREE_FEATURES',
+    ]),
+    'temperature_unit': 'CELSIUS',
+    'zones_count': 7,
+  })
+# ---
 # name: test_get_home_state
   dict({
     'presence': 'HOME',
