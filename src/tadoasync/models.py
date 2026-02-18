@@ -77,7 +77,9 @@ class Home(DataClassORJSONMixin):
 
     date_time_zone: str | None = field(metadata=field_options(alias="dateTimeZone"))
     date_created: str | None = field(metadata=field_options(alias="dateCreated"))
-    temperature_unit: str | None = field(metadata=field_options(alias="temperatureUnit"))
+    temperature_unit: str | None = field(
+        metadata=field_options(alias="temperatureUnit")
+    )
     partner: str | None = None
     simple_smart_schedule_enabled: bool | None = field(
         default=None, metadata=field_options(alias="simpleSmartScheduleEnabled")
@@ -128,6 +130,10 @@ class Home(DataClassORJSONMixin):
     )
     is_heat_pump_installed: bool | None = field(
         default=None, metadata=field_options(alias="isHeatPumpInstalled")
+    )
+    supports_flow_temperature_optimization: bool | None = field(
+        default=None,
+        metadata=field_options(alias="supportsFlowTemperatureOptimization"),
     )
 
 

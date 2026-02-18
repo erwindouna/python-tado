@@ -34,9 +34,9 @@ from tadoasync.const import (
     CONST_VERTICAL_SWING_OFF,
     TADO_HVAC_ACTION_TO_MODES,
     TADO_MODES_TO_HVAC_ACTION,
-    TadoLine,
     TYPE_AIR_CONDITIONING,
     HttpMethod,
+    TadoLine,
 )
 from tadoasync.exceptions import (
     TadoAuthenticationError,
@@ -50,12 +50,13 @@ from tadoasync.models import (
     Capabilities,
     Device,
     GetMe,
+    Home,
     HomeState,
     MobileDevice,
     TemperatureOffset,
     Weather,
     Zone,
-    ZoneState, Home,
+    ZoneState,
 )
 
 CLIENT_ID = "1bb50063-6b0c-4d11-bd99-387f4a91cc46"
@@ -64,7 +65,7 @@ DEVICE_AUTH_URL = "https://login.tado.com/oauth2/device_authorize"
 API_URL = "my.tado.com/api/v2"
 TADO_HOST_URL = "my.tado.com"
 TADO_API_PATH = "/api/v2"
-TADO_X_HOST_URL = "hops.tado.com"
+TADO_X_URL = "hops.tado.com"
 EIQ_URL = "energy-insights.tado.com/api"
 EIQ_HOST_URL = "energy-insights.tado.com"
 EIQ_API_PATH = "/api"
@@ -391,6 +392,31 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         """Get the home."""
         response = await self._request(f"homes/{self._home_id}")
         obj = orjson.loads(response)
+
+        # For Tado X, enrich the home payload from hops.tado.com.
+        # The X payload provides roomCount, which maps to zonesCount in our model.
+        if obj.get("generation") == TadoLine.LINE_X.value:
+            try:
+                x_response = await self._request(
+                    f"homes/{self._home_id}",
+                    endpoint=TADO_X_URL,
+                )
+                x_obj = orjson.loads(x_response)
+
+                if "roomCount" in x_obj:
+                    obj["zonesCount"] = x_obj["roomCount"]
+                if "isHeatPumpInstalled" in x_obj:
+                    obj["isHeatPumpInstalled"] = x_obj["isHeatPumpInstalled"]
+                if "supportsFlowTemperatureOptimization" in x_obj:
+                    obj["supportsFlowTemperatureOptimization"] = x_obj[
+                        "supportsFlowTemperatureOptimization"
+                    ]
+            except TadoError as err:
+                _LOGGER.debug(
+                    "Failed to enrich Tado X home data from hops endpoint: %s",
+                    err,
+                )
+
         return Home.from_dict(obj)
 
     async def get_devices(self) -> list[Device]:
@@ -573,6 +599,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self,
         uri: str | None = None,
         endpoint: str = API_URL,
+        params: dict[str, str] | None = None,
         data: dict[str, object] | None = None,
         method: HttpMethod = HttpMethod.GET,
     ) -> str:
@@ -582,6 +609,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         url = URL.build(scheme="https", host=TADO_HOST_URL, path=TADO_API_PATH)
         if endpoint == EIQ_HOST_URL:
             url = URL.build(scheme="https", host=EIQ_HOST_URL, path=EIQ_API_PATH)
+        elif endpoint == TADO_X_URL:
+            url = URL.build(scheme="https", host=TADO_X_URL)
 
         if uri:
             url = url.joinpath(uri)
@@ -601,7 +630,11 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             async with asyncio.timeout(self._request_timeout):
                 session = self._ensure_session()
                 request = await session.request(
-                    method=method.value, url=str(url), headers=headers, json=data
+                    method=method.value,
+                    url=str(url),
+                    params=params,
+                    headers=headers,
+                    json=data,
                 )
                 request.raise_for_status()
         except asyncio.TimeoutError as err:

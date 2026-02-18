@@ -575,8 +575,9 @@
       'AUTO_ASSIST',
       'PRE_2025_FREE_FEATURES',
     ]),
+    'supports_flow_temperature_optimization': False,
     'temperature_unit': 'CELSIUS',
-    'zones_count': 0,
+    'zones_count': 5,
   })
 # ---
 # name: test_get_home_pre_line_x
@@ -625,6 +626,7 @@
       'AUTO_ASSIST',
       'PRE_2025_FREE_FEATURES',
     ]),
+    'supports_flow_temperature_optimization': False,
     'temperature_unit': 'CELSIUS',
     'zones_count': 7,
   })
