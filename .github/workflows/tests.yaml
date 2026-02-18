@@ -20,22 +20,14 @@ jobs:
     steps:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v4.1.1
-      - name: 🏗 Set up Poetry
-        run: pipx install poetry
-      - name: 🏗 Set up Python ${{ matrix.python }}
-        id: python
-        uses: actions/setup-python@v5.0.0
+      - name: 🏗 Install uv and set the Python version ${{ env.DEFAULT_PYTHON }}
+        uses: astral-sh/setup-uv@v7
         with:
-          python-version: ${{ matrix.python }}
-          cache: "poetry"
-      - name: 🏗 Install workflow dependencies
-        run: |
-          poetry config virtualenvs.create true
-          poetry config virtualenvs.in-project true
+          python-version: ${{ env.DEFAULT_PYTHON }}
       - name: 🏗 Install dependencies
-        run: poetry install --no-interaction
+        run: uv sync
       - name: 🚀 Run pytest
-        run: poetry run pytest --cov=tadoasync tests --cov-fail-under=95
+        run: uv run pytest --cov=tadoasync tests --cov-fail-under=95
       - name: ⬆️ Upload coverage artifact
         uses: actions/upload-artifact@v4.3.1
         with:
@@ -53,26 +45,18 @@ jobs:
           fetch-depth: 0
       - name: ⬇️ Download coverage data
         uses: actions/download-artifact@v4.1.4
-      - name: 🏗 Set up Poetry
-        run: pipx install poetry
-      - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
-        id: python
-        uses: actions/setup-python@v5.0.0
+      - name: 🏗 Install uv and set the Python version ${{ env.DEFAULT_PYTHON }}
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ env.DEFAULT_PYTHON }}
-          cache: "poetry"
-      - name: 🏗 Install workflow dependencies
-        run: |
-          poetry config virtualenvs.create true
-          poetry config virtualenvs.in-project true
       - name: 🏗 Install dependencies
-        run: poetry install --no-interaction
+        run: uv sync
       - name: 🚀 Process coverage results
         run: |
-          poetry run coverage combine coverage*/.coverage*
-          poetry run coverage xml -i
+          uv run coverage combine coverage*/.coverage*
+          uv run coverage xml -i
       - name: ✅ Enforce minimum coverage (95%)
-        run: poetry run coverage report -m --fail-under=95
+        run: uv run coverage report -m --fail-under=95
       - name: 🚀 Upload coverage report
         uses: codecov/codecov-action@v4.1.0
         with:

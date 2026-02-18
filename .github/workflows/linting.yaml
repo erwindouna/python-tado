@@ -17,14 +17,10 @@ jobs:
     steps:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v4.1.1
-      - name: 🏗 Set up uv
+      - name: 🏗 Install uv and set the Python version ${{ env.DEFAULT_PYTHON }}
         uses: astral-sh/setup-uv@v7
-      - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
-        id: python
-        uses: actions/setup-python@v5.0.0
         with:
           python-version: ${{ env.DEFAULT_PYTHON }}
-          cache: "uv"
       - name: 🏗 Install Python dependencies
         run: uv sync
       - name: 🚀 Run ruff linter
@@ -38,14 +34,10 @@ jobs:
     steps:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v4.1.1
-      - name: 🏗 Set up uv
+      - name: 🏗 Install uv and set the Python version ${{ env.DEFAULT_PYTHON }}
         uses: astral-sh/setup-uv@v7
-      - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
-        id: python
-        uses: actions/setup-python@v5.0.0
         with:
           python-version: ${{ env.DEFAULT_PYTHON }}
-          cache: "uv"
       - name: 🏗 Install Python dependencies
         run: uv sync
       - name: 🚀 Check Python AST
@@ -83,14 +75,10 @@ jobs:
     steps:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v4.1.1
-      - name: 🏗 Set up uv
+      - name: 🏗 Install uv and set the Python version ${{ env.DEFAULT_PYTHON }}
         uses: astral-sh/setup-uv@v7
-      - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
-        id: python
-        uses: actions/setup-python@v5.0.0
         with:
           python-version: ${{ env.DEFAULT_PYTHON }}
-          cache: "uv"
       - name: 🏗 Install Python dependencies
         run: uv sync
       - name: 🚀 Run pylint
@@ -102,14 +90,10 @@ jobs:
     steps:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v4.1.1
-      - name: 🏗 Set up uv
+      - name: 🏗 Install uv and set the Python version ${{ env.DEFAULT_PYTHON }}
         uses: astral-sh/setup-uv@v7
-      - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
-        id: python
-        uses: actions/setup-python@v5.0.0
         with:
           python-version: ${{ env.DEFAULT_PYTHON }}
-          cache: "uv"
       - name: 🏗 Install Python dependencies
         run: uv sync
       - name: 🚀 Run yamllint
@@ -121,14 +105,10 @@ jobs:
     steps:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v4.1.1
-      - name: 🏗 Set up uv
+      - name: 🏗 Install uv and set the Python version ${{ env.DEFAULT_PYTHON }}
         uses: astral-sh/setup-uv@v7
-      - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
-        id: python
-        uses: actions/setup-python@v5.0.0
         with:
           python-version: ${{ env.DEFAULT_PYTHON }}
-          cache: "uv"
       - name: 🏗 Install Python dependencies
         run: uv sync
       - name: 🏗 Set up Node.js
