@@ -7,7 +7,7 @@ import enum
 import logging
 import time
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from importlib import metadata
 from typing import Self
 from urllib.parse import urlencode
@@ -185,9 +185,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         _LOGGER.info("Please visit the following URL: %s", visit_url)
 
         expires_in_seconds = float(self._device_flow_data["expires_in"])
-        self._expires_at = datetime.now(timezone.utc) + timedelta(
-            seconds=expires_in_seconds
-        )
+        self._expires_at = datetime.now(UTC) + timedelta(seconds=expires_in_seconds)
 
         _LOGGER.info(
             "Waiting for user to authorize the device. Expires at %s",
@@ -198,7 +196,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
     async def _check_device_activation(self) -> bool:
         if self._expires_at is not None and datetime.timestamp(
-            datetime.now(timezone.utc)
+            datetime.now(UTC)
         ) > datetime.timestamp(self._expires_at):
             raise TadoError("User took too long to enter key")
 
@@ -544,7 +542,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
     ) -> None:
         """Set the meter readings."""
         if date is None:
-            date = datetime.now(timezone.utc)
+            date = datetime.now(UTC)
 
         payload = {"date": date.strftime("%Y-%m-%d"), "reading": reading}
         response = await self._request(

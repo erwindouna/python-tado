@@ -1,5 +1,70 @@
 ---
 repos:
+  - repo: builtin
+    hooks:
+      - id: check-case-conflict
+        name: 🔠 Check for case conflicts
+      - id: check-executables-have-shebangs
+        name: 🧐 Check that executables have shebangs
+        language: system
+        types: [text, executable]
+        stages: [commit, push, manual]
+      - id: check-json
+        name: ｛ Check JSON files
+        language: system
+        types: [json]
+      - id: check-merge-conflict
+        name: 💥 Check for merge conflicts
+        language: system
+        types: [text]
+      - id: check-symlinks
+        name: 🔗 Check for broken symlinks
+        language: system
+        types: [symlink]
+      - id: check-toml
+        name: ✅ Check TOML files
+        language: system
+        types: [toml]
+      - id: check-xml
+        name: ✅ Check XML files
+        language: system
+        types: [xml]
+      - id: check-yaml
+        name: ✅ Check YAML files
+        language: system
+        types: [yaml]
+      - id: detect-private-key
+        name: 🕵️  Detect Private Keys
+        language: system
+        types: [text]
+      - id: end-of-file-fixer
+        name: ⮐  Fix End of Files
+        language: system
+        types: [text]
+        stages: [commit, push, manual]
+      - id: no-commit-to-branch
+        name: 🛑 Don't commit to main branch
+        language: system
+        pass_filenames: false
+        always_run: true
+        args:
+          - --branch=main
+      - id: trailing-whitespace
+        name: ✄ Trim Trailing Whitespace
+        language: system
+        types: [text]
+        stages: [commit, push, manual]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-ast
+        name: 🐍 Check Python AST
+        types: [python]
+      - id: check-docstring-first
+        name: ℹ️  Check docstring is first
+        types: [python]
+
   - repo: local
     hooks:
       - id: ruff-check
@@ -16,81 +81,12 @@ repos:
         entry: uv run ruff format
         require_serial: true
         stages: [commit, push, manual]
-      - id: check-ast
-        name: 🐍 Check Python AST
-        language: system
-        types: [python]
-        entry: uv run check-ast
-      - id: check-case-conflict
-        name: 🔠 Check for case conflicts
-        language: system
-        entry: uv run check-case-conflict
-      - id: check-docstring-first
-        name: ℹ️  Check docstring is first
-        language: system
-        types: [python]
-        entry: uv run check-docstring-first
-      - id: check-executables-have-shebangs
-        name: 🧐 Check that executables have shebangs
-        language: system
-        types: [text, executable]
-        entry: uv run check-executables-have-shebangs
-        stages: [commit, push, manual]
-      - id: check-json
-        name: ｛ Check JSON files
-        language: system
-        types: [json]
-        entry: uv run check-json
-      - id: check-merge-conflict
-        name: 💥 Check for merge conflicts
-        language: system
-        types: [text]
-        entry: uv run check-merge-conflict
-      - id: check-symlinks
-        name: 🔗 Check for broken symlinks
-        language: system
-        types: [symlink]
-        entry: uv run check-symlinks
-      - id: check-toml
-        name: ✅ Check TOML files
-        language: system
-        types: [toml]
-        entry: uv run check-toml
-      - id: check-xml
-        name: ✅ Check XML files
-        entry: check-xml
-        language: system
-        types: [xml]
-      - id: check-yaml
-        name: ✅ Check YAML files
-        language: system
-        types: [yaml]
-        entry: uv run check-yaml
-      - id: detect-private-key
-        name: 🕵️  Detect Private Keys
-        language: system
-        types: [text]
-        entry: uv run detect-private-key
-      - id: end-of-file-fixer
-        name: ⮐  Fix End of Files
-        language: system
-        types: [text]
-        entry: uv run end-of-file-fixer
-        stages: [commit, push, manual]
       - id: mypy
         name: 🆎 Static type checking using mypy
         language: system
         types: [python]
         entry: uv run mypy
         require_serial: true
-      - id: no-commit-to-branch
-        name: 🛑 Don't commit to main branch
-        language: system
-        entry: uv run no-commit-to-branch
-        pass_filenames: false
-        always_run: true
-        args:
-          - --branch=main
       - id: uv
         name: 📜 Check pyproject with uv
         language: system
@@ -114,12 +110,6 @@ repos:
         types: [python]
         entry: uv run pytest --cov=tadoasync --cov-report=term-missing --cov-report=xml --cov-fail-under=95
         pass_filenames: false
-      - id: trailing-whitespace
-        name: ✄  Trim Trailing Whitespace
-        language: system
-        types: [text]
-        entry: uv run trailing-whitespace-fixer
-        stages: [commit, push, manual]
       - id: yamllint
         name: 🎗  Check YAML files with yamllint
         language: system
