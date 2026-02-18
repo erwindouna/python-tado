@@ -45,7 +45,6 @@ repos:
       - id: no-commit-to-branch
         name: 🛑 Don't commit to main branch
         language: system
-        entry: uv run no-commit-to-branch
         pass_filenames: false
         always_run: true
         args:
@@ -55,6 +54,16 @@ repos:
         language: system
         types: [text]
         stages: [commit, push, manual]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-ast
+        name: 🐍 Check Python AST
+        types: [python]
+      - id: check-docstring-first
+        name: ℹ️  Check docstring is first
+        types: [python]
 
   - repo: local
     hooks:
@@ -72,16 +81,6 @@ repos:
         entry: uv run ruff format
         require_serial: true
         stages: [commit, push, manual]
-      - id: check-ast
-        name: 🐍 Check Python AST
-        language: system
-        types: [python]
-        entry: uv run check-ast
-      - id: check-docstring-first
-        name: ℹ️  Check docstring is first
-        language: system
-        types: [python]
-        entry: uv run check-docstring-first
       - id: mypy
         name: 🆎 Static type checking using mypy
         language: system
