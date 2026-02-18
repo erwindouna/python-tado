@@ -62,7 +62,9 @@
       "installOhMyZsh": true
     }
   },
-  "image": "mcr.microsoft.com/vscode/devcontainers/python:3.12",
+  "build": {
+    "dockerfile": "Containerfile"
+  },
   "name": "Asynchronous Python client Tado",
   "updateContentCommand": ". ${NVM_DIR}/nvm.sh && nvm install && nvm use && npm install && uv sync && uv run prek install",
   "postStartCommand": ". ${NVM_DIR}/nvm.sh && nvm install && nvm use && npm install && uv sync && uv run prek install"
