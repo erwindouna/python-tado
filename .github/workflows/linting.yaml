@@ -20,7 +20,6 @@ jobs:
       - name: 🏗 Set up uv
         uses: astral-sh/setup-uv@v7
       - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
-        id: python
         run: uv python install ${{ env.DEFAULT_PYTHON }}
       - name: 🏗 Install Python dependencies
         run: uv sync
@@ -38,7 +37,6 @@ jobs:
       - name: 🏗 Set up uv
         uses: astral-sh/setup-uv@v7
       - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
-        id: python
         run: uv python install ${{ env.DEFAULT_PYTHON }}
       - name: 🏗 Install Python dependencies
         run: uv sync
@@ -80,7 +78,6 @@ jobs:
       - name: 🏗 Set up uv
         uses: astral-sh/setup-uv@v7
       - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
-        id: python
         run: uv python install ${{ env.DEFAULT_PYTHON }}
       - name: 🏗 Install Python dependencies
         run: uv sync
@@ -96,7 +93,6 @@ jobs:
       - name: 🏗 Set up uv
         uses: astral-sh/setup-uv@v7
       - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
-        id: python
         run: uv python install ${{ env.DEFAULT_PYTHON }}
       - name: 🏗 Install Python dependencies
         run: uv sync
@@ -112,7 +108,6 @@ jobs:
       - name: 🏗 Set up uv
         uses: astral-sh/setup-uv@v7
       - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
-        id: python
         run: uv python install ${{ env.DEFAULT_PYTHON }}
       - name: 🏗 Install Python dependencies
         run: uv sync
