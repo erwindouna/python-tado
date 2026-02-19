@@ -158,6 +158,9 @@ ignore = [
 ]
 select = ["ALL"]
 
+[tool.ruff.per-file-ignores]
+"scripts/*" = ["INP001"]
+
 [tool.ruff.flake8-pytest-style]
 fixture-parentheses = false
 mark-parentheses = false
