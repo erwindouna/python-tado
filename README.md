@@ -8,8 +8,8 @@
 
 [![Build Status][build-shield]][build]
 [![Code Coverage][codecov-shield]][codecov]
+[![Documentation][docs-shield]][docs]
 [![Quality Gate Status][sonarcloud-shield]][sonarcloud]
-[![Documentation Status][readthedocs-shield]][readthedocs]
 [![Open in Dev Containers][devcontainer-shield]][devcontainer]
 
 Asynchronous Python client to control Tado devices.
@@ -22,7 +22,8 @@ Not all endpoints and features are fully supported.
 This is the continuation project of PyTado.
 
 ## Documentation
-A full documentation can be found at [Read the Docs][readthedocs].
+
+Full documentation is available at [GitHub Pages][docs].
 
 ## Installation
 
@@ -168,6 +169,8 @@ SOFTWARE.
 [contributors]: https://github.com/erwindouna/python-tado/graphs/contributors
 [devcontainer-shield]: https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode
 [devcontainer]: https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/erwindouna/python-tado
+[docs]: https://erwindouna.github.io/python-tado/
+[docs-shield]: https://github.com/erwindouna/python-tado/actions/workflows/deploy-docs.yaml/badge.svg
 [erwindouna]: https://github.com/erwindouna
 [github-sponsors-shield]: https://erwindouna.dev/wp-content/uploads/2019/12/github_sponsor.png
 [github-sponsors]: https://github.com/sponsors/erwindouna
@@ -185,5 +188,3 @@ SOFTWARE.
 [semver]: http://semver.org/spec/v2.0.0.html
 [sonarcloud-shield]: https://sonarcloud.io/api/project_badges/measure?project=erwindouna_python-tado&metric=alert_status
 [sonarcloud]: https://sonarcloud.io/summary/new_code?id=erwindouna_python-tado
-[readthedocs-shield]: https://readthedocs.org/projects/python-tado/badge/?version=latest
-[readthedocs]: https://python-tado.readthedocs.io/en/latest/index.html
