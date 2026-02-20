@@ -110,6 +110,34 @@ warn_return_any = true
 warn_unused_configs = true
 warn_unused_ignores = true
 
+# Per-module overrides for libraries without type stubs
+[[tool.mypy.overrides]]
+module = "mashumaro.*"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = "syrupy"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = "aresponses"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = "tadoasync.models"
+disallow_any_generics = false
+disallow_subclassing_any = false
+
+[[tool.mypy.overrides]]
+module = "tadoasync.tadoasync"
+disallow_any_generics = false
+warn_return_any = false
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_decorators = false
+ignore_errors = true
+
 [tool.pylint.MASTER]
 ignore = ["tests"]
 
@@ -120,7 +148,7 @@ good-names = ["_", "ex", "fp", "i", "id", "j", "k", "on", "Run", "T"]
 max-attributes = 8
 
 [tool.pylint."MESSAGES CONTROL"]
-disable = ["duplicate-code", "format", "unsubscriptable-object", "no-member", "too-many-arguments", "protected-access", "invalid-name", "wrong-import-order", "too-many-statements", "too-many-public-methods", "too-many-instance-attributes", "redefined-builtin"]
+disable = ["duplicate-code", "format", "unsubscriptable-object", "no-member", "too-many-arguments", "protected-access", "invalid-name", "wrong-import-order", "too-many-statements", "too-many-public-methods", "too-many-instance-attributes", "redefined-builtin", "import-error"]
 
 [tool.pylint.SIMILARITIES]
 ignore-imports = true
@@ -133,6 +161,7 @@ addopts = "--cov"
 asyncio_mode = "auto"
 
 [tool.ruff]
+[tool.ruff.lint]
 ignore = [
   "ANN101",  # Self... explanatory
   "ANN102",  # cls... just as useless
@@ -158,11 +187,11 @@ ignore = [
 ]
 select = ["ALL"]
 
-[tool.ruff.flake8-pytest-style]
+[tool.ruff.lint.flake8-pytest-style]
 fixture-parentheses = false
 mark-parentheses = false
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["tado"]
 
 [tool.ruff.lint.flake8-type-checking]
@@ -170,5 +199,5 @@ runtime-evaluated-base-classes = [
   "mashumaro.mixins.orjson.DataClassORJSONMixin",
 ]
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 max-complexity = 25

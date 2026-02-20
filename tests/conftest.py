@@ -23,10 +23,13 @@ def snapshot_assertion(snapshot: SnapshotAssertion) -> SnapshotAssertion:
 @pytest.fixture(name="python_tado")
 async def client() -> AsyncGenerator[Tado, None]:
     """Return a Tado client."""
-    async with aiohttp.ClientSession() as session, Tado(
-        session=session,
-        request_timeout=10,
-    ) as tado:
+    async with (
+        aiohttp.ClientSession() as session,
+        Tado(
+            session=session,
+            request_timeout=10,
+        ) as tado,
+    ):
         await tado.device_activation()
         yield tado
 

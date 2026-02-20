@@ -1,4 +1,5 @@
 """Tests for Python Tado client."""
+
 from pathlib import Path
 
 
