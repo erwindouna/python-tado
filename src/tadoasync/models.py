@@ -8,6 +8,8 @@ from typing import Any
 from mashumaro import field_options
 from mashumaro.mixins.orjson import DataClassORJSONMixin
 
+from tadoasync.const import TadoLine
+
 
 @dataclass
 class GetMe(DataClassORJSONMixin):
@@ -18,15 +20,121 @@ class GetMe(DataClassORJSONMixin):
     id: str
     username: str
     locale: str
-    homes: list[Home]
+    homes: list[MeHome]
+
+
+@dataclass
+class MeHome(DataClassORJSONMixin):
+    """MeHome model represents the user's (basic) home information."""
+
+    id: int
+    name: str
+
+
+@dataclass
+class IncidentDetection(DataClassORJSONMixin):
+    """IncidentDetection model represents the incident detection settings of a home."""
+
+    supported: bool
+    enabled: bool
+
+
+@dataclass
+class ContactDetails(DataClassORJSONMixin):
+    """ContactDetails model represents the contact information of a home."""
+
+    name: str
+    email: str
+    phone: str
+
+
+@dataclass
+class Address(DataClassORJSONMixin):
+    """Address model represents the address information of a home."""
+
+    address_line1: str = field(metadata=field_options(alias="addressLine1"))
+
+    city: str
+    state: str
+    zip_code: str = field(metadata=field_options(alias="zipCode"))
+    country: str
+    address_line2: str | None = field(
+        default=None, metadata=field_options(alias="addressLine2")
+    )
+
+
+@dataclass
+class Geolocation(DataClassORJSONMixin):
+    """Geolocation model represents the geolocation information of a home."""
+
+    latitude: float
+    longitude: float
 
 
 @dataclass
 class Home(DataClassORJSONMixin):
-    """Home model represents the user's home information."""
+    """MyHome model represents the user's home information with full details."""
 
-    id: int
-    name: str
+    date_time_zone: str | None = field(metadata=field_options(alias="dateTimeZone"))
+    date_created: str | None = field(metadata=field_options(alias="dateCreated"))
+    temperature_unit: str | None = field(
+        metadata=field_options(alias="temperatureUnit")
+    )
+    partner: str | None = None
+    simple_smart_schedule_enabled: bool | None = field(
+        default=None, metadata=field_options(alias="simpleSmartScheduleEnabled")
+    )
+    away_radius_in_meters: float | None = field(
+        default=None, metadata=field_options(alias="awayRadiusInMeters")
+    )
+    installation_completed: bool | None = field(
+        default=None, metadata=field_options(alias="installationCompleted")
+    )
+    incident_detection: IncidentDetection | None = field(
+        default=None, metadata=field_options(alias="incidentDetection")
+    )
+    generation: TadoLine | None = None
+    zones_count: int | None = field(
+        metadata=field_options(alias="zonesCount"),
+        default=None,
+    )
+    language: str | None = None
+    prevent_from_subscribing: bool | None = field(
+        default=None, metadata=field_options(alias="preventFromSubscribing")
+    )
+    skills: list[str] | None = None
+    christmas_mode_enabled: bool | None = field(
+        default=None, metadata=field_options(alias="christmasModeEnabled")
+    )
+    show_auto_assist_reminders: bool | None = field(
+        default=None, metadata=field_options(alias="showAutoAssistReminders")
+    )
+    contact_details: ContactDetails | None = field(
+        default=None, metadata=field_options(alias="contactDetails")
+    )
+    geolocation: Geolocation | None = None
+    consent_grant_skippable: bool | None = field(
+        default=None, metadata=field_options(alias="consentGrantSkippable")
+    )
+    enabled_features: list[str] | None = field(
+        default=None, metadata=field_options(alias="enabledFeatures")
+    )
+    is_air_comfort_eligible: bool | None = field(
+        default=None, metadata=field_options(alias="isAirComfortEligible")
+    )
+    is_energy_iq_eligible: bool | None = field(
+        default=None, metadata=field_options(alias="isEnergyIqEligible")
+    )
+    is_heat_source_installed: bool | None = field(
+        default=None, metadata=field_options(alias="isHeatSourceInstalled")
+    )
+    is_heat_pump_installed: bool | None = field(
+        default=None, metadata=field_options(alias="isHeatPumpInstalled")
+    )
+    supports_flow_temperature_optimization: bool | None = field(
+        default=None,
+        metadata=field_options(alias="supportsFlowTemperatureOptimization"),
+    )
 
 
 @dataclass

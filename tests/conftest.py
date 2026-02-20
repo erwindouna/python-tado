@@ -10,7 +10,7 @@ from tadoasync import Tado
 from syrupy import SnapshotAssertion
 from tests import load_fixture
 
-from .const import TADO_API_URL, TADO_DEVICE_AUTH_URL, TADO_TOKEN_URL
+from .const import TADO_API_URL, TADO_DEVICE_AUTH_URL, TADO_TOKEN_URL, TADO_X_URL
 from .syrupy import TadoSnapshotExtension
 
 
@@ -62,6 +62,21 @@ def _tado_oauth(responses: aioresponses) -> None:
         f"{TADO_API_URL}/me",
         status=200,
         body=load_fixture("me.json"),
+    )
+    responses.get(
+        f"{TADO_API_URL}/homes/1",
+        status=200,
+        body=load_fixture("home_v3.json"),
+    )
+    responses.get(
+        f"{TADO_API_URL}/homes/2",
+        status=200,
+        body=load_fixture("home_x.json"),
+    )
+    responses.get(
+        f"{TADO_X_URL}/homes/2",
+        status=200,
+        body=load_fixture("home_x_hops.json"),
     )
 
 
