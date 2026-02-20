@@ -121,7 +121,7 @@ async def test_login_device_flow_timeout(responses: aioresponses) -> None:
     responses._matches.clear()
     responses.post(
         DEVICE_AUTH_URL,
-        exception=asyncio.TimeoutError(),
+        exception=TimeoutError(),
         repeat=True,
     )
 
@@ -161,8 +161,9 @@ async def test_login_invalid_status() -> None:
 
     async with aiohttp.ClientSession() as session:
         tado = Tado(session=session)
-        with patch("aiohttp.ClientSession.post", new=mock_post), pytest.raises(
-            TadoError
+        with (
+            patch("aiohttp.ClientSession.post", new=mock_post),
+            pytest.raises(TadoError),
         ):
             await tado.async_init()
 
@@ -182,8 +183,9 @@ async def test_login_client_response_error() -> None:
 
     async with aiohttp.ClientSession() as session:
         tado = Tado(session=session)
-        with patch("aiohttp.ClientSession.post", new=mock_post), pytest.raises(
-            TadoAuthenticationError
+        with (
+            patch("aiohttp.ClientSession.post", new=mock_post),
+            pytest.raises(TadoAuthenticationError),
         ):
             await tado.async_init()
 
@@ -203,8 +205,9 @@ async def test_login_client_response_still_pending() -> None:
 
     async with aiohttp.ClientSession() as session:
         tado = Tado(session=session)
-        with patch("aiohttp.ClientSession.post", new=mock_post), pytest.raises(
-            TadoAuthenticationError
+        with (
+            patch("aiohttp.ClientSession.post", new=mock_post),
+            pytest.raises(TadoAuthenticationError),
         ):
             await tado.async_init()
 
@@ -236,7 +239,7 @@ async def test_refresh_auth_timeout(python_tado: Tado, responses: aioresponses) 
     """Test timeout during refresh of auth token."""
     responses.post(
         TADO_TOKEN_URL,
-        exception=asyncio.TimeoutError(),
+        exception=TimeoutError(),
     )
     async with aiohttp.ClientSession():
         python_tado._access_token = "old_test_access_token"
@@ -635,8 +638,9 @@ async def test_request_client_response_error(python_tado: Tado) -> None:
     async def mock_get(*args: Any, **kwargs: Any) -> ClientResponse:  # noqa: ARG001 # pylint: disable=unused-argument
         return mock_response
 
-    with patch("aiohttp.ClientSession.request", new=mock_get), pytest.raises(
-        TadoBadRequestError
+    with (
+        patch("aiohttp.ClientSession.request", new=mock_get),
+        pytest.raises(TadoBadRequestError),
     ):
         await python_tado._request("me")
 

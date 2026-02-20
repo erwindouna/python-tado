@@ -156,7 +156,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                 session = self._ensure_session()
                 request = await session.post(url=DEVICE_AUTH_URL, data=data)
                 request.raise_for_status()
-        except asyncio.TimeoutError as err:
+        except TimeoutError as err:
             raise TadoConnectionError(
                 "Timeout occurred while connecting to Tado."
             ) from err
@@ -219,7 +219,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                         _LOGGER.info("Authorization pending. Continuing polling...")
                         return False
                 request.raise_for_status()
-        except asyncio.TimeoutError as err:
+        except TimeoutError as err:
             raise TadoConnectionError(
                 "Timeout occurred while connecting to Tado."
             ) from err
@@ -281,7 +281,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             async with asyncio.timeout(self._request_timeout):
                 request = await self._session.post(url=TOKEN_URL, data=data)
                 request.raise_for_status()
-        except asyncio.TimeoutError as err:
+        except TimeoutError as err:
             raise TadoConnectionError(
                 "Timeout occurred while connecting to Tado."
             ) from err
@@ -355,7 +355,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                 session = self._ensure_session()
                 request = await session.post(url=TOKEN_URL, data=data)
                 request.raise_for_status()
-        except asyncio.TimeoutError as err:
+        except TimeoutError as err:
             raise TadoConnectionError(
                 "Timeout occurred while connecting to Tado."
             ) from err
@@ -587,7 +587,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                     method=method.value, url=str(url), headers=headers, json=data
                 )
                 request.raise_for_status()
-        except asyncio.TimeoutError as err:
+        except TimeoutError as err:
             raise TadoConnectionError(
                 "Timeout occurred while connecting to Tado."
             ) from err

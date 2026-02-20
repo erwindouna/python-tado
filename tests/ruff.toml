@@ -1,6 +1,7 @@
 # This extend our general Ruff rules specifically for tests
 extend = "../pyproject.toml"
 
+[lint]
 extend-select = [
   "PT", # Use @pytest.fixture without parentheses
 ]
