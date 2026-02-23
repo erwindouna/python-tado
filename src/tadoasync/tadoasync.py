@@ -9,7 +9,7 @@ import time
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from importlib import metadata
-from typing import Any, Self
+from typing import Self
 from urllib.parse import urlencode
 
 import jwt
@@ -240,14 +240,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             self._token_expiry = time.time() + float(response["expires_in"])
             self._refresh_token = response["refresh_token"]
 
-            decoded = await self._decode_access_token()
-
-            try:
-                self._home_id = int(decoded["tado_homes"][0]["id"])
-            except (KeyError, ValueError) as err:
-                raise TadoError(
-                    "Failed to extract home ID from access token"
-                ) from err
+            self._set_home_id_from_access_token()
             return True
 
         raise TadoError(f"Login failed. Reason: {request.reason}")
@@ -308,28 +301,23 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self._token_expiry = time.time() + float(response["expires_in"])
         self._refresh_token = response["refresh_token"]
 
-        decoded = await self._decode_access_token()
+        self._set_home_id_from_access_token()
 
-        try:
-            self._home_id = int(decoded["tado_homes"][0]["id"])
-        except (KeyError, ValueError) as err:
-            raise TadoError(
-                "Failed to extract home ID from access token"
-            ) from err
-
-    async def _decode_access_token(self) -> dict[str, Any]:
-        """Decode the access token."""
+    def _set_home_id_from_access_token(self) -> None:
+        """Decode the access token and set the home ID."""
         if self._access_token is None:
             raise TadoError("Access token is not available for decoding")
 
         try:
-            return jwt.decode(
+            jwt_data = jwt.decode(
                 self._access_token,
                 options={"verify_signature": False, "verify_exp": False},
             )
-
-        except jwt.DecodeError as err:
-            raise TadoError("Failed to decode access token") from err
+            self._home_id = int(jwt_data["tado_homes"][0]["id"])
+        except (KeyError, TypeError, ValueError, jwt.DecodeError) as err:
+            raise TadoError(
+                "Failed to decode access token and extract home ID"
+            ) from err
 
     async def check_request_status(
         self, response_error: ClientResponseError, *, login: bool = False
@@ -393,14 +381,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self._token_expiry = time.time() + float(response["expires_in"])
         self._refresh_token = response["refresh_token"]
 
-        decoded = await self._decode_access_token()
-
-        try:
-            self._home_id = int(decoded["tado_homes"][0]["id"])
-        except (KeyError, ValueError) as err:
-            raise TadoError(
-                "Failed to extract home ID from access token"
-            ) from err
+        self._set_home_id_from_access_token()
 
         _LOGGER.debug("Tado token refreshed")
 
