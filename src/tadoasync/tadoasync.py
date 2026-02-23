@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import enum
 import logging
+import re
 import time
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
@@ -115,6 +116,10 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self._device_activation_status = DeviceActivationStatus.NOT_STARTED
         self._expires_at: datetime | None = None
 
+        self._last_headers: dict[str, str] = {}
+        self._last_limit: int | None = None
+        self._last_remaining: int | None = None
+
         _LOGGER.setLevel(logging.DEBUG if debug else logging.INFO)
 
     async def async_init(self) -> None:
@@ -140,6 +145,35 @@ class Tado:  # pylint: disable=too-many-instance-attributes
     def refresh_token(self) -> str | None:
         """Return the refresh token."""
         return self._refresh_token
+
+    @property
+    def session(self) -> ClientSession:
+        """Return the aiohttp session."""
+        return self._ensure_session()
+
+    @property
+    def home_id(self) -> int | None:
+        """Return the home ID."""
+        return self._home_id
+
+    @property
+    def access_token(self) -> str | None:
+        """Return the OAuth access token."""
+        return self._access_token
+
+    async def refresh_auth(self) -> None:
+        """Refresh the OAuth token."""
+        await self._refresh_auth()
+
+    @property
+    def last_headers(self) -> dict[str, str]:
+        """Return headers from the last API response."""
+        return self._last_headers
+
+    @property
+    def rate_limit(self) -> tuple[int | None, int | None]:
+        """Return rate limit (limit, remaining) from the last API response."""
+        return (self._last_limit, self._last_remaining)
 
     async def login_device_flow(self) -> DeviceActivationStatus:
         """Login using device flow."""
@@ -586,6 +620,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                 request = await session.request(
                     method=method.value, url=str(url), headers=headers, json=data
                 )
+                self._last_headers = dict(request.headers)
+                self._last_limit, self._last_remaining = self._parse_rate_limit()
                 request.raise_for_status()
         except TimeoutError as err:
             raise TadoConnectionError(
@@ -769,6 +805,23 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             self._session = ClientSession()
             self._close_session = True
         return self._session
+
+    def _parse_rate_limit(self) -> tuple[int | None, int | None]:
+        """Parse rate limit from RateLimit headers."""
+        limit = None
+        remaining = None
+
+        if (policy := self._last_headers.get("RateLimit-Policy", "")) and (
+            match := re.search(r"quota=(\d+)", policy)
+        ):
+            limit = int(match[1])
+
+        if (rl := self._last_headers.get("RateLimit", "")) and (
+            match := re.search(r"remaining=(\d+)", rl)
+        ):
+            remaining = int(match[1])
+
+        return limit, remaining
 
     async def __aenter__(self) -> Self:
         """Async enter."""
