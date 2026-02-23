@@ -246,7 +246,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                 self._home_id = int(decoded["tado_homes"][0]["id"])
             except (KeyError, ValueError) as err:
                 raise TadoError(
-                    "Failed to decode access token and extract home ID"
+                    "Failed to extract home ID from access token"
                 ) from err
             return True
 
@@ -314,11 +314,11 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             self._home_id = int(decoded["tado_homes"][0]["id"])
         except (KeyError, ValueError) as err:
             raise TadoError(
-                "Failed to decode access token and extract home ID"
+                "Failed to extract home ID from access token"
             ) from err
 
     async def _decode_access_token(self) -> dict[str, Any]:
-        """Decode the access token to extract the home ID."""
+        """Decode the access token."""
         if self._access_token is None:
             raise TadoError("Access token is not available for decoding")
 
