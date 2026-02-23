@@ -808,20 +808,17 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
     def _parse_rate_limit(self) -> tuple[int | None, int | None]:
         """Parse rate limit from RateLimit headers."""
-        limit = None
-        remaining = None
+    def extract(pattern: str, value: str) -> int | None:
+        match = re.search(pattern, value)
+        return int(match.group(1)) if match else None
 
-        if (policy := self._last_headers.get("RateLimit-Policy", "")) and (
-            match := re.search(r"quota=(\d+)", policy)
-        ):
-            limit = int(match[1])
+    policy = self._last_headers.get("RateLimit-Policy", "")
+    rl = self._last_headers.get("RateLimit", "")
 
-        if (rl := self._last_headers.get("RateLimit", "")) and (
-            match := re.search(r"remaining=(\d+)", rl)
-        ):
-            remaining = int(match[1])
+    limit = extract(r"quota=(\d+)", policy)
+    remaining = extract(r"remaining=(\d+)", rl)
 
-        return limit, remaining
+    return limit, remaining
 
     async def __aenter__(self) -> Self:
         """Async enter."""
