@@ -124,8 +124,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             self._device_activation_status = await self.login_device_flow()
         else:
             self._device_ready()
-            get_me = await self.get_me()
-            self._home_id = get_me.homes[0].id
+
+            await self._refresh_auth()
 
     @property
     def device_activation_status(self) -> DeviceActivationStatus:
@@ -392,6 +392,15 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self._access_token = response["access_token"]
         self._token_expiry = time.time() + float(response["expires_in"])
         self._refresh_token = response["refresh_token"]
+
+        decoded = await self._decode_access_token()
+
+        try:
+            self._home_id = int(decoded["tado_homes"][0]["id"])
+        except (KeyError, ValueError) as err:
+            raise TadoError(
+                "Failed to extract home ID from access token"
+            ) from err
 
         _LOGGER.debug("Tado token refreshed")
 
