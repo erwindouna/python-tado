@@ -90,6 +90,32 @@ async def test_login_success_no_session(responses: aioresponses) -> None:
         assert tado._refresh_token == "test_refresh_token"
 
 
+def test_set_home_id_from_access_token_success() -> None:
+    """Test successful home ID extraction from access token."""
+    tado = Tado()
+    tado._access_token = AUTH_TOKEN
+    tado._set_home_id_from_access_token()
+    assert tado._home_id == 1
+
+
+@pytest.mark.parametrize(
+    ("access_token", "decoded_token", "expected_error"),
+    [
+        (None, {}, "Access token is not available for decoding"),
+        (AUTH_TOKEN, {}, "Failed to decode access token and extract home ID"),
+    ],
+)
+def test_set_home_id_from_access_token_errors(
+    access_token: str | None, decoded_token: dict[str, object], expected_error: str
+) -> None:
+    """Test home ID extraction error paths."""
+    tado = Tado()
+    tado._access_token = access_token
+    with patch("tadoasync.tadoasync.jwt.decode", return_value=decoded_token):
+        with pytest.raises(TadoError, match=expected_error):
+            tado._set_home_id_from_access_token()
+
+
 async def test_activation_timeout(responses: aioresponses) -> None:
     """Test activation timeout."""
     responses.post(
