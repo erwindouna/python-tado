@@ -15,6 +15,9 @@ from urllib.parse import urlencode
 import orjson
 from aiohttp import ClientResponseError
 from aiohttp.client import ClientSession
+from tadoasync import models_unified as unified_models
+from tadoasync.api_v3 import ApiV3
+from tadoasync.api_x import ApiX
 from yarl import URL
 
 from tadoasync.const import (
@@ -35,7 +38,9 @@ from tadoasync.const import (
     TADO_HVAC_ACTION_TO_MODES,
     TADO_MODES_TO_HVAC_ACTION,
     TYPE_AIR_CONDITIONING,
+    INSIDE_TEMPERATURE_MEASUREMENT,
     HttpMethod,
+    TadoLine,
 )
 from tadoasync.exceptions import (
     TadoAuthenticationError,
@@ -45,7 +50,7 @@ from tadoasync.exceptions import (
     TadoForbiddenError,
     TadoReadingError,
 )
-from tadoasync.models import (
+from tadoasync.models_v3 import (
     Capabilities,
     Device,
     GetMe,
@@ -108,6 +113,10 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self._home_id: int | None = None
         self._me: GetMe | None = None
         self._auto_geofencing_supported: bool | None = None
+        self._tado_line: TadoLine | None = None
+
+        self.api_x = ApiX(self)
+        self.api_v3 = ApiV3(self)
 
         self._user_code: str | None = None
         self._device_verification_url: str | None = None
@@ -529,6 +538,42 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         response = await self._request(f"devices/{serial_no}/")
         return Device.from_json(response)
 
+    async def get_unified_devices(self) -> list[unified_models.Device]:
+        if self._tado_line == TadoLine.PRE_LINE_X:
+            devices = await self.get_devices()
+            devices_unified = []
+            if not devices:
+                raise TadoError("No devices found for the home")
+            for device in devices:
+                offset = None
+                if (
+                    INSIDE_TEMPERATURE_MEASUREMENT
+                    in device.characteristics.capabilities
+                ):
+                    try:
+                        offset = await self.api_v3.get_device_temperature_offset(
+                            device.serial_no,
+                        )
+                    except TadoError as err:
+                        _LOGGER.warning(
+                            "Failed to get temperature offset for device %s: %s",
+                            device.serial_no,
+                            err,
+                        )
+                devices_unified.append(unified_models.Device.from_v3(device, offset))
+            return devices_unified
+        elif self._tado_line == TadoLine.LINE_X:
+            rooms_and_devices = await self.api_x.get_rooms_and_devices()
+            devices_unified = []
+            for room in rooms_and_devices.rooms:
+                for device in room.devices:
+                    devices_unified.append(unified_models.Device.from_x(device))
+            for device in rooms_and_devices.other_devices:
+                devices_unified.append(unified_models.Device.from_x(device))
+            return devices_unified
+        else:
+            raise TadoError("Tado Line not set. Cannot get unified devices.")
+
     async def set_child_lock(self, serial_no: str, *, child_lock: bool) -> None:
         """Set the child lock."""
         await self._request(
@@ -565,6 +610,11 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         url = URL.build(scheme="https", host=TADO_HOST_URL, path=TADO_API_PATH)
         if endpoint == EIQ_HOST_URL:
             url = URL.build(scheme="https", host=EIQ_HOST_URL, path=EIQ_API_PATH)
+        elif endpoint != API_URL:
+            endpoint_url = (
+                endpoint if endpoint.startswith("http") else f"https://{endpoint}"
+            )
+            url = URL(endpoint_url)
 
         if uri:
             url = url.joinpath(uri)
@@ -593,6 +643,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             ) from err
         except ClientResponseError as err:
             await self.check_request_status(err)
+
+        _LOGGER.debug(f"Request to {url} returned headers: {request.headers}")
 
         return await request.text()
 

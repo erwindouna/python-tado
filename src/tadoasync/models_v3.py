@@ -1,4 +1,4 @@
-"""Models for the Tado API."""
+"""Models for the Tado v3 API."""
 
 from __future__ import annotations
 

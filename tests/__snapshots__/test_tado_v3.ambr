@@ -1,0 +1,355 @@
+# serializer version: 1
+# name: test_get_device
+  dict({
+    'battery_state': None,
+    'characteristics': dict({
+      'capabilities': list([
+        'RADIO_ENCRYPTION_KEY_ACCESS',
+      ]),
+    }),
+    'child_lock_enabled': None,
+    'connection_state': dict({
+      'timestamp': '2024-11-18T21:41:49.404Z',
+      'value': True,
+    }),
+    'current_fw_version': '92.1',
+    'device_type': 'IB01',
+    'in_pairing_mode': False,
+    'mounting_state': None,
+    'mounting_state_with_error': None,
+    'orientation': None,
+    'serial_no': 'SerialNo1',
+    'short_serial_no': 'ShortSerialNo1',
+  })
+# ---
+# name: test_get_device_temperature_offset
+  dict({
+    'celsius': 0.0,
+    'fahrenheit': 0.0,
+  })
+# ---
+# name: test_get_devices
+  list([
+    dict({
+      'battery_state': None,
+      'characteristics': dict({
+        'capabilities': list([
+          'RADIO_ENCRYPTION_KEY_ACCESS',
+        ]),
+      }),
+      'child_lock_enabled': None,
+      'connection_state': dict({
+        'timestamp': '2024-02-27T20:13:45.407Z',
+        'value': True,
+      }),
+      'current_fw_version': '92.1',
+      'device_type': 'IB01',
+      'in_pairing_mode': False,
+      'mounting_state': None,
+      'mounting_state_with_error': None,
+      'orientation': None,
+      'serial_no': 'SerialNo1',
+      'short_serial_no': 'ShortSerialNo1',
+    }),
+    dict({
+      'battery_state': 'NORMAL',
+      'characteristics': dict({
+        'capabilities': list([
+          'INSIDE_TEMPERATURE_MEASUREMENT',
+          'IDENTIFY',
+        ]),
+      }),
+      'child_lock_enabled': True,
+      'connection_state': dict({
+        'timestamp': '2024-02-27T20:20:20.921Z',
+        'value': True,
+      }),
+      'current_fw_version': '95.1',
+      'device_type': 'VA02',
+      'in_pairing_mode': None,
+      'mounting_state': dict({
+        'timestamp': '2024-02-19T17:23:30.537Z',
+        'value': 'CALIBRATED',
+      }),
+      'mounting_state_with_error': 'CALIBRATED',
+      'orientation': 'HORIZONTAL',
+      'serial_no': 'SerialNo2',
+      'short_serial_no': 'ShortSerialNo2',
+    }),
+    dict({
+      'battery_state': 'NORMAL',
+      'characteristics': dict({
+        'capabilities': list([
+          'INSIDE_TEMPERATURE_MEASUREMENT',
+          'IDENTIFY',
+        ]),
+      }),
+      'child_lock_enabled': True,
+      'connection_state': dict({
+        'timestamp': '2024-02-27T20:23:13.342Z',
+        'value': True,
+      }),
+      'current_fw_version': '95.1',
+      'device_type': 'VA02',
+      'in_pairing_mode': None,
+      'mounting_state': dict({
+        'timestamp': '2024-02-26T13:33:10.647Z',
+        'value': 'CALIBRATED',
+      }),
+      'mounting_state_with_error': 'CALIBRATED',
+      'orientation': 'HORIZONTAL',
+      'serial_no': 'SerialNo3',
+      'short_serial_no': 'ShortSerialNo3',
+    }),
+    dict({
+      'battery_state': 'NORMAL',
+      'characteristics': dict({
+        'capabilities': list([
+          'INSIDE_TEMPERATURE_MEASUREMENT',
+          'IDENTIFY',
+        ]),
+      }),
+      'child_lock_enabled': True,
+      'connection_state': dict({
+        'timestamp': '2024-02-27T20:23:02.849Z',
+        'value': True,
+      }),
+      'current_fw_version': '95.1',
+      'device_type': 'VA02',
+      'in_pairing_mode': None,
+      'mounting_state': dict({
+        'timestamp': '2023-10-09T15:39:08.131Z',
+        'value': 'CALIBRATED',
+      }),
+      'mounting_state_with_error': 'CALIBRATED',
+      'orientation': 'HORIZONTAL',
+      'serial_no': 'SerialNo4',
+      'short_serial_no': 'ShortSerialNo4',
+    }),
+    dict({
+      'battery_state': 'NORMAL',
+      'characteristics': dict({
+        'capabilities': list([
+          'INSIDE_TEMPERATURE_MEASUREMENT',
+          'IDENTIFY',
+        ]),
+      }),
+      'child_lock_enabled': True,
+      'connection_state': dict({
+        'timestamp': '2024-02-27T20:16:13.890Z',
+        'value': True,
+      }),
+      'current_fw_version': '95.1',
+      'device_type': 'VA02',
+      'in_pairing_mode': None,
+      'mounting_state': dict({
+        'timestamp': '2024-02-04T10:17:00.266Z',
+        'value': 'CALIBRATED',
+      }),
+      'mounting_state_with_error': 'CALIBRATED',
+      'orientation': 'HORIZONTAL',
+      'serial_no': 'SerialNo5',
+      'short_serial_no': 'ShortSerialNo5',
+    }),
+  ])
+# ---
+# name: test_get_zones
+  list([
+    dict({
+      'date_created': '2023-04-12T12:58:12.737Z',
+      'dazzle_enabled': True,
+      'dazzle_mode': dict({
+        'enabled': True,
+        'supported': True,
+      }),
+      'device_types': list([
+        'VA02',
+      ]),
+      'devices': list([
+        dict({
+          'battery_state': 'NORMAL',
+          'characteristics': dict({
+            'capabilities': list([
+              'INSIDE_TEMPERATURE_MEASUREMENT',
+              'IDENTIFY',
+            ]),
+          }),
+          'child_lock_enabled': True,
+          'connection_state': dict({
+            'timestamp': '2024-02-27T20:30:13.976Z',
+            'value': True,
+          }),
+          'current_fw_version': '95.1',
+          'device_type': 'VA02',
+          'in_pairing_mode': None,
+          'mounting_state': dict({
+            'timestamp': '2024-02-04T10:17:00.266Z',
+            'value': 'CALIBRATED',
+          }),
+          'mounting_state_with_error': 'CALIBRATED',
+          'orientation': 'HORIZONTAL',
+          'serial_no': 'Serial1',
+          'short_serial_no': 'ShortSerial1',
+        }),
+      ]),
+      'id': 2,
+      'name': 'Zone1',
+      'open_window_detection': dict({
+        'enabled': False,
+        'supported': True,
+        'timeout_in_seconds': 900,
+      }),
+      'report_available': False,
+      'show_schedule_setup': False,
+      'supports_dazzle': True,
+      'type': 'HEATING',
+    }),
+    dict({
+      'date_created': '2023-01-29T16:02:14.530Z',
+      'dazzle_enabled': True,
+      'dazzle_mode': dict({
+        'enabled': True,
+        'supported': True,
+      }),
+      'device_types': list([
+        'VA02',
+      ]),
+      'devices': list([
+        dict({
+          'battery_state': 'NORMAL',
+          'characteristics': dict({
+            'capabilities': list([
+              'INSIDE_TEMPERATURE_MEASUREMENT',
+              'IDENTIFY',
+            ]),
+          }),
+          'child_lock_enabled': True,
+          'connection_state': dict({
+            'timestamp': '2024-02-27T20:32:05.188Z',
+            'value': True,
+          }),
+          'current_fw_version': '95.1',
+          'device_type': 'VA02',
+          'in_pairing_mode': None,
+          'mounting_state': dict({
+            'timestamp': '2023-10-09T15:39:08.131Z',
+            'value': 'CALIBRATED',
+          }),
+          'mounting_state_with_error': 'CALIBRATED',
+          'orientation': 'HORIZONTAL',
+          'serial_no': 'Serial2',
+          'short_serial_no': 'ShortSerial2',
+        }),
+      ]),
+      'id': 1,
+      'name': 'Zone2',
+      'open_window_detection': dict({
+        'enabled': False,
+        'supported': True,
+        'timeout_in_seconds': 900,
+      }),
+      'report_available': False,
+      'show_schedule_setup': True,
+      'supports_dazzle': True,
+      'type': 'HEATING',
+    }),
+    dict({
+      'date_created': '2023-04-14T07:52:56.352Z',
+      'dazzle_enabled': True,
+      'dazzle_mode': dict({
+        'enabled': True,
+        'supported': True,
+      }),
+      'device_types': list([
+        'VA02',
+      ]),
+      'devices': list([
+        dict({
+          'battery_state': 'NORMAL',
+          'characteristics': dict({
+            'capabilities': list([
+              'INSIDE_TEMPERATURE_MEASUREMENT',
+              'IDENTIFY',
+            ]),
+          }),
+          'child_lock_enabled': True,
+          'connection_state': dict({
+            'timestamp': '2024-02-27T20:31:11.417Z',
+            'value': True,
+          }),
+          'current_fw_version': '95.1',
+          'device_type': 'VA02',
+          'in_pairing_mode': None,
+          'mounting_state': dict({
+            'timestamp': '2024-02-26T13:33:10.647Z',
+            'value': 'CALIBRATED',
+          }),
+          'mounting_state_with_error': 'CALIBRATED',
+          'orientation': 'HORIZONTAL',
+          'serial_no': 'Serial3',
+          'short_serial_no': 'ShortSerial3',
+        }),
+      ]),
+      'id': 3,
+      'name': 'Zone3',
+      'open_window_detection': dict({
+        'enabled': False,
+        'supported': True,
+        'timeout_in_seconds': 900,
+      }),
+      'report_available': False,
+      'show_schedule_setup': True,
+      'supports_dazzle': True,
+      'type': 'HEATING',
+    }),
+    dict({
+      'date_created': '2023-04-14T07:58:45.196Z',
+      'dazzle_enabled': True,
+      'dazzle_mode': dict({
+        'enabled': True,
+        'supported': True,
+      }),
+      'device_types': list([
+        'VA02',
+      ]),
+      'devices': list([
+        dict({
+          'battery_state': 'NORMAL',
+          'characteristics': dict({
+            'capabilities': list([
+              'INSIDE_TEMPERATURE_MEASUREMENT',
+              'IDENTIFY',
+            ]),
+          }),
+          'child_lock_enabled': True,
+          'connection_state': dict({
+            'timestamp': '2024-02-27T20:33:21.903Z',
+            'value': True,
+          }),
+          'current_fw_version': '95.1',
+          'device_type': 'VA02',
+          'in_pairing_mode': None,
+          'mounting_state': dict({
+            'timestamp': '2024-02-19T17:23:30.537Z',
+            'value': 'CALIBRATED',
+          }),
+          'mounting_state_with_error': 'CALIBRATED',
+          'orientation': 'HORIZONTAL',
+          'serial_no': 'Serial4',
+          'short_serial_no': 'ShortSerial4',
+        }),
+      ]),
+      'id': 4,
+      'name': 'Zone4',
+      'open_window_detection': dict({
+        'enabled': False,
+        'supported': True,
+        'timeout_in_seconds': 900,
+      }),
+      'report_available': False,
+      'show_schedule_setup': True,
+      'supports_dazzle': True,
+      'type': 'HEATING',
+    }),
+  ])
+# ---
