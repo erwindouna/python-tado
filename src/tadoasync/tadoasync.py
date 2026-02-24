@@ -126,6 +126,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             self._device_ready()
 
             await self._refresh_auth()
+            self._set_home_id_from_access_token()
 
     @property
     def device_activation_status(self) -> DeviceActivationStatus:
@@ -380,8 +381,6 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self._access_token = response["access_token"]
         self._token_expiry = time.time() + float(response["expires_in"])
         self._refresh_token = response["refresh_token"]
-
-        self._set_home_id_from_access_token()
 
         _LOGGER.debug("Tado token refreshed")
 
