@@ -111,9 +111,11 @@ def test_set_home_id_from_access_token_errors(
     """Test home ID extraction error paths."""
     tado = Tado()
     tado._access_token = access_token
-    with patch("tadoasync.tadoasync.jwt.decode", return_value=decoded_token):
-        with pytest.raises(TadoError, match=expected_error):
-            tado._set_home_id_from_access_token()
+    with (
+        patch("tadoasync.tadoasync.jwt.decode", return_value=decoded_token),
+        pytest.raises(TadoError, match=expected_error),
+    ):
+        tado._set_home_id_from_access_token()
 
 
 async def test_activation_timeout(responses: aioresponses) -> None:
