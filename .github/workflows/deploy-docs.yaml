@@ -4,7 +4,7 @@ name: Deploy docs to GitHub Pages
 # yamllint disable-line rule:truthy
 on:
   push:
-    branches: [main]
+    branches: [main, feature/migrate-from-read-the-docs]
   workflow_dispatch:
 
 permissions:
