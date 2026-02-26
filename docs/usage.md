@@ -18,7 +18,8 @@ from tadoasync import Tado
 
 async def main() -> None:
     """Example usage of Tado Async to retrieve all devices."""
-    async with Tado("username", "password") as tado:
+    async with Tado(refresh_token="your_refresh_token") as tado:
+        await tado.async_init()
         await tado.get_devices()
 
 
@@ -26,4 +27,4 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-Keep in mind that if you use `async with`, the `__aenter__` and `__aexit__` methods are called automatically. It's recommended you use session control; if you don't use `async with`, you need to call `tado.close()` to close the session.
+Keep in mind that if you use `async with`, the `__aenter__` and `__aexit__` methods are called automatically. It's recommended you use session control; if you don't use `async with`, you need to run `await tado.async_init()` before making any API calls and call `tado.close()` to close the session when you're done.

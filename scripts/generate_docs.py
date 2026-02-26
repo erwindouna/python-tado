@@ -14,6 +14,7 @@ import subprocess
 from pathlib import Path
 
 DOCS_DIR = Path(__file__).resolve().parent.parent / "docs"
+SRC_DIR = str(Path(__file__).resolve().parent.parent / "src")
 
 MODULES = {
     "models.md": {
@@ -56,7 +57,7 @@ def generate(filename: str, config: dict[str, str], pydoc_md: str) -> None:
             [  # noqa: S603
                 pydoc_md,
                 "-I",
-                "src",
+                SRC_DIR,
                 "-m",
                 config["module"],
             ],
@@ -72,13 +73,14 @@ def generate(filename: str, config: dict[str, str], pydoc_md: str) -> None:
     content = header + result.stdout
 
     output = DOCS_DIR / filename
-    output.write_text(content)
+    output.write_text(content, encoding="utf-8")
     print(f"Generated {output}")  # noqa: T201
 
 
 def main() -> None:
     """Generate all documentation pages."""
     pydoc_md = _find_pydoc_markdown()
+    DOCS_DIR.mkdir(parents=True, exist_ok=True)
     for filename, config in MODULES.items():
         generate(filename, config, pydoc_md)
 

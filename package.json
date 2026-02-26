@@ -8,7 +8,7 @@
     "docs:generate": "python3 scripts/generate_docs.py",
     "docs:dev": "npm run docs:generate && vitepress dev docs",
     "docs:build": "npm run docs:generate && vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "npm run docs:build && vitepress preview docs"
   },
   "author": "Erwin Douna <e.douna@gmail.com>",
   "license": "MIT",
