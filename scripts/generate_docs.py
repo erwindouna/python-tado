@@ -11,10 +11,12 @@ from __future__ import annotations
 
 import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 
-DOCS_DIR = Path(__file__).resolve().parent.parent / "docs"
-SRC_DIR = str(Path(__file__).resolve().parent.parent / "src")
+ROOT_DIR = Path(__file__).resolve().parent.parent
+DOCS_DIR = ROOT_DIR / "docs"
+SRC_DIR = str(ROOT_DIR / "src")
 
 MODULES = {
     "models.md": {
@@ -40,27 +42,60 @@ MODULES = {
     },
 }
 
+FILTER_EXPRESSION = (
+    "not name.startswith('_')"
+    " and (obj.docstring or"
+    " (obj.parent and not isinstance(obj.parent,"
+    " __import__('docspec').Module)))"
+)
+
 
 def _find_pydoc_markdown() -> str:
     """Find pydoc-markdown binary or raise."""
     pydoc_md = shutil.which("pydoc-markdown")
     if pydoc_md is None:
-        msg = "pydoc-markdown not found. Install it with: pip install pydoc-markdown"
+        msg = (
+            "pydoc-markdown not found."
+            " Install it with: uv pip install pydoc-markdown"
+        )
         raise RuntimeError(msg)
     return pydoc_md
 
 
+def _build_config(module: str) -> str:
+    """Build a pydoc-markdown YAML config for a module."""
+    return f"""\
+loaders:
+  - type: python
+    search_path: ["{SRC_DIR}"]
+    modules: ["{module}"]
+processors:
+  - type: filter
+    expression: "{FILTER_EXPRESSION}"
+    documented_only: false
+  - type: smart
+  - type: crossref
+renderer:
+  type: markdown
+  render_module_header: true
+  descriptive_class_title: true
+  render_typehint_in_data_header: true
+"""
+
+
 def generate(filename: str, config: dict[str, str], pydoc_md: str) -> None:
     """Generate a single documentation page."""
+    yaml_content = _build_config(config["module"])
+
+    with tempfile.NamedTemporaryFile(
+        mode="w", suffix=".yaml", delete=False, encoding="utf-8"
+    ) as tmp:
+        tmp.write(yaml_content)
+        tmp_path = tmp.name
+
     try:
         result = subprocess.run(
-            [  # noqa: S603
-                pydoc_md,
-                "-I",
-                SRC_DIR,
-                "-m",
-                config["module"],
-            ],
+            [pydoc_md, tmp_path],  # noqa: S603
             capture_output=True,
             text=True,
             check=True,
@@ -68,6 +103,8 @@ def generate(filename: str, config: dict[str, str], pydoc_md: str) -> None:
     except subprocess.CalledProcessError as exc:
         msg = f"Failed to generate docs for {config['module']}: {exc.stderr}"
         raise RuntimeError(msg) from exc
+    finally:
+        Path(tmp_path).unlink(missing_ok=True)
 
     header = f"# {config['title']}\n\n{config['description']}\n\n"
     content = header + result.stdout
