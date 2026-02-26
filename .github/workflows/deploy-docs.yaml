@@ -31,6 +31,8 @@ jobs:
           python-version: "3.12"
       - name: 🏗 Install uv
         uses: astral-sh/setup-uv@v7
+      - name: 🏗 Install project dependencies
+        run: uv sync
       - name: 🏗 Install pydoc-markdown
         run: uv pip install pydoc-markdown --system
       - name: 🏗 Set up Node.js

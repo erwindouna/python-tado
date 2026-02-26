@@ -5,7 +5,7 @@
   "description": "Asynchronous Python client providing Tado API, mainly usage for Home Assistant",
   "scripts": {
     "prettier": "prettier --write **/*.{json,js,md,yml,yaml}",
-    "docs:generate": "python3 scripts/generate_docs.py",
+    "docs:generate": "uv run python scripts/generate_docs.py",
     "docs:dev": "npm run docs:generate && vitepress dev docs",
     "docs:build": "npm run docs:generate && vitepress build docs",
     "docs:preview": "npm run docs:build && vitepress preview docs"
