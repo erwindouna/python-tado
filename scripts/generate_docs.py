@@ -113,7 +113,7 @@ def _format_inherited_section(
     module_name: str, class_name: str, members: list[dict[str, str]]
 ) -> str:
     """Format inherited members as markdown."""
-    lines = [f"\n**Inherited from base class:**\n"]
+    lines = ["\n**Inherited from base class:**\n"]
     for m in members:
         anchor = f'<a id="{module_name}.{class_name}.{m["name"]}"></a>\n\n'
         if m["sig"]:
