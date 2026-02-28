@@ -545,32 +545,34 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             devices_unified = []
             if not devices:
                 raise TadoError("No devices found for the home")
-            for device in devices:
+            for v3_device in devices:
                 offset = None
                 if (
                     INSIDE_TEMPERATURE_MEASUREMENT
-                    in device.characteristics.capabilities
+                    in v3_device.characteristics.capabilities
                 ):
                     try:
                         offset = await self.api_v3.get_device_temperature_offset(
-                            device.serial_no,
+                            v3_device.serial_no,
                         )
                     except TadoError as err:
                         _LOGGER.warning(
                             "Failed to get temperature offset for device %s: %s",
-                            device.serial_no,
+                            v3_device.serial_no,
                             err,
                         )
-                devices_unified.append(unified_models.Device.from_v3(device, offset))
+                devices_unified.append(
+                    unified_models.Device.from_v3(v3_device, offset)
+                )
             return devices_unified
         if self._tado_line == TadoLine.LINE_X:
             rooms_and_devices = await self.api_x.get_rooms_and_devices()
             devices_unified = []
             for room in rooms_and_devices.rooms:
-                for device in room.devices:
-                    devices_unified.append(unified_models.Device.from_x(device))
-            for device in rooms_and_devices.other_devices:
-                devices_unified.append(unified_models.Device.from_x(device))
+                for x_device in room.devices:
+                    devices_unified.append(unified_models.Device.from_x(x_device))
+            for x_device in rooms_and_devices.other_devices:
+                devices_unified.append(unified_models.Device.from_x(x_device))
             return devices_unified
         raise TadoError("Tado Line not set. Cannot get unified devices.")
 
