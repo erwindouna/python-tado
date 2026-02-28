@@ -8,8 +8,6 @@ from typing import Any
 from mashumaro import field_options
 from mashumaro.mixins.orjson import DataClassORJSONMixin
 
-from tadoasync.const import TadoLine
-
 
 @dataclass
 class DeviceManualControlTermination(DataClassORJSONMixin):
@@ -68,7 +66,7 @@ class Room(DataClassORJSONMixin):
     )
     zone_controllers: list[Any] = field(
         metadata=field_options(alias="zoneControllers")
-    )  # ToDo: Define ZoneController model
+    )  # TODO: Define ZoneController model
     room_link_available: bool = field(metadata=field_options(alias="roomLinkAvailable"))
 
 

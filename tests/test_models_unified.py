@@ -3,12 +3,10 @@
 from __future__ import annotations
 
 import orjson
-
-import tadoasync.models_v3 as models_v3
-import tadoasync.models_x as models_x
-from syrupy import SnapshotAssertion
+from tadoasync import models_v3, models_x
 from tadoasync.models_unified import Device
 
+from syrupy import SnapshotAssertion
 from tests import load_fixture
 
 

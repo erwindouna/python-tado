@@ -2,16 +2,11 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Any
+from dataclasses import dataclass
 
-from mashumaro import field_options
 from mashumaro.mixins.orjson import DataClassORJSONMixin
 
-from tadoasync.const import TadoLine
-
-import tadoasync.models_v3 as models_v3
-import tadoasync.models_x as models_x
+from tadoasync import models_v3, models_x
 
 
 @dataclass
@@ -24,7 +19,7 @@ class Device(DataClassORJSONMixin):
 
     connection_state: bool
 
-    battery_state: str | None  # Todo: Enum
+    battery_state: str | None  # TODO: Enum
 
     temperature_offset: float | None = None
 

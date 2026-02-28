@@ -15,11 +15,11 @@ from urllib.parse import urlencode
 import orjson
 from aiohttp import ClientResponseError
 from aiohttp.client import ClientSession
+from yarl import URL
+
 from tadoasync import models_unified as unified_models
 from tadoasync.api_v3 import ApiV3
 from tadoasync.api_x import ApiX
-from yarl import URL
-
 from tadoasync.const import (
     CONST_AWAY,
     CONST_FAN_AUTO,
@@ -35,10 +35,10 @@ from tadoasync.const import (
     CONST_MODE_OFF,
     CONST_MODE_SMART_SCHEDULE,
     CONST_VERTICAL_SWING_OFF,
+    INSIDE_TEMPERATURE_MEASUREMENT,
     TADO_HVAC_ACTION_TO_MODES,
     TADO_MODES_TO_HVAC_ACTION,
     TYPE_AIR_CONDITIONING,
-    INSIDE_TEMPERATURE_MEASUREMENT,
     HttpMethod,
     TadoLine,
 )
@@ -562,7 +562,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                         )
                 devices_unified.append(unified_models.Device.from_v3(device, offset))
             return devices_unified
-        elif self._tado_line == TadoLine.LINE_X:
+        if self._tado_line == TadoLine.LINE_X:
             rooms_and_devices = await self.api_x.get_rooms_and_devices()
             devices_unified = []
             for room in rooms_and_devices.rooms:
@@ -571,8 +571,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             for device in rooms_and_devices.other_devices:
                 devices_unified.append(unified_models.Device.from_x(device))
             return devices_unified
-        else:
-            raise TadoError("Tado Line not set. Cannot get unified devices.")
+        raise TadoError("Tado Line not set. Cannot get unified devices.")
 
     async def set_child_lock(self, serial_no: str, *, child_lock: bool) -> None:
         """Set the child lock."""

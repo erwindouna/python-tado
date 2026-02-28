@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 import orjson
 
-from tadoasync.models_v3 import TemperatureOffset, Zone, Device
+from tadoasync.models_v3 import Device, TemperatureOffset, Zone
 
 if TYPE_CHECKING:
     from tadoasync.tadoasync import Tado
