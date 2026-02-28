@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from tadoasync.tadoasync import Tado
 
 
-class ApiX:
+class ApiX:  # pylint: disable=too-few-public-methods
     """Wrapper class for the Tado X API."""
 
     def __init__(self, base: Tado) -> None:

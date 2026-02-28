@@ -561,9 +561,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                             v3_device.serial_no,
                             err,
                         )
-                devices_unified.append(
-                    unified_models.Device.from_v3(v3_device, offset)
-                )
+                devices_unified.append(unified_models.Device.from_v3(v3_device, offset))
             return devices_unified
         if self._tado_line == TadoLine.LINE_X:
             rooms_and_devices = await self.api_x.get_rooms_and_devices()
