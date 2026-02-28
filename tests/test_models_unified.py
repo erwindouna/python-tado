@@ -8,10 +8,10 @@ import orjson
 from tadoasync import models_v3, models_x
 from tadoasync.models_unified import Device
 
+from tests import load_fixture
+
 if TYPE_CHECKING:
     from syrupy import SnapshotAssertion
-
-from tests import load_fixture
 
 
 def test_device_from_v3_with_offset(snapshot: SnapshotAssertion) -> None:
