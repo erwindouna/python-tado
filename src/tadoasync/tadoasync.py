@@ -539,6 +539,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         return Device.from_json(response)
 
     async def get_unified_devices(self) -> list[unified_models.Device]:
+        """Get devices in a unified format, compatible with both Tado X and v3."""
         if self._tado_line == TadoLine.PRE_LINE_X:
             devices = await self.get_devices()
             devices_unified = []
@@ -642,8 +643,6 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             ) from err
         except ClientResponseError as err:
             await self.check_request_status(err)
-
-        _LOGGER.debug(f"Request to {url} returned headers: {request.headers}")
 
         return await request.text()
 
@@ -794,9 +793,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             and data.termination_condition is not None
         ):
             data.default_overlay_termination_type = (
-                data.termination_condition.type
-                if data.termination_condition.type
-                else None
+                data.termination_condition.type or None
             )
             data.default_overlay_termination_duration = getattr(
                 data.termination_condition, "duration_in_seconds", None

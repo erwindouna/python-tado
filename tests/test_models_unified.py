@@ -2,11 +2,15 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import orjson
 from tadoasync import models_v3, models_x
 from tadoasync.models_unified import Device
 
-from syrupy import SnapshotAssertion
+if TYPE_CHECKING:
+    from syrupy import SnapshotAssertion
+
 from tests import load_fixture
 
 

@@ -2,6 +2,7 @@
 
 import asyncio
 import os
+import re
 import time
 from datetime import UTC, datetime, timedelta
 from typing import Any
@@ -778,7 +779,8 @@ async def test_get_devices_unified_v3(
 
 
 async def test_get_devices_unified_no_devices(
-    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+    python_tado: Tado,
+    responses: aioresponses,
 ) -> None:
     """Test get devices when no devices are returned."""
     python_tado._tado_line = TadoLine.PRE_LINE_X
@@ -794,12 +796,12 @@ async def test_get_devices_unified_no_devices(
 
 
 async def test_get_devices_unified_no_tado_line(
-    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+    python_tado: Tado,
 ) -> None:
     """Test get devices when tado line is not set."""
     python_tado._tado_line = None
 
     with pytest.raises(
-        TadoError, match="Tado Line not set. Cannot get unified devices."
+        TadoError, match=re.escape("Tado Line not set. Cannot get unified devices.")
     ):
         await python_tado.get_unified_devices()

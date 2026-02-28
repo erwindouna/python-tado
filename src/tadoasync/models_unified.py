@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 from mashumaro.mixins.orjson import DataClassORJSONMixin
 
-from tadoasync import models_v3, models_x
+if TYPE_CHECKING:
+    from tadoasync import models_v3, models_x
 
 
 @dataclass
@@ -19,7 +21,7 @@ class Device(DataClassORJSONMixin):
 
     connection_state: bool
 
-    battery_state: str | None  # TODO: Enum
+    battery_state: str | None
 
     temperature_offset: float | None = None
 

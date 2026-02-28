@@ -11,9 +11,9 @@ from mashumaro.mixins.orjson import DataClassORJSONMixin
 
 @dataclass
 class DeviceManualControlTermination(DataClassORJSONMixin):
-    """DeviceManualControlTermination model represents the manual control termination settings of a device."""
+    """Represents the manual control termination settings of a device."""
 
-    type: str  # TODO: Enum
+    type: str
     duration_in_seconds: int | None = field(
         metadata=field_options(alias="durationInSeconds")
     )
@@ -64,9 +64,7 @@ class Room(DataClassORJSONMixin):
     zone_controller_assignable: bool = field(
         metadata=field_options(alias="zoneControllerAssignable")
     )
-    zone_controllers: list[Any] = field(
-        metadata=field_options(alias="zoneControllers")
-    )  # TODO: Define ZoneController model
+    zone_controllers: list[Any] = field(metadata=field_options(alias="zoneControllers"))
     room_link_available: bool = field(metadata=field_options(alias="roomLinkAvailable"))
 
 
