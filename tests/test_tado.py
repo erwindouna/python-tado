@@ -28,6 +28,8 @@ from tests import load_fixture
 
 from .const import TADO_API_URL, TADO_EIQ_URL, TADO_TOKEN_URL
 
+AUTH_TOKEN = load_fixture("auth_token.txt")
+
 
 async def test_create_session(
     responses: aioresponses,
@@ -65,7 +67,7 @@ async def test_login_success(responses: aioresponses) -> None:
         tado = Tado(session=session)
         await tado.async_init()
         await tado.device_activation()
-        assert tado._access_token == "test_access_token"
+        assert tado._access_token == AUTH_TOKEN
         assert tado._token_expiry is not None
         assert tado._token_expiry > time.time()
         assert tado._refresh_token == "test_refresh_token"
@@ -82,10 +84,38 @@ async def test_login_success_no_session(responses: aioresponses) -> None:
         tado = Tado()
         await tado.async_init()
         await tado.device_activation()
-        assert tado._access_token == "test_access_token"
+        assert tado._access_token == AUTH_TOKEN
         assert tado._token_expiry is not None
         assert tado._token_expiry > time.time()
         assert tado._refresh_token == "test_refresh_token"
+
+
+def test_set_home_id_from_access_token_success() -> None:
+    """Test successful home ID extraction from access token."""
+    tado = Tado()
+    tado._access_token = AUTH_TOKEN
+    tado._set_home_id_from_access_token()
+    assert tado._home_id == 1
+
+
+@pytest.mark.parametrize(
+    ("access_token", "decoded_token", "expected_error"),
+    [
+        (None, {}, "Access token is not available for decoding"),
+        (AUTH_TOKEN, {}, "Failed to decode access token and extract home ID"),
+    ],
+)
+def test_set_home_id_from_access_token_errors(
+    access_token: str | None, decoded_token: dict[str, object], expected_error: str
+) -> None:
+    """Test home ID extraction error paths."""
+    tado = Tado()
+    tado._access_token = access_token
+    with (
+        patch("tadoasync.tadoasync.jwt.decode", return_value=decoded_token),
+        pytest.raises(TadoError, match=expected_error),
+    ):
+        tado._set_home_id_from_access_token()
 
 
 async def test_activation_timeout(responses: aioresponses) -> None:
@@ -218,7 +248,7 @@ async def test_refresh_auth_success(responses: aioresponses) -> None:
         TADO_TOKEN_URL,
         status=200,
         payload={
-            "access_token": "new_test_access_token",
+            "access_token": AUTH_TOKEN,
             "expires_in": "3600",
             "refresh_token": "new_test_refresh_token",
         },
@@ -230,7 +260,7 @@ async def test_refresh_auth_success(responses: aioresponses) -> None:
         tado._token_expiry = time.time() - 10  # make sure the token is expired
         tado._refresh_token = "old_test_refresh_token"
         await tado._refresh_auth()
-        assert tado._access_token == "test_access_token"
+        assert tado._access_token == AUTH_TOKEN
         assert tado._token_expiry > time.time()
         assert tado._refresh_token == "test_refresh_token"
 
@@ -675,7 +705,7 @@ async def test_get_me_timeout(responses: aioresponses) -> None:
     responses.post(
         "https://auth.tado.com/oauth/token",
         payload={
-            "access_token": "test_access_token",
+            "access_token": AUTH_TOKEN,
             "expires_in": 3600,
             "refresh_token": "test_refresh_token",
             "token_type": "bearer",
@@ -686,7 +716,7 @@ async def test_get_me_timeout(responses: aioresponses) -> None:
         TADO_TOKEN_URL,
         status=200,
         payload={
-            "access_token": "test_access_token",
+            "access_token": AUTH_TOKEN,
             "expires_in": 3600,
             "refresh_token": "test_refresh_token",
         },
