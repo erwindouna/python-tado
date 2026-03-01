@@ -1,0 +1,59 @@
+{
+    "id": 2,
+    "name": "Test Home X",
+    "dateTimeZone": "Europe/Berlin",
+    "dateCreated": "2025-01-01T12:00:00Z",
+    "temperatureUnit": "CELSIUS",
+    "partner": "AA_LIFETIME_WEBSHOP",
+    "simpleSmartScheduleEnabled": true,
+    "awayRadiusInMeters": 200.00,
+    "installationCompleted": true,
+    "incidentDetection": {
+        "supported": true,
+        "enabled": true
+    },
+    "generation": "LINE_X",
+    "zonesCount": 0,
+    "language": "en-US",
+    "preventFromSubscribing": true,
+    "skills": [
+        "AUTO_ASSIST",
+        "PRE_2025_FREE_FEATURES"
+    ],
+    "christmasModeEnabled": true,
+    "showAutoAssistReminders": true,
+    "contactDetails": {
+        "name": "Test User",
+        "email": "test@example.com",
+        "phone": " +498941209569"
+    },
+    "address": {
+        "addressLine1": "Sapporobogen 6-8",
+        "addressLine2": null,
+        "zipCode": "80637",
+        "city": "München",
+        "state": null,
+        "country": "DEU"
+    },
+    "geolocation": {
+        "latitude": 48.168453,
+        "longitude": 11.534673
+    },
+    "consentGrantSkippable": true,
+    "enabledFeatures": [
+        "AA_REVERSE_TRIAL_7D",
+        "ADAPTIVE_HEATING",
+        "AI_ASSIST_MESSAGING_ENABLED",
+        "AI_ASSIST_OVERVIEW",
+        "AI_PREHEATING_V2",
+        "CUSTOM_THREAD_NETWORK_FLOW",
+        "HOLIDAY_MODE",
+        "ONE_WEBVIEW",
+        "PREHEATING_GEOFENCING_LINE_X",
+        "TABBAR_IN_WEBVIEW"
+    ],
+    "isAirComfortEligible": false,
+    "isEnergyIqEligible": true,
+    "isHeatSourceInstalled": false,
+    "isHeatPumpInstalled": false
+}
