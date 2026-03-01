@@ -77,8 +77,14 @@ coverage.xml
 # Django stuff:
 *.log
 
-# Sphinx documentation
-docs/_build/
+# VitePress
+docs/.vitepress/cache
+docs/.vitepress/dist
+
+# Auto-generated docs (created by scripts/generate_docs.py via pydoc-markdown)
+docs/api.md
+docs/models.md
+docs/exceptions.md
 
 # pyenv
 .python-version
