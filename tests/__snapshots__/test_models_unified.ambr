@@ -1,0 +1,45 @@
+# serializer version: 1
+# name: test_device_from_v3_with_offset
+  dict({
+    'battery_state': 'NORMAL',
+    'child_lock_enabled': True,
+    'connection_state': True,
+    'device_type': 'VA02',
+    'firmware_version': '95.1',
+    'serial': 'SerialNo2',
+    'temperature_offset': 0.0,
+  })
+# ---
+# name: test_device_from_v3_without_offset
+  dict({
+    'battery_state': None,
+    'child_lock_enabled': None,
+    'connection_state': True,
+    'device_type': 'IB01',
+    'firmware_version': '92.1',
+    'serial': 'SerialNo1',
+    'temperature_offset': None,
+  })
+# ---
+# name: test_device_from_x_connected
+  dict({
+    'battery_state': 'NORMAL',
+    'child_lock_enabled': None,
+    'connection_state': True,
+    'device_type': 'SU04',
+    'firmware_version': '287.1',
+    'serial': 'SU0000000000',
+    'temperature_offset': None,
+  })
+# ---
+# name: test_device_from_x_disconnected
+  dict({
+    'battery_state': 'NORMAL',
+    'child_lock_enabled': False,
+    'connection_state': False,
+    'device_type': 'VA04',
+    'firmware_version': '280.1',
+    'serial': 'VA0000000006',
+    'temperature_offset': None,
+  })
+# ---

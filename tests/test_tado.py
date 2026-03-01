@@ -2,6 +2,7 @@
 
 import asyncio
 import os
+import re
 import time
 from datetime import UTC, datetime, timedelta
 from typing import Any
@@ -14,6 +15,7 @@ from aioresponses import CallbackResult, aioresponses
 from tadoasync import (
     Tado,
 )
+from tadoasync.const import TadoLine
 from tadoasync.exceptions import (
     TadoAuthenticationError,
     TadoBadRequestError,
@@ -26,7 +28,7 @@ from tadoasync.tadoasync import DEVICE_AUTH_URL, DeviceActivationStatus
 from syrupy import SnapshotAssertion
 from tests import load_fixture
 
-from .const import TADO_API_URL, TADO_EIQ_URL, TADO_TOKEN_URL
+from .const import TADO_API_URL, TADO_EIQ_URL, TADO_TOKEN_URL, TADO_X_API_URL
 
 
 async def test_create_session(
@@ -736,3 +738,70 @@ async def test_login_device_flow_already_in_progress() -> None:
         TadoError, match="Device activation already in progress or completed"
     ):
         await tado.login_device_flow()
+
+
+async def test_get_devices_unified_x(
+    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+) -> None:
+    """Test get devices."""
+    python_tado._tado_line = TadoLine.LINE_X
+
+    responses.get(
+        f"{TADO_X_API_URL}/homes/1/roomsAndDevices",
+        status=200,
+        body=load_fixture(folder="LINE_X", filename="roomsAndDevices.json"),
+    )
+
+    assert await python_tado.get_unified_devices() == snapshot
+
+
+async def test_get_devices_unified_v3(
+    python_tado: Tado, responses: aioresponses, snapshot: SnapshotAssertion
+) -> None:
+    """Test get devices."""
+    python_tado._tado_line = TadoLine.PRE_LINE_X
+
+    responses.get(
+        f"{TADO_API_URL}/homes/1/devices",
+        status=200,
+        body=load_fixture(filename="devices.json"),
+    )
+
+    for i in range(1, 6):
+        serial = f"SerialNo{i}"
+        responses.get(
+            f"{TADO_API_URL}/devices/{serial}/temperatureOffset",
+            status=200,
+            body=load_fixture(filename="device_info_attribute.json"),
+        )
+
+    assert await python_tado.get_unified_devices() == snapshot
+
+
+async def test_get_devices_unified_no_devices(
+    python_tado: Tado,
+    responses: aioresponses,
+) -> None:
+    """Test get devices when no devices are returned."""
+    python_tado._tado_line = TadoLine.PRE_LINE_X
+
+    responses.get(
+        f"{TADO_API_URL}/homes/1/devices",
+        status=200,
+        body="[]",
+    )
+
+    with pytest.raises(TadoError, match="No devices found for the home"):
+        await python_tado.get_unified_devices()
+
+
+async def test_get_devices_unified_no_tado_line(
+    python_tado: Tado,
+) -> None:
+    """Test get devices when tado line is not set."""
+    python_tado._tado_line = None
+
+    with pytest.raises(
+        TadoError, match=re.escape("Tado Line not set. Cannot get unified devices.")
+    ):
+        await python_tado.get_unified_devices()
