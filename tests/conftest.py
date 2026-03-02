@@ -37,6 +37,8 @@ async def client() -> AsyncGenerator[Tado, None]:
 @pytest.fixture(autouse=True)
 def _tado_oauth(responses: aioresponses) -> None:
     """Mock the Tado token URL."""
+    auth_token = load_fixture("auth_token.txt")
+
     responses.post(
         TADO_DEVICE_AUTH_URL,
         status=200,
@@ -53,7 +55,7 @@ def _tado_oauth(responses: aioresponses) -> None:
         TADO_TOKEN_URL,
         status=200,
         payload={
-            "access_token": "test_access_token",
+            "access_token": auth_token,
             "expires_in": 3600,
             "refresh_token": "test_refresh_token",
         },

@@ -12,6 +12,7 @@ from importlib import metadata
 from typing import Self
 from urllib.parse import urlencode
 
+import jwt
 import orjson
 from aiohttp import ClientResponseError
 from aiohttp.client import ClientSession
@@ -123,8 +124,9 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             self._device_activation_status = await self.login_device_flow()
         else:
             self._device_ready()
-            get_me = await self.get_me()
-            self._home_id = get_me.homes[0].id
+
+            await self._refresh_auth()
+            self._set_home_id_from_access_token()
 
     @property
     def device_activation_status(self) -> DeviceActivationStatus:
@@ -239,9 +241,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             self._token_expiry = time.time() + float(response["expires_in"])
             self._refresh_token = response["refresh_token"]
 
-            get_me = await self.get_me()
-            self._home_id = get_me.homes[0].id
-
+            self._set_home_id_from_access_token()
             return True
 
         raise TadoError(f"Login failed. Reason: {request.reason}")
@@ -302,8 +302,23 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self._token_expiry = time.time() + float(response["expires_in"])
         self._refresh_token = response["refresh_token"]
 
-        get_me = await self.get_me()
-        self._home_id = get_me.homes[0].id
+        self._set_home_id_from_access_token()
+
+    def _set_home_id_from_access_token(self) -> None:
+        """Decode the access token and set the home ID."""
+        if self._access_token is None:
+            raise TadoError("Access token is not available for decoding")
+
+        try:
+            jwt_data = jwt.decode(
+                self._access_token,
+                options={"verify_signature": False, "verify_exp": False},
+            )
+            self._home_id = int(jwt_data["tado_homes"][0]["id"])
+        except (KeyError, TypeError, ValueError, jwt.DecodeError) as err:
+            raise TadoError(
+                "Failed to decode access token and extract home ID"
+            ) from err
 
     async def check_request_status(
         self, response_error: ClientResponseError, *, login: bool = False
