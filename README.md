@@ -106,7 +106,7 @@ This Python project is fully managed using the [uv][uv] dependency manager. But 
 
 You need at least:
 
-- Python 3.12+
+- Python 3.14+
 - [uv][uv-install]
 - NodeJS 18+ (including NPM)
 
