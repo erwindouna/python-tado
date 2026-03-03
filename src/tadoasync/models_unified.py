@@ -54,6 +54,7 @@ class Device(DataClassORJSONMixin):
             device_type=x_device.type,
             serial=x_device.serial_number,
             firmware_version=x_device.firmware_version,
+            temperature_offset=x_device.temperature_offset,
             connection_state=x_device.connection.state == "CONNECTED",
             battery_state=x_device.battery_state,
             child_lock_enabled=x_device.child_lock_enabled,
