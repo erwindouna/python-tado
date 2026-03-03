@@ -9,7 +9,7 @@ import time
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from importlib import metadata
-from typing import Self
+from typing import TYPE_CHECKING, Self
 from urllib.parse import urlencode
 
 import jwt
@@ -18,7 +18,6 @@ from aiohttp import ClientResponseError
 from aiohttp.client import ClientSession
 from yarl import URL
 
-from tadoasync import models_unified as unified_models
 from tadoasync.api_v3 import ApiV3
 from tadoasync.api_x import ApiX
 from tadoasync.const import (
@@ -36,7 +35,6 @@ from tadoasync.const import (
     CONST_MODE_OFF,
     CONST_MODE_SMART_SCHEDULE,
     CONST_VERTICAL_SWING_OFF,
-    INSIDE_TEMPERATURE_MEASUREMENT,
     TADO_HVAC_ACTION_TO_MODES,
     TADO_MODES_TO_HVAC_ACTION,
     TYPE_AIR_CONDITIONING,
@@ -62,6 +60,10 @@ from tadoasync.models_v3 import (
     Zone,
     ZoneState,
 )
+from tadoasync.unifier import get_unifier_from_generation
+
+if TYPE_CHECKING:
+    from tadoasync import models_unified as unified_models
 
 CLIENT_ID = "1bb50063-6b0c-4d11-bd99-387f4a91cc46"
 TOKEN_URL = "https://login.tado.com/oauth2/token"  # noqa: S105
@@ -555,39 +557,12 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
     async def get_unified_devices(self) -> list[unified_models.Device]:
         """Get devices in a unified format, compatible with both Tado X and v3."""
-        if self._tado_line == TadoLine.PRE_LINE_X:
-            devices = await self.get_devices()
-            devices_unified = []
-            if not devices:
-                raise TadoError("No devices found for the home")
-            for v3_device in devices:
-                offset = None
-                if (
-                    INSIDE_TEMPERATURE_MEASUREMENT
-                    in v3_device.characteristics.capabilities
-                ):
-                    try:
-                        offset = await self.api_v3.get_device_temperature_offset(
-                            v3_device.serial_no,
-                        )
-                    except TadoError as err:
-                        _LOGGER.warning(
-                            "Failed to get temperature offset for device %s: %s",
-                            v3_device.serial_no,
-                            err,
-                        )
-                devices_unified.append(unified_models.Device.from_v3(v3_device, offset))
-            return devices_unified
-        if self._tado_line == TadoLine.LINE_X:
-            rooms_and_devices = await self.api_x.get_rooms_and_devices()
-            devices_unified = []
-            for room in rooms_and_devices.rooms:
-                for x_device in room.devices:
-                    devices_unified.append(unified_models.Device.from_x(x_device))
-            for x_device in rooms_and_devices.other_devices:
-                devices_unified.append(unified_models.Device.from_x(x_device))
-            return devices_unified
-        raise TadoError("Tado Line not set. Cannot get unified devices.")
+        unifier = get_unifier_from_generation(
+            generation=self._tado_line,
+            api_x=self.api_x,
+            api_v3=self.api_v3,
+        )
+        return await unifier.get_devices()
 
     async def set_child_lock(self, serial_no: str, *, child_lock: bool) -> None:
         """Set the child lock."""
