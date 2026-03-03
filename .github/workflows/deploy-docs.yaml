@@ -1,0 +1,62 @@
+---
+name: Deploy docs to GitHub Pages
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+    branches: [main, feature/migrate-from-read-the-docs]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
+      - name: 🏗 Set up Python
+        uses: actions/setup-python@v5.0.0
+        with:
+          python-version: "3.12"
+      - name: 🏗 Install uv
+        uses: astral-sh/setup-uv@v7
+      - name: 🏗 Install project dependencies
+        run: uv sync
+      - name: 🏗 Install pydoc-markdown
+        run: uv pip install pydoc-markdown --system
+      - name: 🏗 Set up Node.js
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+      - name: 🏗 Install dependencies
+        run: npm ci
+      - name: 🔨 Build with VitePress
+        run: npm run docs:build
+      - name: 📦 Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist
+
+  deploy:
+    name: Deploy
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

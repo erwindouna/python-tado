@@ -31,6 +31,7 @@ dependencies = [
     "orjson>=3.9.8",
     "yarl>=1.6.0",
     "aioresponses>=0.7.7,<0.8",
+    "pyjwt>=2.11.0",
 ]
 
 [project.urls]
@@ -186,6 +187,9 @@ ignore = [
   "ISC001",
 ]
 select = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*" = ["INP001"]
 
 [tool.ruff.lint.flake8-pytest-style]
 fixture-parentheses = false
