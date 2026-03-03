@@ -29,7 +29,7 @@
     'device_type': 'SU04',
     'firmware_version': '287.1',
     'serial': 'SU0000000000',
-    'temperature_offset': None,
+    'temperature_offset': -0.3,
   })
 # ---
 # name: test_device_from_x_disconnected
@@ -40,6 +40,6 @@
     'device_type': 'VA04',
     'firmware_version': '280.1',
     'serial': 'VA0000000006',
-    'temperature_offset': None,
+    'temperature_offset': -1.0,
   })
 # ---

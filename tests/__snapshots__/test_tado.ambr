@@ -586,7 +586,7 @@
       'device_type': 'SU04',
       'firmware_version': '287.1',
       'serial': 'SU0000000000',
-      'temperature_offset': None,
+      'temperature_offset': -0.3,
     }),
     dict({
       'battery_state': 'NORMAL',
@@ -595,7 +595,7 @@
       'device_type': 'VA04',
       'firmware_version': '280.1',
       'serial': 'VA0000000001',
-      'temperature_offset': None,
+      'temperature_offset': -2.2,
     }),
     dict({
       'battery_state': 'NORMAL',
@@ -604,7 +604,7 @@
       'device_type': 'VA04',
       'firmware_version': '280.1',
       'serial': 'VA0000000002',
-      'temperature_offset': None,
+      'temperature_offset': -0.5,
     }),
     dict({
       'battery_state': 'NORMAL',
@@ -613,7 +613,7 @@
       'device_type': 'VA04',
       'firmware_version': '280.1',
       'serial': 'VA0000000003',
-      'temperature_offset': None,
+      'temperature_offset': -2.0,
     }),
     dict({
       'battery_state': 'NORMAL',
@@ -622,7 +622,7 @@
       'device_type': 'VA04',
       'firmware_version': '280.1',
       'serial': 'VA0000000004',
-      'temperature_offset': None,
+      'temperature_offset': -2.0,
     }),
     dict({
       'battery_state': 'NORMAL',
@@ -631,7 +631,7 @@
       'device_type': 'VA04',
       'firmware_version': '280.1',
       'serial': 'VA0000000005',
-      'temperature_offset': None,
+      'temperature_offset': -1.0,
     }),
     dict({
       'battery_state': 'NORMAL',
@@ -640,7 +640,7 @@
       'device_type': 'VA04',
       'firmware_version': '280.1',
       'serial': 'VA0000000006',
-      'temperature_offset': None,
+      'temperature_offset': -1.0,
     }),
     dict({
       'battery_state': 'NORMAL',
@@ -649,7 +649,7 @@
       'device_type': 'VA04',
       'firmware_version': '280.1',
       'serial': 'VA0000000007',
-      'temperature_offset': None,
+      'temperature_offset': -1.0,
     }),
     dict({
       'battery_state': 'NORMAL',
@@ -658,7 +658,7 @@
       'device_type': 'VA04',
       'firmware_version': '280.1',
       'serial': 'VA0000000008',
-      'temperature_offset': None,
+      'temperature_offset': -1.0,
     }),
     dict({
       'battery_state': None,
