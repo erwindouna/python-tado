@@ -83,6 +83,8 @@ TADO_HVAC_ACTION_TO_MODES = {
     CONST_HVAC_COOL: CONST_MODE_COOL,
 }
 
+INSIDE_TEMPERATURE_MEASUREMENT = "INSIDE_TEMPERATURE_MEASUREMENT"
+
 # These modes will not allow a temp to be set
 TADO_MODES_WITH_NO_TEMP_SETTING = [CONST_MODE_AUTO, CONST_MODE_DRY, CONST_MODE_FAN]
 
@@ -99,3 +101,10 @@ class HttpMethod(Enum):
     POST = "POST"
     PUT = "PUT"
     DELETE = "DELETE"
+
+
+class TadoLine(Enum):
+    """Supported Tado product lines."""
+
+    PRE_LINE_X = "PRE_LINE_X"
+    LINE_X = "LINE_X"
