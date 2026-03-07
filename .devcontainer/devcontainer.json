@@ -1,6 +1,6 @@
 {
   "containerEnv": {
-    "UV_PROJECT_ENVIRONMENT": "/workspaces/python-tado/.venv"
+    "UV_PROJECT_ENVIRONMENT": "${workspaceFolder}/.venv"
   },
   "customizations": {
     "codespaces": {
