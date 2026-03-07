@@ -43,21 +43,21 @@ Changelog = "https://github.com/erwindouna/python-tado/releases"
 
 [dependency-groups]
 dev = [
-    "aresponses==3.0.0",
-    "codespell==2.2.6",
-    "covdefaults==2.3.0",
-    "coverage[toml]==7.4.3",
-    "mypy==1.9.0",
-    "prek",
-    "pylint==3.0.3",
-    "pytest==8.1.1",
-    "pytest-asyncio>=0.23.5.post1,<0.24",
-    "pytest-cov==4.1.0",
-    "ruff==0.1.13",
-    "safety==3.0.1",
-    "yamllint==1.33.0",
-    "syrupy==4.6.1",
-    "deptry>=0.19.1,<0.20",
+    "aresponses>=3.0.0",
+    "codespell>=2.2.6",
+    "covdefaults>=2.3.0",
+    "coverage[toml]>=7.4.3",
+    "mypy>=1.9.0",
+    "prek>=0.3.4",
+    "pylint>=3.0.3",
+    "pytest>=9.0.2",
+    "pytest-asyncio>=1.3.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.15.5",
+    "safety>=3.0.1",
+    "yamllint>=1.33.0",
+    "syrupy>=4.6.1",
+    "deptry>=0.24.0",
 ]
 
 [tool.hatch.build.targets.sdist]
@@ -164,9 +164,7 @@ asyncio_mode = "auto"
 [tool.ruff]
 [tool.ruff.lint]
 ignore = [
-  "ANN101",  # Self... explanatory
-  "ANN102",  # cls... just as useless
-  "ANN401",  # Opinioated warning on disallowing dynamically typed expressions
+  "ANN401",  # Opinionated warning on disallowing dynamically typed expressions
   "D203",    # Conflicts with other rules
   "ARG002",  # Conflicts with other rules
   "D213",    # Conflicts with other rules
