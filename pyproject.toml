@@ -3,7 +3,7 @@ name = "tadoasync"
 version = "0.2.2"
 description = "Asynchronous Python client for controlling Tado devices."
 authors = [{ name = "Erwin Douna", email = "e.douna@gmail.com" }]
-requires-python = ">=3.14,<4"
+requires-python = ">=3.12,<4"
 readme = "README.md"
 license = "MIT"
 maintainers = [{ name = "Erwin Douna", email = "e.douna@gmail.com" }]
@@ -27,7 +27,7 @@ classifiers = [
 ]
 dependencies = [
     "aiohttp>=3.0.0",
-    "mashumaro>=3.10",
+    "mashumaro>=3.20",
     "orjson>=3.10.12",
     "yarl>=1.6.0",
     "aioresponses>=0.7.7,<0.8",
