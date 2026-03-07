@@ -87,7 +87,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
     def __init__(
         self,
         refresh_token: str | None = None,
-        debug: bool | None = None,
+        debug: bool | None = None,  # noqa: FBT001
         session: ClientSession | None = None,
         request_timeout: int = 10,
     ) -> None:
@@ -478,6 +478,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self,
         zone: int,
         overlay_mode: str,
+        *,
         set_temp: float | None = None,
         duration: int | None = None,
         device_type: str = "HEATING",
@@ -758,9 +759,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             and data.termination_condition is not None
         ):
             data.default_overlay_termination_type = (
-                data.termination_condition.type
-                if data.termination_condition.type
-                else None
+                data.termination_condition.type or None
             )
             data.default_overlay_termination_duration = getattr(
                 data.termination_condition, "duration_in_seconds", None

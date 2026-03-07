@@ -1,17 +1,21 @@
 """Asynchronous Python client for Tado."""
 
-from collections.abc import AsyncGenerator, Generator
+from typing import TYPE_CHECKING
 
 import aiohttp
 import pytest
 from aioresponses import aioresponses
 from tadoasync import Tado
 
-from syrupy import SnapshotAssertion
 from tests import load_fixture
 
 from .const import TADO_API_URL, TADO_DEVICE_AUTH_URL, TADO_TOKEN_URL
 from .syrupy import TadoSnapshotExtension
+
+if TYPE_CHECKING:
+    from collections.abc import AsyncGenerator, Generator
+
+    from syrupy import SnapshotAssertion
 
 
 @pytest.fixture(name="snapshot")
@@ -21,7 +25,7 @@ def snapshot_assertion(snapshot: SnapshotAssertion) -> SnapshotAssertion:
 
 
 @pytest.fixture(name="python_tado")
-async def client() -> AsyncGenerator[Tado, None]:
+async def client() -> AsyncGenerator[Tado]:
     """Return a Tado client."""
     async with (
         aiohttp.ClientSession() as session,
@@ -68,7 +72,7 @@ def _tado_oauth(responses: aioresponses) -> None:
 
 
 @pytest.fixture(name="responses")
-def aioresponses_fixture() -> Generator[aioresponses, None, None]:
+def aioresponses_fixture() -> Generator[aioresponses]:
     """Return aioresponses fixture."""
     with aioresponses() as mocked_responses:
         yield mocked_responses

@@ -12,10 +12,10 @@ from .tadoasync import Tado
 
 __all__ = [
     "Tado",
+    "TadoAuthenticationError",
+    "TadoBadRequestError",
     "TadoConnectionError",
     "TadoError",
-    "TadoAuthenticationError",
-    "TadoServerError",
-    "TadoBadRequestError",
     "TadoReadingError",
+    "TadoServerError",
 ]

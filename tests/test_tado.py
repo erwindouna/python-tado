@@ -1,10 +1,12 @@
 """Tests for the Python Tado."""
 
+from __future__ import annotations
+
 import asyncio
-import os
 import time
 from datetime import UTC, datetime, timedelta
-from typing import Any
+from pathlib import Path
+from typing import TYPE_CHECKING, Any
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import aiohttp
@@ -23,10 +25,12 @@ from tadoasync.exceptions import (
 )
 from tadoasync.tadoasync import DEVICE_AUTH_URL, DeviceActivationStatus
 
-from syrupy import SnapshotAssertion
 from tests import load_fixture
 
 from .const import TADO_API_URL, TADO_EIQ_URL, TADO_TOKEN_URL
+
+if TYPE_CHECKING:
+    from syrupy import SnapshotAssertion
 
 AUTH_TOKEN = load_fixture("auth_token.txt")
 
@@ -604,13 +608,13 @@ async def test_set_zone_overlay_success(
     await python_tado.set_zone_overlay(
         zone,
         overlay_mode,
-        set_temp,
-        duration,
-        device_type,
-        power,
-        mode,
-        fan_speed,
-        swing,
+        set_temp=set_temp,
+        duration=duration,
+        device_type=device_type,
+        power=power,
+        mode=mode,
+        fan_speed=fan_speed,
+        swing=swing,
     )
 
 
@@ -676,7 +680,7 @@ async def test_request_client_response_error(python_tado: Tado) -> None:
 
 
 fixtures_files = [
-    f for f in os.listdir("tests/fixtures/zone_state") if f.endswith(".json")
+    f.name for f in Path("tests/fixtures/zone_state").iterdir() if f.suffix == ".json"
 ]
 
 
