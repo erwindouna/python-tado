@@ -35,7 +35,7 @@
         "python.analysis.extraPaths": [
           "${workspaceFolder}/src"
         ],
-        "python.defaultInterpreterPath": "/workspaces/python-tado/.venv/bin/python",
+        "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
         "python.formatting.provider": "black",
         "python.linting.enabled": true,
         "python.linting.mypyEnabled": true,
@@ -45,9 +45,11 @@
           "--cov-report=xml"
         ],
         "python.testing.pytestEnabled": true,
+        "python.languageServer": "Pylance",
+        "ruff.enable": true,
         "ruff.importStrategy": "fromEnvironment",
         "ruff.interpreter": [
-          ".venv/bin/python"
+          "${workspaceFolder}/.venv/bin/python"
         ],
         "editor.formatOnSave": true,
         "terminal.integrated.defaultProfile.linux": "zsh"
