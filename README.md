@@ -66,7 +66,7 @@ based on the following:
 - `MINOR`: Backwards-compatible new features and enhancements.
 - `PATCH`: Backwards-compatible bugfixes and package updates.
 
-## Usage
+## Authentication
 
 As of the 15th of March 2025, Tado has updated their OAuth2 authentication flow. It will now use the device flow, instead of a username/password flow. This means that the user will have to authenticate the device using a browser, and then enter the code that is displayed on the browser into the terminal.
 
@@ -114,7 +114,7 @@ To install all packages, including all development requirements:
 
 ```bash
 npm install
-uv install
+uv sync
 ```
 
 As this repository uses the [pre-commit][pre-commit] framework, all changes
@@ -172,8 +172,6 @@ SOFTWARE.
 [docs]: https://erwindouna.github.io/python-tado/
 [docs-shield]: https://github.com/erwindouna/python-tado/actions/workflows/deploy-docs.yaml/badge.svg
 [erwindouna]: https://github.com/erwindouna
-[github-sponsors-shield]: https://erwindouna.dev/wp-content/uploads/2019/12/github_sponsor.png
-[github-sponsors]: https://github.com/sponsors/erwindouna
 [keepchangelog]: http://keepachangelog.com/en/1.0.0/
 [license-shield]: https://img.shields.io/github/license/erwindouna/python-tado.svg
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2025.svg
