@@ -77,7 +77,7 @@ PyTado handles this as following:
 2. Once the URL is obtained, the user will have to enter the code that is displayed on the browser into the terminal. By default, the URL has the `user_code` attached, for the ease of going trough the flow. At this point, run the method `device_activation()`. It will poll every five seconds to see if the flow has been completed. If the flow has been completed, the method will return a token that will be used for all further requests. It will timeout after five minutes.
 
 3. Once the token has been obtained, the user can use the PyTado object to interact with the Tado API. The token will be stored in the `Tado` object, and will be used for all further requests. The token will be refreshed automatically when it expires.
-The `device_verification_url()` will be reset to `None` and the `device_activation_status()` will return `COMPLETED`.
+   The `device_verification_url()` will be reset to `None` and the `device_activation_status()` will return `COMPLETED`.
 
 ### Screenshots of the device flow
 
@@ -106,7 +106,7 @@ This Python project is fully managed using the [uv][uv] dependency manager. But 
 
 You need at least:
 
-- Python 3.14+
+- Python 3.12+
 - [uv][uv-install]
 - NodeJS 18+ (including NPM)
 

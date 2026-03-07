@@ -25,7 +25,8 @@
             "source.fixAll": "always",
             "source.organizeImports": "always"
           },
-          "editor.defaultFormatter": "charliermarsh.ruff"
+          "editor.defaultFormatter": "charliermarsh.ruff",
+          "editor.formatOnSave": true
         },
         "coverage-gutters.customizable.context-menu": true,
         "coverage-gutters.customizable.status-bar-toggler-watchCoverageAndVisibleEditors-enabled": true,
@@ -36,7 +37,6 @@
           "${workspaceFolder}/src"
         ],
         "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
-        "python.formatting.provider": "black",
         "python.linting.enabled": true,
         "python.linting.mypyEnabled": true,
         "python.linting.pylintEnabled": true,
@@ -51,7 +51,6 @@
         "ruff.interpreter": [
           "${workspaceFolder}/.venv/bin/python"
         ],
-        "editor.formatOnSave": true,
         "terminal.integrated.defaultProfile.linux": "zsh"
       }
     }
