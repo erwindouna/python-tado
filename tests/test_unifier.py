@@ -60,6 +60,6 @@ def test_get_unifier_from_generation_unknown_line() -> None:
     api_v3 = create_autospec(ApiV3, instance=True)
     with pytest.raises(
         TadoError,
-        match="Tado Line not set. Cannot get unified devices.",
+        match=r"Tado Line not set\. Cannot get unified devices\.",
     ):
         get_unifier_from_generation(None, api_x, api_v3)
