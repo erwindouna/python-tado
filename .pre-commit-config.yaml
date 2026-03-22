@@ -49,7 +49,7 @@ repos:
         args: [--branch=main]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.6.8
+    rev: v0.15.5
     hooks:
       - id: ruff
         name: 🐶 Ruff Linter
@@ -60,22 +60,15 @@ repos:
         stages: [commit, push, manual]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.14.1
+    rev: v1.19.1
     hooks:
       - id: mypy
         name: 🆎 Static type checking using mypy
         types: [python]
         additional_dependencies: []
 
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.0
-    hooks:
-      - id: prettier
-        name: 💄 Ensuring files are prettier
-        types: [yaml, json, markdown]
-
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.35.1
+    rev: v1.38.0
     hooks:
       - id: yamllint
         name: 🎗  Check YAML files with yamllint
@@ -100,3 +93,8 @@ repos:
         types: [python]
         entry: uv run pytest --cov=tadoasync --cov-report=term-missing --cov-report=xml --cov-fail-under=95
         pass_filenames: false
+      - id: prettier
+        name: 💄 Ensuring files are prettier
+        language: system
+        entry: npx prettier --write --ignore-unknown
+        types: [yaml, json, markdown]

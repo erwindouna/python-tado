@@ -94,7 +94,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
     def __init__(
         self,
         refresh_token: str | None = None,
-        debug: bool | None = None,
+        debug: bool | None = None,  # noqa: FBT001
         session: ClientSession | None = None,
         request_timeout: int = 10,
     ) -> None:
@@ -489,6 +489,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self,
         zone: int,
         overlay_mode: str,
+        *,
         set_temp: float | None = None,
         duration: int | None = None,
         device_type: str = "HEATING",

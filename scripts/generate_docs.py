@@ -59,10 +59,7 @@ def _find_pydoc_markdown() -> str:
     """Find pydoc-markdown binary or raise."""
     pydoc_md = shutil.which("pydoc-markdown")
     if pydoc_md is None:
-        msg = (
-            "pydoc-markdown not found."
-            " Install it with: uv pip install pydoc-markdown"
-        )
+        msg = "pydoc-markdown not found. Install it with: uv pip install pydoc-markdown"
         raise RuntimeError(msg)
     return pydoc_md
 
@@ -103,7 +100,7 @@ def _get_inherited_members(cls: type) -> list[dict[str, str]]:
         if callable(attr):
             try:
                 sig = str(inspect.signature(attr))
-            except (ValueError, TypeError):
+            except (ValueError, TypeError):  # fmt: skip
                 sig = "(...)"
         members.append({"name": name, "sig": sig, "doc": doc})
     return members
@@ -118,13 +115,13 @@ def _format_inherited_section(
         anchor = f'<a id="{module_name}.{class_name}.{m["name"]}"></a>\n\n'
         if m["sig"]:
             lines.append(
-                f'{anchor}#### {m["name"]}\n\n```python\n'
-                f'def {m["name"]}{m["sig"]}\n```\n'
+                f"{anchor}#### {m['name']}\n\n```python\n"
+                f"def {m['name']}{m['sig']}\n```\n"
             )
         else:
-            lines.append(f'{anchor}#### {m["name"]}\n')
+            lines.append(f"{anchor}#### {m['name']}\n")
         if m["doc"]:
-            lines.append(f'\n{m["doc"]}\n')
+            lines.append(f"\n{m['doc']}\n")
     return "\n".join(lines)
 
 
@@ -176,8 +173,8 @@ def generate(filename: str, config: dict[str, str], pydoc_md: str) -> None:
         tmp_path = tmp.name
 
     try:
-        result = subprocess.run(
-            [pydoc_md, tmp_path],  # noqa: S603
+        result = subprocess.run(  # noqa: S603
+            [pydoc_md, tmp_path],
             capture_output=True,
             text=True,
             check=True,

@@ -524,7 +524,7 @@ class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attr
     geolocation_override: bool = field(
         metadata=field_options(alias="geolocationOverride")
     )
-    overlay_type: str = field(metadata=field_options(alias="overlayType"))
+    overlay_type: str | None = field(metadata=field_options(alias="overlayType"))
     next_time_block: dict[str, str] = field(
         metadata=field_options(alias="nextTimeBlock")
     )

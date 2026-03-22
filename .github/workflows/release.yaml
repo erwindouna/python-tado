@@ -27,7 +27,7 @@ on:
         required: true
 
 env:
-  DEFAULT_PYTHON: "3.12"
+  DEFAULT_PYTHON: "3.14"
 
 jobs:
   release:
@@ -42,20 +42,12 @@ jobs:
     steps:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v4.1.1
-      - name: 🏗 Set up Poetry
-        run: pipx install poetry
-      - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
-        id: python
-        uses: actions/setup-python@v5.0.0
+      - name: 🏗 Install uv and set the Python version ${{ env.DEFAULT_PYTHON }}
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ env.DEFAULT_PYTHON }}
-          cache: "poetry"
-      - name: 🏗 Install workflow dependencies
-        run: |
-          poetry config virtualenvs.create true
-          poetry config virtualenvs.in-project true
-      - name: 🏗 Install dependencies
-        run: poetry install --no-interaction
+      - name: 🏗 Install Python dependencies
+        run: uv sync
       - name: 🏗 Set package version
         run: |
           version="${{ github.event.release.tag_name }}"
