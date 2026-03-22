@@ -1,4 +1,4 @@
-"""Tests for the Python Tado X models."""
+"""Tests for the Python Tado v3 models."""
 
 from aioresponses import aioresponses
 from tadoasync import (
