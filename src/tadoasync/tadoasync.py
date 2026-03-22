@@ -9,7 +9,7 @@ import time
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from importlib import metadata
-from typing import Self
+from typing import TYPE_CHECKING, Self
 from urllib.parse import urlencode
 
 import jwt
@@ -18,6 +18,8 @@ from aiohttp import ClientResponseError
 from aiohttp.client import ClientSession
 from yarl import URL
 
+from tadoasync.api_v3 import ApiV3
+from tadoasync.api_x import ApiX
 from tadoasync.const import (
     CONST_AWAY,
     CONST_FAN_AUTO,
@@ -37,6 +39,7 @@ from tadoasync.const import (
     TADO_MODES_TO_HVAC_ACTION,
     TYPE_AIR_CONDITIONING,
     HttpMethod,
+    TadoLine,
 )
 from tadoasync.exceptions import (
     TadoAuthenticationError,
@@ -46,7 +49,7 @@ from tadoasync.exceptions import (
     TadoForbiddenError,
     TadoReadingError,
 )
-from tadoasync.models import (
+from tadoasync.models_v3 import (
     Capabilities,
     Device,
     GetMe,
@@ -57,6 +60,10 @@ from tadoasync.models import (
     Zone,
     ZoneState,
 )
+from tadoasync.unifier import get_unifier_from_generation
+
+if TYPE_CHECKING:
+    from tadoasync import models_unified as unified_models
 
 CLIENT_ID = "1bb50063-6b0c-4d11-bd99-387f4a91cc46"
 TOKEN_URL = "https://login.tado.com/oauth2/token"  # noqa: S105
@@ -109,6 +116,10 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self._home_id: int | None = None
         self._me: GetMe | None = None
         self._auto_geofencing_supported: bool | None = None
+        self._tado_line: TadoLine | None = None
+
+        self.api_x = ApiX(self)
+        self.api_v3 = ApiV3(self)
 
         self._user_code: str | None = None
         self._device_verification_url: str | None = None
@@ -545,6 +556,15 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         response = await self._request(f"devices/{serial_no}/")
         return Device.from_json(response)
 
+    async def get_unified_devices(self) -> list[unified_models.Device]:
+        """Get devices in a unified format, compatible with both Tado X and v3."""
+        unifier = get_unifier_from_generation(
+            generation=self._tado_line,
+            api_x=self.api_x,
+            api_v3=self.api_v3,
+        )
+        return await unifier.get_devices()
+
     async def set_child_lock(self, serial_no: str, *, child_lock: bool) -> None:
         """Set the child lock."""
         await self._request(
@@ -581,6 +601,11 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         url = URL.build(scheme="https", host=TADO_HOST_URL, path=TADO_API_PATH)
         if endpoint == EIQ_HOST_URL:
             url = URL.build(scheme="https", host=EIQ_HOST_URL, path=EIQ_API_PATH)
+        elif endpoint != API_URL:
+            endpoint_url = (
+                endpoint if endpoint.startswith("http") else f"https://{endpoint}"
+            )
+            url = URL(endpoint_url)
 
         if uri:
             url = url.joinpath(uri)

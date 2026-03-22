@@ -1,0 +1,209 @@
+# serializer version: 1
+# name: test_get_rooms_and_devices
+  dict({
+    'other_devices': list([
+      dict({
+        'battery_state': None,
+        'child_lock_enabled': None,
+        'connection': dict({
+          'state': 'CONNECTED',
+        }),
+        'firmware_version': '279.1',
+        'mounting_state': None,
+        'serial_number': 'IB0000000000',
+        'temperature_as_measured': None,
+        'temperature_offset': None,
+        'type': 'IB02',
+      }),
+    ]),
+    'rooms': list([
+      dict({
+        'device_manual_control_termination': dict({
+          'duration_in_seconds': None,
+          'type': 'NEXT_TIME_BLOCK',
+        }),
+        'devices': list([
+          dict({
+            'battery_state': 'NORMAL',
+            'child_lock_enabled': None,
+            'connection': dict({
+              'state': 'CONNECTED',
+            }),
+            'firmware_version': '287.1',
+            'mounting_state': None,
+            'serial_number': 'SU0000000000',
+            'temperature_as_measured': 19.91,
+            'temperature_offset': -0.3,
+            'type': 'SU04',
+          }),
+          dict({
+            'battery_state': 'NORMAL',
+            'child_lock_enabled': False,
+            'connection': dict({
+              'state': 'CONNECTED',
+            }),
+            'firmware_version': '280.1',
+            'mounting_state': 'CALIBRATED',
+            'serial_number': 'VA0000000001',
+            'temperature_as_measured': 22.48,
+            'temperature_offset': -2.2,
+            'type': 'VA04',
+          }),
+        ]),
+        'room_id': 1,
+        'room_link_available': True,
+        'room_name': 'Room 1',
+        'zone_controller_assignable': False,
+        'zone_controllers': list([
+        ]),
+      }),
+      dict({
+        'device_manual_control_termination': dict({
+          'duration_in_seconds': 3600,
+          'type': 'TIMER',
+        }),
+        'devices': list([
+          dict({
+            'battery_state': 'NORMAL',
+            'child_lock_enabled': False,
+            'connection': dict({
+              'state': 'CONNECTED',
+            }),
+            'firmware_version': '280.1',
+            'mounting_state': 'CALIBRATED',
+            'serial_number': 'VA0000000002',
+            'temperature_as_measured': 20.98,
+            'temperature_offset': -0.5,
+            'type': 'VA04',
+          }),
+        ]),
+        'room_id': 2,
+        'room_link_available': True,
+        'room_name': 'Room 2',
+        'zone_controller_assignable': False,
+        'zone_controllers': list([
+        ]),
+      }),
+      dict({
+        'device_manual_control_termination': dict({
+          'duration_in_seconds': None,
+          'type': 'NEXT_TIME_BLOCK',
+        }),
+        'devices': list([
+          dict({
+            'battery_state': 'NORMAL',
+            'child_lock_enabled': False,
+            'connection': dict({
+              'state': 'CONNECTED',
+            }),
+            'firmware_version': '280.1',
+            'mounting_state': 'CALIBRATED',
+            'serial_number': 'VA0000000003',
+            'temperature_as_measured': 22.9,
+            'temperature_offset': -2.0,
+            'type': 'VA04',
+          }),
+        ]),
+        'room_id': 3,
+        'room_link_available': True,
+        'room_name': 'Room 3',
+        'zone_controller_assignable': False,
+        'zone_controllers': list([
+        ]),
+      }),
+      dict({
+        'device_manual_control_termination': dict({
+          'duration_in_seconds': None,
+          'type': 'NEXT_TIME_BLOCK',
+        }),
+        'devices': list([
+          dict({
+            'battery_state': 'NORMAL',
+            'child_lock_enabled': False,
+            'connection': dict({
+              'state': 'CONNECTED',
+            }),
+            'firmware_version': '280.1',
+            'mounting_state': 'CALIBRATED',
+            'serial_number': 'VA0000000004',
+            'temperature_as_measured': 22.52,
+            'temperature_offset': -2.0,
+            'type': 'VA04',
+          }),
+          dict({
+            'battery_state': 'NORMAL',
+            'child_lock_enabled': False,
+            'connection': dict({
+              'state': 'CONNECTED',
+            }),
+            'firmware_version': '280.1',
+            'mounting_state': 'CALIBRATED',
+            'serial_number': 'VA0000000005',
+            'temperature_as_measured': 21.62,
+            'temperature_offset': -1.0,
+            'type': 'VA04',
+          }),
+          dict({
+            'battery_state': 'NORMAL',
+            'child_lock_enabled': False,
+            'connection': dict({
+              'state': 'DISCONNECTED',
+            }),
+            'firmware_version': '280.1',
+            'mounting_state': 'CALIBRATED',
+            'serial_number': 'VA0000000006',
+            'temperature_as_measured': 20.89,
+            'temperature_offset': -1.0,
+            'type': 'VA04',
+          }),
+          dict({
+            'battery_state': 'NORMAL',
+            'child_lock_enabled': False,
+            'connection': dict({
+              'state': 'CONNECTED',
+            }),
+            'firmware_version': '280.1',
+            'mounting_state': 'CALIBRATED',
+            'serial_number': 'VA0000000007',
+            'temperature_as_measured': 21.54,
+            'temperature_offset': -1.0,
+            'type': 'VA04',
+          }),
+        ]),
+        'room_id': 4,
+        'room_link_available': True,
+        'room_name': 'Room 4',
+        'zone_controller_assignable': False,
+        'zone_controllers': list([
+        ]),
+      }),
+      dict({
+        'device_manual_control_termination': dict({
+          'duration_in_seconds': None,
+          'type': 'NEXT_TIME_BLOCK',
+        }),
+        'devices': list([
+          dict({
+            'battery_state': 'NORMAL',
+            'child_lock_enabled': False,
+            'connection': dict({
+              'state': 'CONNECTED',
+            }),
+            'firmware_version': '280.1',
+            'mounting_state': 'CALIBRATED',
+            'serial_number': 'VA0000000008',
+            'temperature_as_measured': 21.22,
+            'temperature_offset': -1.0,
+            'type': 'VA04',
+          }),
+        ]),
+        'room_id': 8,
+        'room_link_available': True,
+        'room_name': 'Room 5',
+        'zone_controller_assignable': False,
+        'zone_controllers': list([
+        ]),
+      }),
+    ]),
+  })
+# ---
