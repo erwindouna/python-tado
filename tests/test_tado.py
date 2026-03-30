@@ -625,7 +625,7 @@ async def test_add_meter_readings_success(
 ) -> None:
     """Test adding meter readings."""
     responses.post(
-        TADO_EIQ_URL,
+        f"{TADO_EIQ_URL}/homes/1/meterReadings",
         body=load_fixture(folder="meter", filename="add_reading_success.json"),
     )
     await python_tado.set_meter_readings(5)
@@ -650,7 +650,7 @@ async def test_add_meter_readings_duplicated(
     date = datetime(2023, 10, 1, 12, 0, 0, tzinfo=UTC)
     reading = 5
     responses.post(
-        TADO_EIQ_URL,
+        f"{TADO_EIQ_URL}/homes/1/meterReadings",
         body=load_fixture(folder="meter", filename="add_reading_duplicate.json"),
     )
     with pytest.raises(

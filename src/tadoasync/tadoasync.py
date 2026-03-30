@@ -582,7 +582,10 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
         payload = {"date": date.strftime("%Y-%m-%d"), "reading": reading}
         response = await self._request(
-            endpoint=EIQ_HOST_URL, data=payload, method=HttpMethod.POST
+            f"homes/{self._home_id}/meterReadings",
+            endpoint=EIQ_HOST_URL,
+            data=payload,
+            method=HttpMethod.POST,
         )
         data = orjson.loads(response)
         if "message" in data:
