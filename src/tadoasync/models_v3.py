@@ -589,6 +589,8 @@ class ZoneState(DataClassORJSONMixin):  # pylint: disable=too-many-instance-attr
         """Pre deserialize hook."""
         if not d["sensorDataPoints"]:
             d["sensorDataPoints"] = None
+        if d.get("nextTimeBlock") is None:
+            d["nextTimeBlock"] = {}
         return d
 
 
