@@ -493,6 +493,15 @@ class AcPower(DataClassORJSONMixin):
 
 
 @dataclass
+class HotWaterInUse(DataClassORJSONMixin):
+    """HotWaterInUse model represents the hot water activity state."""
+
+    type: str
+    timestamp: str
+    value: str
+
+
+@dataclass
 class Humidity(DataClassORJSONMixin):
     """Humidity model represents the humidity."""
 
@@ -625,6 +634,9 @@ class ActivityDataPoints(DataClassORJSONMixin):
     )
     heating_power: HeatingPower | None = field(
         default=None, metadata=field_options(alias="heatingPower")
+    )
+    hot_water_in_use: HotWaterInUse | None = field(
+        default=None, metadata=field_options(alias="hotWaterInUse")
     )
 
 
