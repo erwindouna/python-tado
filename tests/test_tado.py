@@ -34,7 +34,7 @@ from .const import TADO_API_URL, TADO_EIQ_URL, TADO_TOKEN_URL, TADO_X_API_URL
 if TYPE_CHECKING:
     from syrupy import SnapshotAssertion
 
-AUTH_TOKEN = load_fixture("auth_token.txt")
+AUTH_TOKEN = load_fixture("auth_token.txt").strip()
 
 
 async def test_create_session(
