@@ -23,7 +23,10 @@ from tadoasync.exceptions import (
     TadoBadRequestError,
     TadoConnectionError,
     TadoError,
+    TadoForbiddenError,
+    TadoRateLimitError,
     TadoReadingError,
+    TadoServerError,
 )
 from tadoasync.tadoasync import DEVICE_AUTH_URL, DeviceActivationStatus
 
@@ -302,8 +305,35 @@ async def test_refresh_auth_client_response_error(python_tado: Tado) -> None:
         python_tado._access_token = "old_test_access_token"
         python_tado._token_expiry = time.time() - 10  # make sure the token is expired
         python_tado._refresh_token = "old_test_refresh_token"
-        with pytest.raises(TadoBadRequestError):
+        # a 400 from the token endpoint means the refresh token was refused
+        with pytest.raises(TadoAuthenticationError):
             await python_tado._refresh_auth()
+
+
+@pytest.mark.parametrize(
+    ("status", "login", "expected"),
+    [
+        (400, False, TadoBadRequestError),
+        (400, True, TadoAuthenticationError),
+        (401, False, TadoAuthenticationError),
+        (403, False, TadoForbiddenError),
+        (404, False, TadoError),
+        (429, False, TadoRateLimitError),
+        (500, False, TadoServerError),
+        (502, False, TadoServerError),
+        (503, False, TadoServerError),
+    ],
+)
+async def test_check_request_status_maps_every_status(
+    python_tado: Tado, status: int, *, login: bool, expected: type[TadoError]
+) -> None:
+    """Every HTTP error maps to a Tado exception, never a KeyError."""
+    error = ClientResponseError(
+        MagicMock(spec=RequestInfo), (), status=status, message="Error message"
+    )
+    with pytest.raises(expected) as exc_info:
+        await python_tado.check_request_status(error, login=login)
+    assert "Error message" in str(exc_info.value)
 
 
 async def test_device_flow_sets_verification_url(responses: aioresponses) -> None:

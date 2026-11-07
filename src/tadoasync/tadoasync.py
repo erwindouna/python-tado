@@ -48,7 +48,9 @@ from tadoasync.exceptions import (
     TadoConnectionError,
     TadoError,
     TadoForbiddenError,
+    TadoRateLimitError,
     TadoReadingError,
+    TadoServerError,
 )
 from tadoasync.models_v3 import (
     Capabilities,
@@ -369,33 +371,29 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self, response_error: ClientResponseError, *, login: bool = False
     ) -> None:
         """Check the status of the request and raise the proper exception if needed."""
-        status_error_mapping = {
-            500: TadoError(
-                "Error "
-                + str(response_error.status)
-                + " connecting to Tado. Response body: "
-                + response_error.message
-            ),
-            401: TadoAuthenticationError(
-                "Authentication error connecting to Tado. Response body: "
-                + response_error.message
-            ),
-            403: TadoForbiddenError(
-                "Forbidden error connecting to Tado. Response body: "
-                + response_error.message
-            ),
-        }
-
-        status_error_mapping[400] = TadoBadRequestError(
-            "Bad request to Tado. Response body: " + response_error.message
-        )
-        if login:
-            status_error_mapping[400] = TadoAuthenticationError(
-                "Authentication error connecting to Tado. Response body: "
-                + response_error.message
+        status = response_error.status
+        body = response_error.message
+        if status == 401 or (status == 400 and login):
+            raise TadoAuthenticationError(
+                "Authentication error connecting to Tado. Response body: " + body
             )
-
-        raise status_error_mapping[response_error.status]
+        if status == 400:
+            raise TadoBadRequestError("Bad request to Tado. Response body: " + body)
+        if status == 403:
+            raise TadoForbiddenError(
+                "Forbidden error connecting to Tado. Response body: " + body
+            )
+        if status == 429:
+            raise TadoRateLimitError(
+                "Tado API rate limit reached. Response body: " + body
+            )
+        if status >= 500:
+            raise TadoServerError(
+                "Error " + str(status) + " connecting to Tado. Response body: " + body
+            )
+        raise TadoError(
+            "Unexpected status " + str(status) + " from Tado. Response body: " + body
+        )
 
     async def _refresh_auth(self) -> None:
         """Refresh the authentication token."""
@@ -420,7 +418,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                 "Timeout occurred while connecting to Tado."
             ) from err
         except ClientResponseError as err:
-            await self.check_request_status(err)
+            # 400 here is invalid_grant: tado refused the refresh token
+            await self.check_request_status(err, login=True)
 
         response = await request.json()
         self._access_token = response["access_token"]
