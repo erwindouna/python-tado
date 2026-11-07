@@ -17,6 +17,10 @@ class TadoServerError(TadoError):
     """Tado server exception."""
 
 
+class TadoRateLimitError(TadoError):
+    """Tado API rate limit (daily quota) exception."""
+
+
 class TadoBadRequestError(TadoError):
     """Tado bad request exception."""
 

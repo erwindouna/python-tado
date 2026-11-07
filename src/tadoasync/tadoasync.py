@@ -48,7 +48,9 @@ from tadoasync.exceptions import (
     TadoConnectionError,
     TadoError,
     TadoForbiddenError,
+    TadoRateLimitError,
     TadoReadingError,
+    TadoServerError,
 )
 from tadoasync.models_v3 import (
     Capabilities,
@@ -64,6 +66,8 @@ from tadoasync.models_v3 import (
 from tadoasync.unifier import get_unifier_from_generation
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from tadoasync import models_unified as unified_models
 
 CLIENT_ID = "1bb50063-6b0c-4d11-bd99-387f4a91cc46"
@@ -98,9 +102,17 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         debug: bool | None = None,  # noqa: FBT001
         session: ClientSession | None = None,
         request_timeout: int = 10,
+        token_update_callback: Callable[[str], None] | None = None,
     ) -> None:
-        """Initialize the Tado object."""
+        """Initialize the Tado object.
+
+        token_update_callback, if given, is called with the new refresh token
+        every time tado issues one (device login and every refresh). tado refresh
+        tokens are single use, so a caller that stores the token should save it
+        here rather than only after its own calls succeed.
+        """
         self._refresh_token = refresh_token
+        self._token_update_callback = token_update_callback
         self._debug: bool = debug or False
         self._session = session
         self._request_timeout = request_timeout
@@ -113,6 +125,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
         self._access_token: str | None = None
         self._token_expiry: float | None = None
+        # tado refresh tokens are single use: only one refresh may run at a time
+        self._refresh_lock = asyncio.Lock()
         self._access_headers: dict[str, str] | None = None
         self._home_id: int | None = None
         self._me: GetMe | None = None
@@ -284,7 +298,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             response = await request.json()
             self._access_token = response["access_token"]
             self._token_expiry = time.time() + float(response["expires_in"])
-            self._refresh_token = response["refresh_token"]
+            self._set_refresh_token(response["refresh_token"])
 
             self._set_home_id_from_access_token()
             return True
@@ -345,7 +359,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         response = await request.json()
         self._access_token = response["access_token"]
         self._token_expiry = time.time() + float(response["expires_in"])
-        self._refresh_token = response["refresh_token"]
+        self._set_refresh_token(response["refresh_token"])
 
         self._set_home_id_from_access_token()
 
@@ -369,39 +383,59 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         self, response_error: ClientResponseError, *, login: bool = False
     ) -> None:
         """Check the status of the request and raise the proper exception if needed."""
-        status_error_mapping = {
-            500: TadoError(
-                "Error "
-                + str(response_error.status)
-                + " connecting to Tado. Response body: "
-                + response_error.message
-            ),
-            401: TadoAuthenticationError(
-                "Authentication error connecting to Tado. Response body: "
-                + response_error.message
-            ),
-            403: TadoForbiddenError(
-                "Forbidden error connecting to Tado. Response body: "
-                + response_error.message
-            ),
-        }
-
-        status_error_mapping[400] = TadoBadRequestError(
-            "Bad request to Tado. Response body: " + response_error.message
-        )
-        if login:
-            status_error_mapping[400] = TadoAuthenticationError(
-                "Authentication error connecting to Tado. Response body: "
-                + response_error.message
+        status = response_error.status
+        body = response_error.message
+        if status == 401 or (status == 400 and login):
+            raise TadoAuthenticationError(
+                "Authentication error connecting to Tado. Response body: " + body
             )
-
-        raise status_error_mapping[response_error.status]
+        if status == 400:
+            raise TadoBadRequestError("Bad request to Tado. Response body: " + body)
+        if status == 403:
+            raise TadoForbiddenError(
+                "Forbidden error connecting to Tado. Response body: " + body
+            )
+        if status == 429:
+            raise TadoRateLimitError(
+                "Tado API rate limit reached. Response body: " + body
+            )
+        if status >= 500:
+            raise TadoServerError(
+                "Error " + str(status) + " connecting to Tado. Response body: " + body
+            )
+        raise TadoError(
+            "Unexpected status " + str(status) + " from Tado. Response body: " + body
+        )
 
     async def _refresh_auth(self) -> None:
         """Refresh the authentication token."""
-        if self._token_expiry is not None and time.time() < self._token_expiry - 30:
+        if self._token_is_fresh():
             return
 
+        # Several requests can find the token expired at the same time. Only the
+        # first one refreshes; the others wait and then use its new token instead
+        # of sending the refresh token it has just used up (tado answers 400).
+        async with self._refresh_lock:
+            if self._token_is_fresh():
+                return
+            await self._refresh_auth_locked()
+
+    def _set_refresh_token(self, refresh_token: str) -> None:
+        """Store a newly issued refresh token and hand it to the callback."""
+        self._refresh_token = refresh_token
+        if self._token_update_callback is None:
+            return
+        try:
+            self._token_update_callback(refresh_token)
+        except Exception:  # pylint: disable=broad-exception-caught
+            _LOGGER.exception("Token update callback failed")
+
+    def _token_is_fresh(self) -> bool:
+        """Return True while the access token is valid for at least 30 more seconds."""
+        return self._token_expiry is not None and time.time() < self._token_expiry - 30
+
+    async def _refresh_auth_locked(self) -> None:
+        """Refresh the authentication token; the caller holds the refresh lock."""
         data = {
             "client_id": CLIENT_ID,
             "grant_type": "refresh_token",
@@ -420,12 +454,13 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                 "Timeout occurred while connecting to Tado."
             ) from err
         except ClientResponseError as err:
-            await self.check_request_status(err)
+            # 400 here is invalid_grant: tado refused the refresh token
+            await self.check_request_status(err, login=True)
 
         response = await request.json()
         self._access_token = response["access_token"]
         self._token_expiry = time.time() + float(response["expires_in"])
-        self._refresh_token = response["refresh_token"]
+        self._set_refresh_token(response["refresh_token"])
 
         _LOGGER.debug("Tado token refreshed")
 

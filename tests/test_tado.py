@@ -23,7 +23,10 @@ from tadoasync.exceptions import (
     TadoBadRequestError,
     TadoConnectionError,
     TadoError,
+    TadoForbiddenError,
+    TadoRateLimitError,
     TadoReadingError,
+    TadoServerError,
 )
 from tadoasync.tadoasync import DEVICE_AUTH_URL, DeviceActivationStatus
 
@@ -34,7 +37,7 @@ from .const import TADO_API_URL, TADO_EIQ_URL, TADO_TOKEN_URL, TADO_X_API_URL
 if TYPE_CHECKING:
     from syrupy import SnapshotAssertion
 
-AUTH_TOKEN = load_fixture("auth_token.txt")
+AUTH_TOKEN = load_fixture("auth_token.txt").strip()
 
 
 async def test_create_session(
@@ -302,8 +305,121 @@ async def test_refresh_auth_client_response_error(python_tado: Tado) -> None:
         python_tado._access_token = "old_test_access_token"
         python_tado._token_expiry = time.time() - 10  # make sure the token is expired
         python_tado._refresh_token = "old_test_refresh_token"
-        with pytest.raises(TadoBadRequestError):
+        # a 400 from the token endpoint means the refresh token was refused
+        with pytest.raises(TadoAuthenticationError):
             await python_tado._refresh_auth()
+
+
+@pytest.mark.parametrize(
+    ("status", "login", "expected"),
+    [
+        (400, False, TadoBadRequestError),
+        (400, True, TadoAuthenticationError),
+        (401, False, TadoAuthenticationError),
+        (403, False, TadoForbiddenError),
+        (404, False, TadoError),
+        (429, False, TadoRateLimitError),
+        (500, False, TadoServerError),
+        (502, False, TadoServerError),
+        (503, False, TadoServerError),
+    ],
+)
+async def test_check_request_status_maps_every_status(
+    python_tado: Tado, status: int, *, login: bool, expected: type[TadoError]
+) -> None:
+    """Every HTTP error maps to a Tado exception, never a KeyError."""
+    error = ClientResponseError(
+        MagicMock(spec=RequestInfo), (), status=status, message="Error message"
+    )
+    with pytest.raises(expected) as exc_info:
+        await python_tado.check_request_status(error, login=login)
+    assert "Error message" in str(exc_info.value)
+
+
+async def test_parallel_requests_refresh_token_once(python_tado: Tado) -> None:
+    """Parallel requests at token expiry refresh once and reuse the result.
+
+    tado refresh tokens are single use. Without serialisation every coroutine
+    sends the same refresh token and all but the first get HTTP 400.
+    """
+    valid = {"rotating_0"}
+    calls = {"refresh": 0, "rejected": 0}
+
+    async def mock_post(*args: Any, **kwargs: Any) -> ClientResponse:  # noqa: ARG001 # pylint: disable=unused-argument
+        sent = kwargs["data"]["refresh_token"]
+        await asyncio.sleep(0.01)  # a real round trip; lets the others catch up
+        calls["refresh"] += 1
+        response = MagicMock(spec=ClientResponse)
+        if sent not in valid:
+            calls["rejected"] += 1
+            response.raise_for_status.side_effect = ClientResponseError(
+                MagicMock(spec=RequestInfo), (), status=400, message="invalid_grant"
+            )
+            return response
+        valid.discard(sent)
+        new = f"rotating_{calls['refresh']}"
+        valid.add(new)
+        response.json = AsyncMock(
+            return_value={
+                "access_token": AUTH_TOKEN,
+                "expires_in": 600,
+                "refresh_token": new,
+            }
+        )
+        return response
+
+    with patch("aiohttp.ClientSession.post", new=mock_post):
+        python_tado._token_expiry = time.time() - 10
+        python_tado._refresh_token = "rotating_0"
+        results = await asyncio.gather(
+            *(python_tado._refresh_auth() for _ in range(6)), return_exceptions=True
+        )
+
+    assert [r for r in results if isinstance(r, Exception)] == []
+    assert calls == {"refresh": 1, "rejected": 0}
+    assert python_tado.refresh_token == "rotating_1"
+
+
+async def test_token_update_callback_gets_every_new_token(
+    responses: aioresponses,
+) -> None:
+    """The callback sees the token from the device login and from each refresh."""
+    seen: list[str] = []
+    async with aiohttp.ClientSession() as session:
+        tado = Tado(session=session, token_update_callback=seen.append)
+        await tado.async_init()
+        await tado.device_activation()
+        assert seen == ["test_refresh_token"]
+
+        responses.post(
+            TADO_TOKEN_URL,
+            status=200,
+            payload={
+                "access_token": AUTH_TOKEN,
+                "expires_in": 600,
+                "refresh_token": "second_refresh_token",
+            },
+        )
+        tado._token_expiry = time.time() - 10
+        await tado._refresh_auth()
+        assert seen == ["test_refresh_token", "second_refresh_token"]
+
+
+async def test_token_update_callback_error_does_not_break_auth(
+    responses: aioresponses,  # noqa: ARG001 # pylint: disable=unused-argument
+) -> None:
+    """A failing callback is logged; authentication still completes."""
+
+    def broken(token: str) -> None:  # noqa: ARG001 # pylint: disable=unused-argument
+        msg = "storage full"
+        raise RuntimeError(msg)
+
+    async with aiohttp.ClientSession() as session:
+        tado = Tado(session=session, token_update_callback=broken)
+        await tado.async_init()
+        await tado.device_activation()
+        assert tado.refresh_token == "test_refresh_token"
+        assert tado.device_activation_status == DeviceActivationStatus.COMPLETED
 
 
 async def test_device_flow_sets_verification_url(responses: aioresponses) -> None:
