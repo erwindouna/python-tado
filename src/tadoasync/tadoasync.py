@@ -66,6 +66,8 @@ from tadoasync.models_v3 import (
 from tadoasync.unifier import get_unifier_from_generation
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from tadoasync import models_unified as unified_models
 
 CLIENT_ID = "1bb50063-6b0c-4d11-bd99-387f4a91cc46"
@@ -100,9 +102,17 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         debug: bool | None = None,  # noqa: FBT001
         session: ClientSession | None = None,
         request_timeout: int = 10,
+        token_update_callback: Callable[[str], None] | None = None,
     ) -> None:
-        """Initialize the Tado object."""
+        """Initialize the Tado object.
+
+        token_update_callback, if given, is called with the new refresh token
+        every time tado issues one (device login and every refresh). tado refresh
+        tokens are single use, so a caller that stores the token should save it
+        here rather than only after its own calls succeed.
+        """
         self._refresh_token = refresh_token
+        self._token_update_callback = token_update_callback
         self._debug: bool = debug or False
         self._session = session
         self._request_timeout = request_timeout
@@ -288,7 +298,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
             response = await request.json()
             self._access_token = response["access_token"]
             self._token_expiry = time.time() + float(response["expires_in"])
-            self._refresh_token = response["refresh_token"]
+            self._set_refresh_token(response["refresh_token"])
 
             self._set_home_id_from_access_token()
             return True
@@ -349,7 +359,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         response = await request.json()
         self._access_token = response["access_token"]
         self._token_expiry = time.time() + float(response["expires_in"])
-        self._refresh_token = response["refresh_token"]
+        self._set_refresh_token(response["refresh_token"])
 
         self._set_home_id_from_access_token()
 
@@ -410,6 +420,16 @@ class Tado:  # pylint: disable=too-many-instance-attributes
                 return
             await self._refresh_auth_locked()
 
+    def _set_refresh_token(self, refresh_token: str) -> None:
+        """Store a newly issued refresh token and hand it to the callback."""
+        self._refresh_token = refresh_token
+        if self._token_update_callback is None:
+            return
+        try:
+            self._token_update_callback(refresh_token)
+        except Exception:  # pylint: disable=broad-exception-caught
+            _LOGGER.exception("Token update callback failed")
+
     def _token_is_fresh(self) -> bool:
         """Return True while the access token is valid for at least 30 more seconds."""
         return self._token_expiry is not None and time.time() < self._token_expiry - 30
@@ -440,7 +460,7 @@ class Tado:  # pylint: disable=too-many-instance-attributes
         response = await request.json()
         self._access_token = response["access_token"]
         self._token_expiry = time.time() + float(response["expires_in"])
-        self._refresh_token = response["refresh_token"]
+        self._set_refresh_token(response["refresh_token"])
 
         _LOGGER.debug("Tado token refreshed")
 

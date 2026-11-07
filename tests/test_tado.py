@@ -380,6 +380,48 @@ async def test_parallel_requests_refresh_token_once(python_tado: Tado) -> None:
     assert python_tado.refresh_token == "rotating_1"
 
 
+async def test_token_update_callback_gets_every_new_token(
+    responses: aioresponses,
+) -> None:
+    """The callback sees the token from the device login and from each refresh."""
+    seen: list[str] = []
+    async with aiohttp.ClientSession() as session:
+        tado = Tado(session=session, token_update_callback=seen.append)
+        await tado.async_init()
+        await tado.device_activation()
+        assert seen == ["test_refresh_token"]
+
+        responses.post(
+            TADO_TOKEN_URL,
+            status=200,
+            payload={
+                "access_token": AUTH_TOKEN,
+                "expires_in": 600,
+                "refresh_token": "second_refresh_token",
+            },
+        )
+        tado._token_expiry = time.time() - 10
+        await tado._refresh_auth()
+        assert seen == ["test_refresh_token", "second_refresh_token"]
+
+
+async def test_token_update_callback_error_does_not_break_auth(
+    responses: aioresponses,  # noqa: ARG001 # pylint: disable=unused-argument
+) -> None:
+    """A failing callback is logged; authentication still completes."""
+
+    def broken(token: str) -> None:  # noqa: ARG001 # pylint: disable=unused-argument
+        msg = "storage full"
+        raise RuntimeError(msg)
+
+    async with aiohttp.ClientSession() as session:
+        tado = Tado(session=session, token_update_callback=broken)
+        await tado.async_init()
+        await tado.device_activation()
+        assert tado.refresh_token == "test_refresh_token"
+        assert tado.device_activation_status == DeviceActivationStatus.COMPLETED
+
+
 async def test_device_flow_sets_verification_url(responses: aioresponses) -> None:
     """Test device flow sets verification URL."""
     responses.post(
