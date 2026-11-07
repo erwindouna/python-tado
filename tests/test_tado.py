@@ -336,6 +336,50 @@ async def test_check_request_status_maps_every_status(
     assert "Error message" in str(exc_info.value)
 
 
+async def test_parallel_requests_refresh_token_once(python_tado: Tado) -> None:
+    """Parallel requests at token expiry refresh once and reuse the result.
+
+    tado refresh tokens are single use. Without serialisation every coroutine
+    sends the same refresh token and all but the first get HTTP 400.
+    """
+    valid = {"rotating_0"}
+    calls = {"refresh": 0, "rejected": 0}
+
+    async def mock_post(*args: Any, **kwargs: Any) -> ClientResponse:  # noqa: ARG001 # pylint: disable=unused-argument
+        sent = kwargs["data"]["refresh_token"]
+        await asyncio.sleep(0.01)  # a real round trip; lets the others catch up
+        calls["refresh"] += 1
+        response = MagicMock(spec=ClientResponse)
+        if sent not in valid:
+            calls["rejected"] += 1
+            response.raise_for_status.side_effect = ClientResponseError(
+                MagicMock(spec=RequestInfo), (), status=400, message="invalid_grant"
+            )
+            return response
+        valid.discard(sent)
+        new = f"rotating_{calls['refresh']}"
+        valid.add(new)
+        response.json = AsyncMock(
+            return_value={
+                "access_token": AUTH_TOKEN,
+                "expires_in": 600,
+                "refresh_token": new,
+            }
+        )
+        return response
+
+    with patch("aiohttp.ClientSession.post", new=mock_post):
+        python_tado._token_expiry = time.time() - 10
+        python_tado._refresh_token = "rotating_0"
+        results = await asyncio.gather(
+            *(python_tado._refresh_auth() for _ in range(6)), return_exceptions=True
+        )
+
+    assert [r for r in results if isinstance(r, Exception)] == []
+    assert calls == {"refresh": 1, "rejected": 0}
+    assert python_tado.refresh_token == "rotating_1"
+
+
 async def test_device_flow_sets_verification_url(responses: aioresponses) -> None:
     """Test device flow sets verification URL."""
     responses.post(

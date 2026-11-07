@@ -115,6 +115,8 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
         self._access_token: str | None = None
         self._token_expiry: float | None = None
+        # tado refresh tokens are single use: only one refresh may run at a time
+        self._refresh_lock = asyncio.Lock()
         self._access_headers: dict[str, str] | None = None
         self._home_id: int | None = None
         self._me: GetMe | None = None
@@ -397,9 +399,23 @@ class Tado:  # pylint: disable=too-many-instance-attributes
 
     async def _refresh_auth(self) -> None:
         """Refresh the authentication token."""
-        if self._token_expiry is not None and time.time() < self._token_expiry - 30:
+        if self._token_is_fresh():
             return
 
+        # Several requests can find the token expired at the same time. Only the
+        # first one refreshes; the others wait and then use its new token instead
+        # of sending the refresh token it has just used up (tado answers 400).
+        async with self._refresh_lock:
+            if self._token_is_fresh():
+                return
+            await self._refresh_auth_locked()
+
+    def _token_is_fresh(self) -> bool:
+        """Return True while the access token is valid for at least 30 more seconds."""
+        return self._token_expiry is not None and time.time() < self._token_expiry - 30
+
+    async def _refresh_auth_locked(self) -> None:
+        """Refresh the authentication token; the caller holds the refresh lock."""
         data = {
             "client_id": CLIENT_ID,
             "grant_type": "refresh_token",
